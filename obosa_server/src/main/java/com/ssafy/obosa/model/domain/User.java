@@ -19,6 +19,8 @@ public class User extends DateEntity
     private String password;
     private int salt;
     private String email;
+    private String name;
+    private String nickname;
     private String address;
     private String zipCode;
     private String phone;
