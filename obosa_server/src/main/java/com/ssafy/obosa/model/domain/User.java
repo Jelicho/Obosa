@@ -24,6 +24,4 @@ public class User extends DateEntity
     private String phone;
     private String profileImg;
     private Boolean State;
-    private String registeredDate;
-    private String modifiedDate;
 }
