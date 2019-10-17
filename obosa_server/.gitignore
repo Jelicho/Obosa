@@ -180,4 +180,7 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
+
+.idea
+
 # End of https://www.gitignore.io/api/vue,java,vuejs,maven,gradle,intellij,visualstudiocode
