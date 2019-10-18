@@ -1,0 +1,197 @@
+body {
+  margin: 0;
+  padding: 0;
+  color: #293046;
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.col {
+  align-self: center!important;
+}
+
+/* App */
+#app {
+  margin-top: 0px !important;
+}
+.router-view{
+  min-height: calc(100vh - 64px);
+  text-align: -webkit-center;
+}
+
+@media screen and (min-width:1200px){
+  .v-toolbar__content, .router-view>div {
+    max-width: 1140px;
+  }
+}
+@media (max-width:1200px) and (min-width:992px){
+  .v-toolbar__content, .router-view>div {
+    max-width: 960px;
+  }
+}
+@media (max-width:992px) and (min-width:768px){
+  .v-toolbar__content, .router-view>div {
+    max-width: 720px;
+  }
+}
+@media (max-width:768px) and (min-width:576px){
+  .v-toolbar__content, .router-view>div {
+    max-width: 540px;
+  }
+}
+
+/* nav */
+.v-toolbar {
+  text-align: -webkit-center;
+}
+
+/* input form */
+.input-form .v-text-field__details {
+  display: none;;
+}
+.input-form > .row > .col{
+  padding: 0px;
+}
+
+/* 메인 소개글 스타일 시트 */
+#main-overview {
+  margin-top: 80px;
+  text-align: right;
+}
+
+#main-overview h1 {
+  font-size: 50px;
+  font-weight: 800;
+  padding-top: 50px;
+}
+
+#main-overview h4 {
+  font-weight: 300;
+  padding-top: 15px;
+}
+
+#main-overview a.btn {
+  margin-top: 15px;
+}
+
+.container{
+  text-align: center;
+}
+
+.breadcrumb {
+  padding-top: 100px;
+}
+
+#my-product .product {
+  padding: 10px !important;
+}
+
+/* 작품 리스트 스타일 시트 */
+#auction-list,
+#product-list {
+  padding: 50px 0;
+}
+
+#auction-list .auction,
+#product-list .product {
+  padding: 20px 10px;
+  text-align: center;
+}
+
+#auction-list .auction img,
+#product-list .product img {
+  width: 100%;
+}
+
+#auction-list .auction h4,
+#product-list .product h4 {
+  padding-top: 40px;
+}
+
+#auction-list .auction p,
+#product-list .product p {
+  padding-top: 10px;
+}
+
+/* 로그인 & 회원가입 스타일 시트 */
+#register-form,
+#login-form {
+  padding: 30px;
+  text-align: left;
+  margin:auto;
+  border-radius: 30px;
+  border: solid 1px;
+}
+
+/* 마이페이지 > 서브 메뉴 */
+.sub-nav .nav-item.nav-link {
+  background: #fff;
+  margin-right: 10px;
+  border: 1px solid #eaeaea;
+}
+
+.sub-nav .nav-item.nav-link.active {
+  background: #007bff;
+  border: 1px solid #007bff;
+}
+
+/* 마이페이지 > 내 작품 스타일 시트 */
+#my-product {
+  margin-bottom: 300px;
+}
+
+#my-product .product {
+  padding: 20px 40px;
+  text-align: center;
+}
+
+#my-product .product img {
+  width: 100px;
+  height: 100px;
+  margin: 20px 0;
+}
+
+/* 마이페이지 > 내 지갑 정보 스타일 시트 */
+.card .table {
+  padding: 0;
+  margin: 0;
+}
+
+nav.bottom-pagination {
+  display: inline-block;
+}
+
+/* 작품 리스트 > 작품 상세 정보 > 사용자 별 작품 조회 */
+.product-list-item {
+  display: block;
+  border-bottom: 1px solid #eee;
+  color: #aaa;
+  padding: 10px;
+}
+
+.product-list-item:hover {
+  text-decoration :none;
+  background: #f7f7f7;
+}
+
+.product-list-item:hover h4 {
+  color: #4444bb;
+}
+
+.product-list-item:hover p {
+  color: #4444bb;
+}
+
+.product-list-item h4 {
+  color: #333;
+  padding: 0;
+  margin: 0;
+}
+
+.product-list-item p {
+  padding: 0;
+  margin: 0;
+}
