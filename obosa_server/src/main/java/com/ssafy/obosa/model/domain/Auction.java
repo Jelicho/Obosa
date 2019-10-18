@@ -2,11 +2,10 @@ package com.ssafy.obosa.model.domain;
 
 import com.ssafy.obosa.model.domain.auditing.DateEntity;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -16,23 +15,33 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 public class Auction extends DateEntity
 {
-//    aid int(11) NOT NULL AUTO_INCREMENT,
-//    pid int(11) NOT NULL,
-//    uid int(11) NOT NULL,
-//    lowPrice int(11) NOT NULL,
-//    highPrice int(11) NOT NULL DEFAULT '2000000000',
-//    description text,
-//    registeredDate datetime NOT NULL,
-//    endDate datetime NOT NULL,
-//    aucState char(1) NOT NULL DEFAULT '0',
-//    upPrice int(11) NOT NULL DEFAULT '1000',
-    @Id
-    private int pid;
-    private String pname;
-    private String pdescription;
 
-    @ManyToOne
+    @Id
+    private int aid;
+
+    @OneToOne
     @JoinColumn(name = "uid")
     private User user;
 
+    @OneToOne
+    @JoinColumn(name = "pid")
+    private Product product;
+
+    @NotNull
+    private int lowPrice;
+
+    @ColumnDefault("2000000000")
+    private int highPrice;
+
+    @NotNull
+    private String description;
+
+    @NotNull
+    private String endDate;
+
+    @ColumnDefault("0")
+    private char aucState;
+
+    @ColumnDefault("1000")
+    private int upPrice;
 }
