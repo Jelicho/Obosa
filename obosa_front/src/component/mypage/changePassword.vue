@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  name: "MyChangePasswordView",
+  name: "changePassword",
   data() {
     return {
       user: {

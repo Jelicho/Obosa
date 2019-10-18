@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: "v-mypage-nav",
+  name: "mypageNav",
   data() {
     return {
       sharedState: this.$store.state,
