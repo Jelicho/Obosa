@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import $ from 'jquery'
 window.$ = $
+import axios from 'axios'
+window.axios = axios
 
 /* common component */
 import nav from '@/common/nav'
