@@ -61,7 +61,7 @@ public class SignUpService
                                     .append(profileImgFile.getOriginalFilename()).toString();
 
                 fileService.fileUpload(profileImgFile, filePath);
-                user.setPassword(filePath);
+                user.setProfileImg(filePath);
             }
             else
             {
