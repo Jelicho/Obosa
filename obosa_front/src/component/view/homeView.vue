@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-nav />
     <div id="main-overview" class="container">
       <v-row>
         <v-col md="7">

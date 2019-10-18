@@ -48,7 +48,7 @@
 <script>
 
 export default {
-  name: "MyUpdateView",
+  name: "myUpdate",
   data() {
     return {
       user: {

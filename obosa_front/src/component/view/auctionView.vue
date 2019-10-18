@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-nav />
     <v-breadcrumb title="경매 참여하기" description="경매 중인 작품을 보여줍니다."></v-breadcrumb>
     <div id="auction-list" class="container">
       <div class="row">
@@ -27,12 +26,19 @@
 </template>
 
 <script>
+import auctionList from "@/component/auction/auctionList";
+import auctionRegister from "@/component/auction/auctionRegister";
+
 export default {
   name: "Auction",
   data() {
     return {
       auctions: []
     };
+  },
+  components: {
+    auctionList,
+    auctionRegister
   },
   methods: {
     calculateDate(date) {

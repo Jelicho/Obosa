@@ -2,21 +2,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import component from './component/index'
 import $ from 'jquery'
 window.$ = $
-
-/* common component */
-import nav from '@/common/nav'
-import breadcrumb from '@/common/breadcrumb'
-import mypagenav from '@/common/mypage-nav'
-import logo from '@/common/logo'
-import VueDaumPostcode from "vue-daum-postcode"
-
-Vue.component('v-nav', nav)
-Vue.component('v-breadcrumb', breadcrumb)
-Vue.component('v-mypage-nav', mypagenav)
-Vue.component('logo', logo)
-Vue.use(VueDaumPostcode);
 
 /* service */
 import constant from '@/service/constant'
