@@ -4,8 +4,6 @@ import router from './router'
 import store from './store'
 import $ from 'jquery'
 window.$ = $
-import axios from 'axios'
-window.axios = axios
 
 /* common component */
 import nav from '@/common/nav'
@@ -25,10 +23,12 @@ import constant from '@/service/constant'
 import auctionService  from '@/service/auctionService'
 import productService from '@/service/productService'
 import userService from '@/service/userService'
+import axios from 'axios'
 
 Vue.prototype.$auctionService = auctionService
 Vue.prototype.$productService = productService
 Vue.prototype.$userService = userService
+Vue.prototype.$axios = axios
 
 /* style */
 import './assets/style.css'
