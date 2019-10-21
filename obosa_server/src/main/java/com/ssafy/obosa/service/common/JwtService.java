@@ -30,8 +30,12 @@ public class JwtService
     @Value("${JWT.SECRET}")
     private String SECRET;
 
-    @Autowired
-    AuthService authService;
+    private final AuthService authService;
+
+    public JwtService(final AuthService authService)
+    {
+        this.authService = authService;
+    }
 
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
