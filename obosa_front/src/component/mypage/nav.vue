@@ -6,7 +6,12 @@
           class="nav-item nav-link"
           v-bind:class="{ active: viewName == 'mypage.product' }"
           :to="{ name: 'mypage.product' }"
-        >내 작품</router-link>
+        >내 경매</router-link>
+        <router-link
+          class="nav-item nav-link"
+          v-bind:class="{ active: viewName == 'mypage.product' }"
+          :to="{ name: 'mypage.product' }"
+        >내 상품</router-link>
         <router-link
           class="nav-item nav-link"
           v-bind:class="{ active: viewName == 'mypage.update' }"

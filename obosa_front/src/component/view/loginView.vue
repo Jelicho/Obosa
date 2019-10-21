@@ -66,19 +66,20 @@ export default {
         this.user.password,
         function(data) {
           store.state.isSigned = true;
-          store.state.user.id = data.id;
-
-          this.$walletService.findById(store.state.user.id, function(response) {
-            if (response.status == 204) {
-              store.state.user.hasWallet = false;
-            } else if (response["소유자id"] == store.state.user.id) {
-              store.state.user.hasWallet = true;
-            } else {
-              alert("Unexpected status code : " + response.status);
-            }
-            sessionStorage.setItem("state", JSON.stringify(store.state));
-            scope.$router.push("/");
-          });
+          // store.state.user.id = data.id;
+          console.log(data)
+          console.log('왔다!!')
+          // this.$walletService.findById(store.state.user.id, function(response) {
+          //   if (response.status == 204) {
+          //     store.state.user.hasWallet = false;
+          //   } else if (response["소유자id"] == store.state.user.id) {
+          //     store.state.user.hasWallet = true;
+          //   } else {
+          //     alert("Unexpected status code : " + response.status);
+          //   }
+          //   sessionStorage.setItem("state", JSON.stringify(store.state));
+          //   scope.$router.push("/");
+          // });
         },
         function(error) {
           alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");

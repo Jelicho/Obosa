@@ -21,13 +21,14 @@ export default{
     },
     login: function(email, password, callback, whenError){
         var body = {
-            "이메일": email,
-            "비밀번호": password
+            "email": email,
+            "password": password
         }
 
         $.ajax({
             type: 'POST',
-            url: API_BASE_URL + "/api/members/login",
+            // url: API_BASE_URL + "/api/members/login",
+            url: 'http://70.12.246.59:8080/auth/login',
             data: JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' },
             success: callback,
