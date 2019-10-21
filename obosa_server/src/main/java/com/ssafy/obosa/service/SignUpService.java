@@ -26,8 +26,8 @@ public class SignUpService
     @Value("${uploadpath.user}")
     private String baseDir;
 
-    @Value("${PASSWORD.KEY}")
-    private String pwdKey;
+//    @Value("${PASSWORD.KEY}")
+//    private String pwdKey;
 
     @Value("${AES.SECRET}")
     private String aesKey;
