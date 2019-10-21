@@ -5,11 +5,7 @@ import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.SignupFormDto;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.FileService;
-import com.ssafy.obosa.util.ResponseMessage;
-import com.ssafy.obosa.util.S3Util;
-import com.ssafy.obosa.util.SHA256Util;
-import com.ssafy.obosa.util.StatusCode;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ssafy.obosa.util.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,23 +13,24 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class SignUpService
 {
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    FileService fileService;
+    private final FileService fileService;
 
-//    public SignUpService(final UserRepository userRepository, final FileService fileService)
-//    {
-//        this.userRepository = userRepository;
-//        this.fileService = fileService;
-//    }
+    public SignUpService(final UserRepository userRepository, final FileService fileService)
+    {
+        this.userRepository = userRepository;
+        this.fileService = fileService;
+    }
 
     @Value("${uploadpath.user}")
     private String baseDir;
 
-    @Value("${PASSWORD.KEY}")
-    private String pwdKey;
+//    @Value("${PASSWORD.KEY}")
+//    private String pwdKey;
+
+    @Value("${AES.SECRET}")
+    private String aesKey;
 
     public DefaultRes<SignupFormDto> newUser(SignupFormDto signupFormDto, MultipartFile profileImgFile)
     {
@@ -54,6 +51,18 @@ public class SignUpService
             String newPw = sha256Util.SHA256Util(pw+salt);
             user.setPassword(newPw);
 
+            AES256Util aes256Util = new AES256Util(aesKey);
+
+            String name = aes256Util.aesEncoding(user.getName());
+            String phone = aes256Util.aesEncoding(user.getPhone());
+            String zipCode = aes256Util.aesEncoding(user.getZipCode());
+            String address = aes256Util.aesEncoding(user.getAddress());
+
+            user.setName(name);
+            user.setPhone(phone);
+            user.setZipCode(zipCode);
+            user.setAddress(address);
+
             if(profileImgFile != null)
             {
                 String filePath = new StringBuilder(baseDir)
@@ -65,6 +74,7 @@ public class SignUpService
             }
             else
             {
+                user.setProfileImg("파일 없음");
                 //디폴트 이미지 넣는 로직 간단하게
             }
 
