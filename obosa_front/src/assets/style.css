@@ -10,7 +10,7 @@ a {
 }
 
 .col {
-  align-self: center!important;
+  align-self: center !important;
 }
 
 /* App */
@@ -22,28 +22,50 @@ a {
   text-align: center;
   color: #2c3e50;
 }
-.router-view{
+
+.router-view {
   min-height: calc(100vh - 64px);
   text-align: -webkit-center;
 }
 
-@media screen and (min-width:1200px){
-  .v-toolbar__content, .router-view>div {
+@media screen and (min-width:1200px) {
+
+  .v-toolbar__content,
+  .router-view>div {
     max-width: 1140px;
   }
-}
-@media (max-width:1200px) and (min-width:992px){
-  .v-toolbar__content, .router-view>div {
-    max-width: 960px;
+
+  .item-img {
+    width: 200px;
+    height: 200px;
   }
 }
-@media (max-width:992px) and (min-width:768px){
-  .v-toolbar__content, .router-view>div {
+
+@media (max-width:1200px) and (min-width:992px) {
+
+  .v-toolbar__content,
+  .router-view>div {
+    max-width: 960px;
+  }
+
+  .item-img {
+    width: 184px;
+    height: 184px;
+  }
+}
+
+@media (max-width:992px) and (min-width:768px) {
+
+  .v-toolbar__content,
+  .router-view>div {
     max-width: 720px;
   }
 }
-@media (max-width:768px) and (min-width:576px){
-  .v-toolbar__content, .router-view>div {
+
+@media (max-width:768px) and (min-width:576px) {
+
+  .v-toolbar__content,
+  .router-view>div {
     max-width: 540px;
   }
 }
@@ -55,9 +77,11 @@ a {
 
 /* input form */
 .input-form .v-text-field__details {
-  display: none;;
+  display: none;
+  ;
 }
-.input-form > .row > .col{
+
+.input-form>.row>.col {
   padding: 0px;
 }
 
@@ -82,7 +106,7 @@ a {
   margin-top: 15px;
 }
 
-.container{
+.container {
   text-align: center;
 }
 
@@ -121,12 +145,57 @@ a {
   padding-top: 10px;
 }
 
+.v-progress-linear {
+  text-align: left !important;
+}
+
+.auction-detail-info {
+  height: 500px;
+}
+
+.auction-detail-info>* {
+  padding: 14px;
+}
+
+.auction-description {
+  border-radius: 0px !important;
+}
+
+.auction-description>div {
+  padding: 8px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.auction-description>.v-card__title {
+  font-weight: bold;
+  font-size: 15px;
+  color: #aaa;
+}
+
+.auction-description>.v-card__text {
+  color: black !important;
+}
+
+.price {
+  font-size: 27px;
+  font-weight: bold;
+}
+
+.price .v-input__slot {
+  /* margin-bottom: 0px; */
+}
+
+.price .v-text-field__details {
+  /* display: none; */
+}
+
 /* 로그인 & 회원가입 스타일 시트 */
 #register-form,
 #login-form {
   padding: 30px;
   text-align: left;
-  margin:auto;
+  margin: auto;
   border-radius: 30px;
   border: solid 1px;
 }
@@ -178,7 +247,7 @@ nav.bottom-pagination {
 }
 
 .product-list-item:hover {
-  text-decoration :none;
+  text-decoration: none;
   background: #f7f7f7;
 }
 
