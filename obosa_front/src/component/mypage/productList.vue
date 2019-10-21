@@ -1,17 +1,17 @@
 <template>
   <div>
     <v-nav></v-nav>
-    <v-breadcrumb title="마이페이지" description="지갑을 생성하거나 작품을 업로드 할 수 있습니다."></v-breadcrumb>
+    <v-breadcrumb title="마이페이지" description="고객님의 등록된 상품들 입니다. 상품을 업로드 할 수 있습니다."></v-breadcrumb>
     <div class="container">
       <v-mypage-nav></v-mypage-nav>
       <div class="row">
         <div class="col-md-12 text-right">
-          <router-link to="/products/create" class="btn btn-outline-secondary">내 작품 등록하기</router-link>
+          <router-link to="/products/create" class="btn btn-outline-secondary">내 상품 등록하기</router-link>
         </div>
       </div>
       <div id="my-product" class="row">
         <div class="col-md-12 mt-5">
-          <h4>보유 중</h4>
+          <h4>등록된 상품</h4>
           <div class="row">
             <div class="col-md-3 product" v-for="item in products" v-if="isExistproduct">
               <div class="card">
@@ -31,26 +31,6 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12 mt-5">
-          <h4>경매 중</h4>
-          <div class="row">
-            <div class="col-md-3 product" v-for="item in auctions" v-if="auctions.length > 0">
-              <div class="card">
-                <div class="card-body">
-                  <h4>{{ item['작품정보']['이름'] }}</h4>
-                  <span class="badge badge-success">경매 진행중</span>
-                  <router-link
-                    :to="{ name: 'auction.detail', params: { id: item['id'] }}"
-                    class="btn btn-block btn-secondary mt-3"
-                  >자세히보기</router-link>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-8 mt-3" v-if="auctions.length == 0">
-              <div class="alert alert-warning">진행중인 경매 목록이 없습니다.</div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -65,8 +45,7 @@ export default {
   data() {
     return {
       sharedStates: this.$store.state,
-      products: [],
-      auctions: []
+      products: []
     };
   },
   components: {

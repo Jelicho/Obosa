@@ -1,5 +1,5 @@
 <template>
-          <v-breadcrumb title="작품 등록" description="새로운 상품을 등록합니다."></v-breadcrumb>
+          <!-- <v-breadcrumb title="작품 등록" description="새로운 상품을 등록합니다."></v-breadcrumb> -->
           <div class="container">
               <div class="row">
                   <div class="col-md-8 mx-auto">
@@ -23,10 +23,10 @@
 
 <script>
 // import imgur from '../components/Imgur'
-import productService from '../../Service/productService'
+import productService from '../../service/productService'
 
 export default {
-  name:"productRegister"
+  name:"productRegister",
   data(){
       return {
           product: {
@@ -41,8 +41,7 @@ export default {
   methods: {
       save: function(){
           var scope = this;
-
-          workService.create({
+          productService.create({
               "이름": this.product.name,
               "설명": this.product.description,
               "회원id": this.sharedStates.user.id
