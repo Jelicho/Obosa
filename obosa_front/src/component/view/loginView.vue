@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-nav />
     <v-container class="container">
       <div id="login-form" class="col-md-10 mx-auto bg-white">
         <v-row>
@@ -40,36 +39,6 @@
         </v-row>
       </div>
     </v-container>
-    <!-- <div class="container">
-    <div class="row">
-      <div id="login-form" class="col-md-6 mx-auto bg-white">
-        <router-link to="/">Auction | HARIBO</router-link>
-        <div class="mt-4">
-          <div class="form-group">
-            <label for="email">이메일</label>
-            <input
-              type="text"
-              class="form-control"
-              id="email"
-              v-model="user.email"
-              placeholder="이메일"
-            />
-          </div>
-          <div class="form-group">
-            <label for="password">비밀번호</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              v-model="user.password"
-              placeholder="비밀번호"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary" v-on:click="login">로그인</button>
-        </div>
-      </div>
-    </div>
-    </div>-->
   </div>
 </template>
 

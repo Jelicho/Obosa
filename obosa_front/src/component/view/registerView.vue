@@ -1,7 +1,5 @@
 <template>
   <div>
-    <v-nav />
-
     <v-container class="container">
       <div id="register-form" class="col-md-10 mx-auto bg-white">
         <v-row>
@@ -82,7 +80,7 @@
                   color="grey darken-2"
                   @click="openapi()"
                 ></v-text-field>
-                <addressPopUp :dialog="addressDialog" :address.sync="user.address"/>
+                <addressPopUp :dialog="addressDialog" :address.sync="user.address" />
               </v-col>
             </v-row>
             <v-row>
@@ -135,21 +133,20 @@
             </v-row>
           </v-col>
         </v-row>
-        
       </div>
     </v-container>
   </div>
 </template>
 
 <script>
-import addressPopUp from "@/api/addressPopUp";
+import addressPopUp from "@/component/api/addressPopUp";
 
 export default {
   name: "Register",
   data() {
     return {
-      address : this.$store.state.address,
-      addressDialog : false,
+      address: this.$store.state.address,
+      addressDialog: false,
       user: {
         email: "",
         name: "",
@@ -166,9 +163,9 @@ export default {
     };
   },
   components: {
-     addressPopUp
+    addressPopUp
   },
-  watch:{
+  watch: {
     user() {
       console.log(this.user.address);
     }
@@ -211,7 +208,7 @@ export default {
     jusoCallBack(response) {
       console.log(response);
     },
-    setAddress(adress){
+    setAddress(adress) {
       this.user.address = address;
     }
   }
