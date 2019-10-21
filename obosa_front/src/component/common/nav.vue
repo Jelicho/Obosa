@@ -8,7 +8,7 @@
 
     <v-toolbar-items>
       <v-btn text>
-        <router-link class="nav-link" to="/auction">경매참여하기</router-link>
+        <router-link class="nav-link" to="/auction/count">경매참여하기</router-link>
       </v-btn>
       <v-btn text v-if="sharedState.isSigned">
         <router-link class="nav-link" to="/mypage">마이페이지</router-link>
