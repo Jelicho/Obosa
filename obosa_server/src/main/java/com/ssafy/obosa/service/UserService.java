@@ -6,7 +6,6 @@ import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.JwtService;
 import com.ssafy.obosa.util.ResponseMessage;
 import com.ssafy.obosa.util.StatusCode;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +28,7 @@ public class UserService
 
         return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_USER, userList);
     }
+
     public User getUserByJwtToken(String jwtToken)
     {
         String email = jwtService.decode(jwtToken);
