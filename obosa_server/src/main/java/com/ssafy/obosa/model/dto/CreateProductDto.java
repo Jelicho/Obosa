@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductRegistrationDto {
+public class CreateProductDto {
     private String pname;
     private String pdescription;
     private int uid;

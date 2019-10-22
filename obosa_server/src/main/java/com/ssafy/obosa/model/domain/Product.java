@@ -1,7 +1,7 @@
 package com.ssafy.obosa.model.domain;
 
 import com.ssafy.obosa.model.domain.auditing.DateEntity;
-import com.ssafy.obosa.model.dto.ProductRegistrationDto;
+import com.ssafy.obosa.model.dto.CreateProductDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -33,12 +33,15 @@ public class Product extends DateEntity
 
     @ColumnDefault("0")
     private int imgCount;
-    public static Product setProductByProductRegistrationDto(ProductRegistrationDto productRegistrationDto, User user)
+
+    public static Product setProductByProductDto(CreateProductDto createProductDto, User user)
     {
         return Product.builder()
-                .pname(productRegistrationDto.getPname())
-                .pdescription(productRegistrationDto.getPdescription())
+                .pname(createProductDto.getPname())
+                .pdescription(createProductDto.getPdescription())
                 .user(user)
                 .build();
     }
+
+
 }
