@@ -25,4 +25,7 @@ public class ResponseMessage
     public static final String INTERNAL_SERVER_ERROR = "서버 내부 에러";
     public static final String DB_ERROR = "데이터베이스 에러";
     public static final String BAD_REQUEST = "올바르지 않은 요청";
+
+    //My Page
+    public static final String READ_MYINFO = "마이페이지 정보 조회 성공";
 }
