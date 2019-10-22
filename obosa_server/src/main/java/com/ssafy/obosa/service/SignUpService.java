@@ -2,11 +2,15 @@ package com.ssafy.obosa.service;
 
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
+import com.ssafy.obosa.model.domain.VerificationToken;
 import com.ssafy.obosa.model.dto.SignupFormDto;
+import com.ssafy.obosa.registration.OnRegistrationCompleteEvent;
 import com.ssafy.obosa.repository.UserRepository;
+import com.ssafy.obosa.repository.VerificationTokenRepository;
 import com.ssafy.obosa.service.common.FileService;
 import com.ssafy.obosa.util.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,12 +19,18 @@ public class SignUpService
 {
     private final UserRepository userRepository;
 
+    private final VerificationTokenRepository tokenRepository;
+
     private final FileService fileService;
 
-    public SignUpService(final UserRepository userRepository, final FileService fileService)
+    private final ApplicationEventPublisher eventPublisher;
+
+    public SignUpService(final UserRepository userRepository, VerificationTokenRepository tokenRepository, final FileService fileService, final ApplicationEventPublisher eventPublisher)
     {
         this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
         this.fileService = fileService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Value("${uploadpath.user}")
@@ -80,6 +90,15 @@ public class SignUpService
 
             userRepository.save(user);
 
+            /*
+                publish registrationComplete event
+                TODO: bind appUrl with the context path of request
+             */
+//            String appUrl = request.getContextPath();
+            String appUrl = "http://localhost:8080";
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent
+                    (userRepository.findUserByEmail(user.getEmail()), null, appUrl));
+
             return DefaultRes.res(StatusCode.OK, ResponseMessage.CREATED_USER);
         }
         catch (Exception e)
@@ -98,6 +117,24 @@ public class SignUpService
         else
         {
             return DefaultRes.res(StatusCode.OK, ResponseMessage.ABLE_EMAIL, false);
+        }
+    }
+
+    public DefaultRes confirmEmail(String token) {
+        try {
+            VerificationToken foundToken = tokenRepository.findByToken(token);
+            if (foundToken == null) {
+                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND, false);
+            }
+
+            User user = foundToken.getUser();
+            user.setState(true);
+            userRepository.save(user);
+
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.EMAIL_CONFIRMED, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
         }
     }
 }
