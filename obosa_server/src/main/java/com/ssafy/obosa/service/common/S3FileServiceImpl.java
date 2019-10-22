@@ -3,6 +3,7 @@ package com.ssafy.obosa.service.common;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
@@ -92,6 +93,22 @@ public class S3FileServiceImpl implements FileService
         catch (IOException e)
         {
             e.printStackTrace();
+        }
+    }
+    @Override
+    public void fileDelete(String filePath)
+    {
+        try
+        {
+            s3Client.deleteObject(new DeleteObjectRequest(bucketName, filePath));
+        }
+        catch(AmazonServiceException ase)
+        {
+            ase.printStackTrace();
+        }
+        catch(AmazonClientException ace)
+        {
+            ace.printStackTrace();
         }
     }
 }

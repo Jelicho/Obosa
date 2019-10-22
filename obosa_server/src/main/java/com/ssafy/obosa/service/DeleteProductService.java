@@ -4,7 +4,7 @@ package com.ssafy.obosa.service;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.Product;
 import com.ssafy.obosa.model.domain.User;
-import com.ssafy.obosa.model.dto.ProductRemoveDto;
+import com.ssafy.obosa.model.dto.DeleteProductDto;
 import com.ssafy.obosa.repository.ProductRepository;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.FileService;
@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.ssafy.obosa.util.ImgHandler.DeleteProductImgs;
+
 @Service
-public class ProductRemoveService {
+public class DeleteProductService {
 
     private final ProductRepository productRepository;
     private final FileService fileService;
@@ -25,17 +27,17 @@ public class ProductRemoveService {
     @Value("${uploadpath.product}")
     private String baseDir;
 
-    public ProductRemoveService(final ProductRepository productRepository, final FileService fileService,final UserRepository userRepository)
+    public DeleteProductService(final ProductRepository productRepository, final FileService fileService, final UserRepository userRepository)
     {
         this.productRepository = productRepository;
         this.fileService = fileService;
         this.userRepository = userRepository;
     }
-    public DefaultRes<ProductRemoveDto> newProduct(ProductRemoveDto productRemoveDto)
+    public DefaultRes<DeleteProductDto> deleteProduct(DeleteProductDto deleteProductDto)
     {
         try
         {
-            int uid = productRemoveDto.getUid();
+            int uid = deleteProductDto.getUid();
             Optional<User> optuser = userRepository.findByUid(uid);
             if(!optuser.isPresent())
             {
@@ -44,8 +46,8 @@ public class ProductRemoveService {
 
             User user = optuser.get();
 
-            //삭젤할 Product  객체 가져오기
-            int pid = productRemoveDto.getPid();
+            //삭제할 Product  객체 가져오기
+            int pid = deleteProductDto.getPid();
             Optional<Product> optionalProduct = productRepository.findByPid(pid);
 
             //유효성 검사
@@ -61,9 +63,8 @@ public class ProductRemoveService {
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_MATCHED_USER_AND_PRODUCT);
             }
 
-
             if(product.getImgCount()>0){
-                //TODO:S3 server에 존재하는 imgfile삭제해야한다.
+                DeleteProductImgs(fileService, product);
             }
 
             productRepository.delete(product);

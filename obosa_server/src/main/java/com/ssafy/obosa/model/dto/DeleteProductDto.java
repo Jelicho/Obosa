@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductRemoveDto {
+public class DeleteProductDto {
     private int uid;
     private int pid;
 }
