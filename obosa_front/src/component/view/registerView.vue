@@ -5,10 +5,10 @@
         <div id="register-form" class="col-md-10 mx-auto bg-white">
           <v-row>
             <v-col sm="6" align="center">
-              <v-img :src="imgsrc(user.png)" width="300" height="300"></v-img>
+              <v-img :src="profilePreview" width="300" height="300"></v-img>
               <v-btn rounded depressed color="#FDD835" @click="upload()">
                 업로드
-                <input type="file" style="display:none" id="profile" accept=".gif, .jpg, .png" />
+                <input type="file" style="display:none" accept=".gif, .jpg, .png" id="profile" @change="onFileChange"/>
               </v-btn>
             </v-col>
             <v-col sm="6" class="input-form">
@@ -99,7 +99,7 @@
                     full-width
                     single-line
                     label="우편번호"
-                    v-model="user.zipcode"
+                    v-model="user.zipCode"
                     background-color="#f4f8f7"
                     color="grey darken-2"
                     disabled
@@ -200,12 +200,13 @@ export default {
     return {
       valid: true,
       addressDialog: false,
+      profilePreview: require("@/assets/user.png"),
       user: {
         email: "",
         name: "",
         nickname: "",
         password: "",
-        zipcode: "",
+        zipCode: "",
         address: "",
         phone: "",
         profileImg: ""
@@ -238,6 +239,9 @@ export default {
       console.log(this.user.address);
     }
   },
+  mounted(){
+    this.profilePreview = require("@/assets/user.png")
+  },
   methods: {
     register: function() {
       var scope = this;
@@ -260,12 +264,27 @@ export default {
     upload() {
       $("#profile").trigger("click");
     },
+    onFileChange(e){
+      var profile = e.target.files[0];
+      this.user.profileImg = profile;
+      console.log(profile);
+      
+      this.setPreview(profile);
+    },
+    setPreview(imgfile){
+      var reader = new FileReader(0);
+      var _this = this;
+      reader.onload = (e) => {
+        _this.profilePreview = e.target.result;
+      }
+      reader.readAsDataURL(imgfile);
+    },
     openapi() {
       this.addressDialog = !this.addressDialog;
     },
     setAddress(fulladdress) {
       this.user.address = fulladdress.address + ", " + fulladdress.detail;
-      this.user.zipcode = fulladdress.code;
+      this.user.zipCode = fulladdress.code;
       this.addressDialog = false;
     }
   }
