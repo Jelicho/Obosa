@@ -1,15 +1,21 @@
 package com.ssafy.obosa.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.obosa.model.domain.auditing.DateEntity;
+import com.ssafy.obosa.model.dto.MyinfoDto;
 import com.ssafy.obosa.model.dto.SignupFormDto;
 import com.ssafy.obosa.util.AES256Util;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Entity
@@ -53,6 +59,10 @@ public class User extends DateEntity
     private boolean withDraw = false;
 
     private boolean state;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Product> userProductList = new ArrayList<>();
 
     public String getDecodedName()
     {
@@ -104,6 +114,20 @@ public class User extends DateEntity
         {
             return "DECODE_ERROR";
         }
+    }
+
+    public MyinfoDto getMyinfoDto()
+    {
+        MyinfoDto myinfoDto = MyinfoDto.builder()
+                .email(this.email)
+                .profileImg(this.profileImg)
+                .name(this.name)
+                .nickname(this.nickname)
+                .zipCode(this.zipCode)
+                .address(this.address)
+                .build();
+
+        return myinfoDto;
     }
 
     public static User setUserBySignupDto(SignupFormDto signupFormDto)

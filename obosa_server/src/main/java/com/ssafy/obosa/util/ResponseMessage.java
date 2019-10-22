@@ -16,6 +16,7 @@ public class ResponseMessage
     public static final String UNABLE_USER = "이미 존재하는 id";
     public static final String ABLE_EMAIL = "email 사용 가능";
     public static final String UNABLE_EMAIL = "이미 존재하는 email";
+    public static final String EMAIL_CONFIRMED = "email 인증 완료";
     public static final String NOT_FOUND_USER = "회원을 찾을 수 없습니다.";
     public static final String CREATED_USER = "회원 가입 성공";
     public static final String UPDATE_USER = "회원 정보 수정 성공";
@@ -25,4 +26,7 @@ public class ResponseMessage
     public static final String INTERNAL_SERVER_ERROR = "서버 내부 에러";
     public static final String DB_ERROR = "데이터베이스 에러";
     public static final String BAD_REQUEST = "올바르지 않은 요청";
+
+    //My Page
+    public static final String READ_MYINFO = "마이페이지 정보 조회 성공";
 }
