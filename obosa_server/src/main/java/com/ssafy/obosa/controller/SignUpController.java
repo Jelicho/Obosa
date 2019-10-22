@@ -37,7 +37,7 @@ public class SignUpController
     }
 
     @GetMapping("/confirm/{token}")
-    public ResponseEntity confirmRegistration(@PathVariable String token) {
+    public ResponseEntity verifyEmail(@PathVariable String token) {
         return new ResponseEntity(signUpService.confirmEmail(token), HttpStatus.OK);
     }
 }
