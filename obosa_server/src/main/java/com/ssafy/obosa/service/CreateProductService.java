@@ -48,7 +48,7 @@ public class ProductRegistrationService {
             Product product = Product.setProductByProductRegistrationDto(productRegistrationDto, user);
 
 
-
+            //FIXME : S3에 어떻게 ProductFile들을 구분할지 정해지면 수정할 예정.
             if(productImgs != null)
             {
                 int imgCount = productImgs.size();
