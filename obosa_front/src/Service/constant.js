@@ -1,1 +1,1 @@
-API_BASE_URL = "http://70.12.246.59:8080"
+API_BASE_URL = "http://localhost:8080"
