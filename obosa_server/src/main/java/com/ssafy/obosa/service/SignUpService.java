@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class SignUpService
 {
+    private final UserService userService;
+
     private final UserRepository userRepository;
 
     private final VerificationTokenRepository tokenRepository;
@@ -25,8 +27,9 @@ public class SignUpService
 
     private final ApplicationEventPublisher eventPublisher;
 
-    public SignUpService(final UserRepository userRepository, VerificationTokenRepository tokenRepository, final FileService fileService, final ApplicationEventPublisher eventPublisher)
+    public SignUpService(final UserService userService, final UserRepository userRepository, VerificationTokenRepository tokenRepository, final FileService fileService, final ApplicationEventPublisher eventPublisher)
     {
+        this.userService = userService;
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.fileService = fileService;
@@ -122,16 +125,8 @@ public class SignUpService
 
     public DefaultRes confirmEmail(String token) {
         try {
-            VerificationToken foundToken = tokenRepository.findByToken(token);
-            if (foundToken == null) {
-                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND, false);
-            }
-
-            User user = foundToken.getUser();
-            user.setState(true);
-            userRepository.save(user);
-
-            return DefaultRes.res(StatusCode.OK, ResponseMessage.EMAIL_CONFIRMED, true);
+            String responseMessage = userService.validateVerificationToken(token);
+            return DefaultRes.res(StatusCode.OK, responseMessage, true);
         } catch (Exception e) {
             e.printStackTrace();
             return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
