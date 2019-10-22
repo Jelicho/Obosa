@@ -10,6 +10,12 @@ import mypageView     from '@/component/view/mypageView'
 
 Vue.use(Router)
 
+const requireAuth = () => (from, to, next) => {
+  const isAuthenticated = false
+  if (isAuthenticated) return next()
+  next('/login?returnPath=mypage')
+}
+
 export default new Router({
   mode: 'history',
   routes: [{

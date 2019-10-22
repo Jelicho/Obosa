@@ -1,14 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
+const enhanceAccessToeken = () => {
+  const {accessToken} = localStorage
+  if (!accessToken) return
+  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+}
+enhanceAccessToeken()
+
 export default new Vuex.Store({
-  state: { 
+  state: {
     isSigned: false,
+    accessToken: null,
     user: {
       id: 0, // 사용자 아이디 저장
-      hasWallet: false // 지갑을 가지고 있는지 여부 조회
     },
     address : 'default'
   },
@@ -19,6 +27,36 @@ export default new Vuex.Store({
   clearMessageAction() {
     if (this.debug) console.log('clearMessageAction triggered')
     this.state.message = ''
+  },
+
+  // Mutations
+  mutations: {
+    LOGIN (state, {data}) {
+      state.accessToken = data.accessToken.data
+      console.log(data.accessToken.data)
+      // 토큰을 로컬 스토리지에 저장
+      // localStorage.accessToken = accessToken
+    },
+    LOGOUT (state) {
+      state.accessToken = null
+    }
+  },
+  // actions
+  actions: {
+    LOGIN ({commit}, {email, password}) {
+      console.log("email : " + email)
+      console.log("password : " + password)
+      return axios.post(`http://localhost:8083/auth/login`, {email, password})
+        .then(({data}) => commit('LOGIN', data))
+        // console.log(accessToken)
+        // state.user.id = email
+        // state.isSigned = true
+        // 모든 HTTP 요청 헤더에 Authorization 을 추가한다.
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+    },
+    LOGOUT ({commit}) {
+      commit('LOGOUT')
+    },
   }
 })
 // check session storage for logined user

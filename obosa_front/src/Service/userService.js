@@ -28,7 +28,7 @@ export default{
         $.ajax({
             type: 'POST',
             // url: API_BASE_URL + "/api/members/login",
-            url: 'http://70.12.246.59:8080/auth/login',
+            url: 'localhost:8083/auth/login',
             data: JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' },
             success: callback,

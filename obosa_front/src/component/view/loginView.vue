@@ -55,39 +55,20 @@ export default {
     };
   },
   methods: {
-    login: function() {
-      var scope = this;
-      var store = this.$store
+    login() {
+      var email = this.user.email
+      var password = this.user.password
+      // LOGIN 액션 실행
+      this.$store.dispatch('LOGIN', {email, password})
+        .then(() => this.redirect())
+        .catch(({message}) => this.msg = message)
+    },
+    redirect() {
+      console.log('entered redirect')
 
-      console.log(this.user);
-
-      this.$userService.login(
-        this.user.email,
-        this.user.password,
-        function(data) {
-          store.state.isSigned = true;
-          // store.state.user.id = data.id;
-          console.log(data)
-          console.log('왔다!!')
-          // this.$walletService.findById(store.state.user.id, function(response) {
-          //   if (response.status == 204) {
-          //     store.state.user.hasWallet = false;
-          //   } else if (response["소유자id"] == store.state.user.id) {
-          //     store.state.user.hasWallet = true;
-          //   } else {
-          //     alert("Unexpected status code : " + response.status);
-          //   }
-          //   sessionStorage.setItem("state", JSON.stringify(store.state));
-          //   scope.$router.push("/");
-          // });
-        },
-        function(error) {
-          alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
-        }
-      );
     }
   }
-};
+}
 </script>
 
 <style>
