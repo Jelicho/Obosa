@@ -20,6 +20,9 @@ export default new Vuex.Store({
     },
     address : 'default'
   },
+  getters: {
+    getAccessToken() {return state.accessToken}
+  },
   setMessageAction(newValue) {
     if (this.debug) console.log('setMessageAction triggered with', newValue)
     this.state.message = newValue
@@ -33,12 +36,15 @@ export default new Vuex.Store({
   mutations: {
     LOGIN (state, {data}) {
       state.accessToken = data.accessToken.data
+      state.isSigned = true
       console.log(data.accessToken.data)
       // 토큰을 로컬 스토리지에 저장
-      // localStorage.accessToken = accessToken
+      localStorage.accessToken = state.accessToken
     },
     LOGOUT (state) {
-      state.accessToken = null
+      state.accessToken = null,
+      state.isSigned = false,
+      localStorage.removeItem("accessToken")
     }
   },
   // actions

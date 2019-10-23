@@ -65,7 +65,7 @@ export default {
     },
     redirect() {
       console.log('entered redirect')
-
+      this.$router.replace(this.$route.query.redirect || '/')
     }
   }
 }

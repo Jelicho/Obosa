@@ -7,7 +7,15 @@
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  async beforeMount() {
+    if ((this.$store.state.accessToken==null)
+        && localStorage.accessToken ){
+      this.$store.state.accessToken = await localStorage.accessToken
+      this.$store.state.isSigned = true
+    }
+  }
+
 };
 </script>
 

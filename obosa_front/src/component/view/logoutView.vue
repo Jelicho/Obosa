@@ -8,20 +8,27 @@ export default {
   },
   methods: {
     logout: function() {
-      var scope = this;
+      this.$store.dispatch('LOGOUT')
+        .then(() => this.redirect())
+        .catch(({message}) => this.msg = message)
 
-      this.$userService.logout(function() {
-        store.state.isSigned = false;
-        store.state.user.id = 0;
-        store.state.user.hasWallet = false;
-        sessionStorage.removeItem("state");
-        scope.$router.push("/");
 
+      // var scope = this;
+      //
+      // this.$userService.logout(function() {
+      //   store.state.isSigned = false;
+      //   localStorage.removeItem("accessToken");
+      //   scope.$router.push("/");
+      //
         alert("성공적으로 로그아웃 되었습니다.");
-      });
-      if (sessionStorage.state) {
-        sessionStorage.removeItem("state");
-      }
+      // });
+      // if (sessionStorage.state) {
+      //   sessionStorage.removeItem("state");
+      // }
+    },
+    redirect() {
+      console.log('entered redirect')
+      this.$router.push("/")
     }
   }
 };
