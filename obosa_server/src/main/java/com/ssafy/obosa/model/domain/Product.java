@@ -34,6 +34,8 @@ public class Product extends DateEntity
     @ColumnDefault("0")
     private int imgCount;
 
+    private String dirS3;
+
     public static Product setProductByProductDto(CreateProductDto createProductDto, User user)
     {
         return Product.builder()

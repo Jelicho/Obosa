@@ -7,6 +7,7 @@ import com.ssafy.obosa.model.dto.CreateProductDto;
 import com.ssafy.obosa.repository.ProductRepository;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.FileService;
+import com.ssafy.obosa.util.ImgHandler;
 import com.ssafy.obosa.util.ResponseMessage;
 import com.ssafy.obosa.util.StatusCode;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
-
-import static com.ssafy.obosa.util.ImgHandler.CreateProductImgs;
 
 @Service
 public class CreateProductService {
@@ -35,18 +34,18 @@ public class CreateProductService {
         try
         {
             int uid = createProductDto.getUid();
-            Optional<User> optuser = userRepository.findByUid(uid);
-            if(!optuser.isPresent())
+            Optional<User> optionalUser = userRepository.findByUid(uid);
+            if(!optionalUser.isPresent())
             {
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_USER);
             }
 
-            User user = optuser.get();
+            User user = optionalUser.get();
             Product product = Product.setProductByProductDto(createProductDto, user);
 
             if(productImgs != null)
             {
-                CreateProductImgs(fileService, product, productImgs);
+                ImgHandler.CreateProductImgs(fileService, product, productImgs, uid);
             }
             //else => default는 0로 설정되어 있다.
 

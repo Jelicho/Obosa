@@ -8,6 +8,7 @@ import com.ssafy.obosa.model.dto.UpdateProductDto;
 import com.ssafy.obosa.repository.ProductRepository;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.FileService;
+import com.ssafy.obosa.util.ImgHandler;
 import com.ssafy.obosa.util.ResponseMessage;
 import com.ssafy.obosa.util.StatusCode;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,9 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
-
-import static com.ssafy.obosa.util.ImgHandler.CreateProductImgs;
-import static com.ssafy.obosa.util.ImgHandler.DeleteProductImgs;
 
 @Service
 public class UpdateProductService {
@@ -41,13 +39,13 @@ public class UpdateProductService {
         try
         {
             int uid = updateProductDto.getUid();
-            Optional<User> optuser = userRepository.findByUid(uid);
-            if(!optuser.isPresent())
+            Optional<User> optionalUser = userRepository.findByUid(uid);
+            if(!optionalUser.isPresent())
             {
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_USER);
             }
 
-            User user = optuser.get();
+            User user = optionalUser.get();
 
             //삭젤할 Product  객체 가져오기
             int pid = updateProductDto.getPid();
@@ -69,11 +67,9 @@ public class UpdateProductService {
             product.setPname(updateProductDto.getPname());
             product.setPdescription(updateProductDto.getPdescription());
 
-            DeleteProductImgs(fileService, product);
-            if(productImgs != null)
-            {
-                CreateProductImgs(fileService, product, productImgs);
-            }
+
+            ImgHandler.UpdateProductImgs(fileService, product, productImgs, uid);
+
             product.setImgCount(productImgs.size());
 
             productRepository.save(product);
