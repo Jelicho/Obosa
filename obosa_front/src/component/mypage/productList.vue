@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-nav></v-nav>
+    <!-- <v-nav></v-nav>
     <v-breadcrumb title="마이페이지" description="고객님의 등록된 상품들 입니다. 상품을 업로드 할 수 있습니다."></v-breadcrumb>
     <div class="container">
       <v-mypage-nav></v-mypage-nav>
@@ -32,7 +32,8 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+    <h1>my product</h1>
   </div>
 </template>
 
