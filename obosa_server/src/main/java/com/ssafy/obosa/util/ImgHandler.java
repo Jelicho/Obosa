@@ -19,7 +19,7 @@ public class ImgHandler {
         ProductsDir = product;
     }
 
-    public static void CreateProductImgs(FileService fileService, Product product, List<MultipartFile> productImgs, int uid) {
+    public static void createProductImgs(FileService fileService, Product product, List<MultipartFile> productImgs, int uid) {
         int imgCount = productImgs.size();
         int forFilename_count = 1;
         String dirS3=UUID.randomUUID().toString();
@@ -38,7 +38,7 @@ public class ImgHandler {
         product.setImgCount(imgCount);
     }
 
-    public static void DeleteProductImgs(FileService fileService, Product product, int uid) {
+    public static void deleteProductImgs(FileService fileService, Product product, int uid) {
         int imgCount = product.getImgCount();
         int forFilename_count = 1;
         while (forFilename_count <= imgCount) {
@@ -52,10 +52,10 @@ public class ImgHandler {
         }
     }
 
-    public static void UpdateProductImgs(FileService fileService, Product product, List<MultipartFile> productImgs, int uid) {
+    public static void updateProductImgs(FileService fileService, Product product, List<MultipartFile> productImgs, int uid) {
 
         if(productImgs==null){
-            DeleteProductImgs(fileService, product, uid);
+            deleteProductImgs(fileService, product, uid);
             product.setImgCount(0);
         }
         else{

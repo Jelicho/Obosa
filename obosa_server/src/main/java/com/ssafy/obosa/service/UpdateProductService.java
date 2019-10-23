@@ -68,7 +68,7 @@ public class UpdateProductService {
             product.setPdescription(updateProductDto.getPdescription());
 
 
-            ImgHandler.UpdateProductImgs(fileService, product, productImgs, uid);
+            ImgHandler.updateProductImgs(fileService, product, productImgs, uid);
 
             product.setImgCount(productImgs.size());
 

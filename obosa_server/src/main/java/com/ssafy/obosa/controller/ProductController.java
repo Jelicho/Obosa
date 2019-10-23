@@ -43,33 +43,33 @@ public class ProductController
     UpdateProductService updateProductService;
 
     @GetMapping("/{uid}")
-    public ResponseEntity ReadProducts(@PathVariable("uid") int uid)
+    public ResponseEntity readProducts(@PathVariable("uid") int uid)
     {
         ReadProductDto readProductDto = new ReadProductDto(uid);
         return new ResponseEntity(readProductService.readAllProductsByUid(readProductDto), HttpStatus.OK);
     }
 
     @GetMapping("/{pid}")
-    public ResponseEntity ReadProduct(ReadProductService createProductDto,  @PathVariable("pid") int pid)
+    public ResponseEntity readProduct(ReadProductService createProductDto,  @PathVariable("pid") int pid)
     {
         ReadProductDto readProductDto = new ReadProductDto(pid);
         return new ResponseEntity(readProductService.readOneProductByPid(readProductDto), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity CreateProduct(CreateProductDto createProductDto, @RequestPart(value="productImgs", required = false) final List<MultipartFile> productImgs)
+    public ResponseEntity createProduct(CreateProductDto createProductDto, @RequestPart(value="productImgs", required = false) final List<MultipartFile> productImgs)
     {
         return new ResponseEntity(createProductService.newProduct(createProductDto, productImgs), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity DeleteProduct(DeleteProductDto deleteProductDto)
+    public ResponseEntity deleteProduct(DeleteProductDto deleteProductDto)
     {
         return new ResponseEntity(deleteProductService.deleteProduct(deleteProductDto), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity UpdateProduct(UpdateProductDto updateProductDto, @RequestPart(value="productImgs", required = false) final List<MultipartFile> productImgs)
+    public ResponseEntity updateProduct(UpdateProductDto updateProductDto, @RequestPart(value="productImgs", required = false) final List<MultipartFile> productImgs)
     {
         return new ResponseEntity(updateProductService.updateProduct(updateProductDto, productImgs), HttpStatus.OK);
     }

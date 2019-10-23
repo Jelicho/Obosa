@@ -63,7 +63,7 @@ public class DeleteProductService {
             }
 
             if(product.getImgCount()>0){
-                ImgHandler.DeleteProductImgs(fileService, product, uid);
+                ImgHandler.deleteProductImgs(fileService, product, uid);
             }
 
             productRepository.delete(product);

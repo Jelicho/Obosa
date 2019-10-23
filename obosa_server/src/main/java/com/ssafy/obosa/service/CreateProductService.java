@@ -45,7 +45,7 @@ public class CreateProductService {
 
             if(productImgs != null)
             {
-                ImgHandler.CreateProductImgs(fileService, product, productImgs, uid);
+                ImgHandler.createProductImgs(fileService, product, productImgs, uid);
             }
             //else => default는 0로 설정되어 있다.
 
