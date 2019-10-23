@@ -47,7 +47,7 @@ public class UpdateProductService {
 
             User user = optionalUser.get();
 
-            //삭젤할 Product  객체 가져오기
+            //삭제할 Product  객체 가져오기
             int pid = updateProductDto.getPid();
             Optional<Product> optionalProduct = productRepository.findByPid(pid);
 
