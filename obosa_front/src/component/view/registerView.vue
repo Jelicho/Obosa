@@ -8,7 +8,13 @@
               <v-img :src="profilePreview" width="300" height="300"></v-img>
               <v-btn rounded depressed color="#FDD835" @click="upload()">
                 업로드
-                <input type="file" style="display:none" accept=".gif, .jpg, .png" id="profile" @change="onFileChange"/>
+                <input
+                  type="file"
+                  style="display:none"
+                  accept=".gif, .jpg, .png"
+                  id="profile"
+                  @change="onFileChange"
+                />
               </v-btn>
             </v-col>
             <v-col sm="6" class="input-form">
@@ -18,7 +24,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col md="9">
+                <v-col cols="9">
                   <v-text-field
                     required
                     full-width
@@ -30,8 +36,13 @@
                     :rules="[rules.required, rules.email]"
                   ></v-text-field>
                 </v-col>
-                <v-col md="3" style="align-self:baseline!important">
-                  <v-btn height="56px" width="100%" depressed color="error" error>인증</v-btn>
+                <v-col cols="3" style="align-self:baseline!important">
+                  <v-btn
+                    height="56px"
+                    width="100%"
+                    :color="emailDuplicated ? 'red lighten-2' : 'green lighten-2'"
+                    @click="duplicateCheck('email')"
+                  >중복 확인</v-btn>
                 </v-col>
               </v-row>
               <v-row>
@@ -49,7 +60,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col>
+                <v-col cols="9">
                   <v-text-field
                     required
                     full-width
@@ -60,6 +71,14 @@
                     color="grey darken-2"
                     :rules="[rules.required , rules.nickname]"
                   ></v-text-field>
+                </v-col>
+                <v-col cols="3" style="align-self:baseline!important">
+                  <v-btn
+                    height="56px"
+                    width="100%"
+                    :color="nicknameDuplicated ? 'red lighten-2' : 'green lighten-2'"
+                    @click="duplicateCheck('nickname')"
+                  >중복 확인</v-btn>
                 </v-col>
               </v-row>
               <v-row>
@@ -188,6 +207,10 @@
         </div>
       </v-container>
     </v-form>
+    <v-snackbar v-model="alert.isAlert" middle="true" :color="alert.type" top>
+      {{ alert.message }}
+      <v-btn text @click="alert.isAlert = false">확인</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -200,6 +223,8 @@ export default {
     return {
       valid: true,
       addressDialog: false,
+      emailDuplicated: true,
+      nicknameDuplicated: true,
       profilePreview: require("@/assets/user.png"),
       user: {
         email: "",
@@ -209,7 +234,9 @@ export default {
         zipCode: "",
         address: "",
         phone: "",
-        profileImg: ""
+        profileImg: "",
+        // State : false,
+        // salt: 0
       },
       no1: "",
       no2: "",
@@ -228,55 +255,57 @@ export default {
           value == this.user.password || "비밀번호를 확인해주세요",
         phone: value => value.length <= 4 || "전화번호를 정확히 입력해주세요."
       },
-      message: ""
+      message: "",
+      alert: {
+        isAlert: false,
+        message: "",
+        type: "success"
+      }
     };
   },
   components: {
     addressPopUp
   },
-  watch: {
-    user() {
-      console.log(this.user.address);
-    }
-  },
-  mounted(){
-    this.profilePreview = require("@/assets/user.png")
+  mounted() {
+    this.profilePreview = require("@/assets/user.png");
   },
   methods: {
     register: function() {
       var scope = this;
       var regiFormData = new FormData();
       this.user.phone = this.no1 + "-" + this.no2 + "-" + this.no3;
+      var route = this.$router
 
       if (this.$refs.regiform.validate()) {
         for (var key in this.user) {
           regiFormData.append(key, this.user[key]);
         }
         console.log("send data");
-        this.$userService.signUp(regiFormData)
+        this.$userService.signUp(regiFormData).then(response => {
+          console.log(response);
+          
+          if (response.status == 200) {
+            route.push('/login');
+            }
+        })
       } else {
         this.snackbar = true;
       }
     },
-    imgsrc(src) {
-      return require("@/assets/user.png");
-    },
     upload() {
       $("#profile").trigger("click");
     },
-    onFileChange(e){
+    onFileChange(e) {
       var profile = e.target.files[0];
       this.user.profileImg = profile;
-      console.log(profile);
-      
       this.setPreview(profile);
     },
-    setPreview(imgfile){
+    setPreview(imgfile) {
       var reader = new FileReader(0);
       var _this = this;
-      reader.onload = (e) => {
+      reader.onload = e => {
         _this.profilePreview = e.target.result;
-      }
+      };
       reader.readAsDataURL(imgfile);
     },
     openapi() {
@@ -286,6 +315,41 @@ export default {
       this.user.address = fulladdress.address + ", " + fulladdress.detail;
       this.user.zipCode = fulladdress.code;
       this.addressDialog = false;
+    },
+    async duplicateCheck(column) {
+      const scope = this;
+      var duplicatecheck = null;
+
+      if (column == "email" && this.$refs.regiform.inputs[0].validate()) {
+        duplicatecheck = this.$userService.duplicateEmail(this.user.email);
+      } else if ( column == "nickname" && this.$refs.regiform.inputs[2].validate() ) {
+        duplicatecheck = this.$userService.duplicateNickname(this.user.nickname);
+      }
+
+      if (duplicatecheck != null) {
+        duplicatecheck.then(response => {
+          if (response.status == 200) {
+            scope.alert.message = response.message + "합니다.";
+            scope.alert.type = "success";
+            scope.alert.isAlert = "true";
+            scope.emailDuplicated = false;
+            /*
+             * TODO :
+             * 이메일 중복 검사 완료 시 사용자가 이메일을 변경할 경우를 대비하여
+             * 중복검사 버튼은 이메일 재변경 버튼으로 변경
+             */
+          } else {
+            scope.alert.message = response.message + "입니다.";
+            scope.alert.type = "error";
+            scope.alert.isAlert = "true";
+            scope.emailDuplicated = true;
+          }
+        });
+      } else {
+        scope.alert.message = "정확히 입력해주세요";
+        scope.alert.type = "error";
+        scope.alert.isAlert = "true";
+      }
     }
   }
 };
