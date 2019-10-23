@@ -36,7 +36,7 @@ public class ResponseMessage
     public static final String NOT_FOUND_PRODUCTS = "등록된 상품이 없습니다.";
     public static final String READED_ALL_PRODUCTS = "유저 등록 물품 탐색 성공";
     public static final String READED_PRODUCT = "물품 탐색 성공";
-    
+
     //My Page
     public static final String READ_MYINFO = "마이페이지 정보 조회 성공";
 }
