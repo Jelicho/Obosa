@@ -40,4 +40,5 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.2.0.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.0.RELEASE'
     compile group: 'org.passay', name: 'passay', version: '1.0'
+    compile group: 'com.google.guava', name: 'guava', version: '20.0'
 }
