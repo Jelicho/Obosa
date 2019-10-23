@@ -7,6 +7,11 @@ import logoutView     from '@/component/view/logoutView'
 import registerView   from '@/component/view/registerView'
 import auctionView    from '@/component/view/auctionView'
 import mypageView     from '@/component/view/mypageView'
+// mypage children router
+import myAuction from '@/component/mypage/auctionList'
+import myProduct from '@/component/mypage/productList'
+import myInfo from '@/component/mypage/info'
+
 
 Vue.use(Router)
 
@@ -43,7 +48,24 @@ export default new Router({
     {
       name: "mypage",
       path: '/mypage',
-      component : mypageView
+      component : mypageView,
+      children: [
+            {
+              name: "mypage.auction",
+              path: 'auction',
+              component: myAuction
+            },
+            {
+              name: "mypage.product",
+              path: 'product',
+              component: homeView
+            },
+            {
+              name: "mypage.info",
+              path: 'info',
+              component: myInfo
+            },
+      ]
     }
   ]
 })
