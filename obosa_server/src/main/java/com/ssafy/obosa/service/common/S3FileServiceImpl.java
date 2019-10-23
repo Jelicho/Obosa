@@ -26,7 +26,7 @@ public class S3FileServiceImpl implements FileService
     @Autowired
     private AmazonS3 s3Client;
 
-    @Value("${cloud.aws.bucket")
+    @Value("${cloud.aws.bucket}")
     private String bucketName;
 
     @Async
