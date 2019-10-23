@@ -4,24 +4,20 @@
       <nav class="nav nav-pills nav-fill">
         <router-link
           class="nav-item nav-link"
-          v-bind:class="{ active: viewName == 'mypage.product' }"
-          :to="{ name: 'mypage.product' }"
+          v-bind:class="{ active: viewName == 'mypage.auction' }"
+          to="/mypage/auction"
         >내 경매</router-link>
         <router-link
           class="nav-item nav-link"
           v-bind:class="{ active: viewName == 'mypage.product' }"
-          :to="{ name: 'mypage.product' }"
+          to="/mypage/product"
         >내 상품</router-link>
         <router-link
           class="nav-item nav-link"
-          v-bind:class="{ active: viewName == 'mypage.update' }"
-          :to="{ name: 'mypage.update' }"
+          v-bind:class="{ active: viewName == 'mypage.info' }"
+          to="/mypage/info"
         >개인정보 수정</router-link>
-        <router-link
-          class="nav-item nav-link"
-          v-bind:class="{ active: viewName == 'mypage.change_password' }"
-          :to="{ name: 'mypage.change_password' }"
-        >비밀번호 변경</router-link>
+        <router-view></router-view>
       </nav>
     </div>
   </div>
