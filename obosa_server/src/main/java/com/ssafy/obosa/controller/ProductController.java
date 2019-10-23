@@ -3,11 +3,13 @@ package com.ssafy.obosa.controller;
 
 import com.ssafy.obosa.model.dto.CreateProductDto;
 import com.ssafy.obosa.model.dto.DeleteProductDto;
+import com.ssafy.obosa.model.dto.ReadProductDto;
 import com.ssafy.obosa.model.dto.UpdateProductDto;
 import com.ssafy.obosa.repository.ProductRepository;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.CreateProductService;
 import com.ssafy.obosa.service.DeleteProductService;
+import com.ssafy.obosa.service.ReadProductService;
 import com.ssafy.obosa.service.UpdateProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,9 @@ public class ProductController
     ProductRepository productRepository;
 
     @Autowired
+    ReadProductService readProductService;
+
+    @Autowired
     CreateProductService createProductService;
 
     @Autowired
@@ -37,7 +42,19 @@ public class ProductController
     @Autowired
     UpdateProductService updateProductService;
 
-    //@GetMapping
+    @GetMapping("/{uid}")
+    public ResponseEntity ReadProducts(@PathVariable("uid") int uid)
+    {
+        ReadProductDto readProductDto = new ReadProductDto(uid);
+        return new ResponseEntity(readProductService.readAllProductsByUid(readProductDto), HttpStatus.OK);
+    }
+
+    @GetMapping("/{pid}")
+    public ResponseEntity ReadProduct(ReadProductService createProductDto,  @PathVariable("pid") int pid)
+    {
+        ReadProductDto readProductDto = new ReadProductDto(pid);
+        return new ResponseEntity(readProductService.readOneProductByPid(readProductDto), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity CreateProduct(CreateProductDto createProductDto, @RequestPart(value="productImgs", required = false) final List<MultipartFile> productImgs)
