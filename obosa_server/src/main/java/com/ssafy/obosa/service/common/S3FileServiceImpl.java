@@ -27,7 +27,7 @@ public class S3FileServiceImpl implements FileService
     @Autowired
     private AmazonS3 s3Client;
 
-    @Value("${cloud.aws.bucket")
+    @Value("${cloud.aws.bucket}")
     private String bucketName;
 
     @Async
@@ -72,6 +72,9 @@ public class S3FileServiceImpl implements FileService
         {
             e.printStackTrace();
         }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -94,6 +97,9 @@ public class S3FileServiceImpl implements FileService
         {
             e.printStackTrace();
         }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
     @Override
     public void fileDelete(String filePath)
@@ -109,6 +115,9 @@ public class S3FileServiceImpl implements FileService
         catch(AmazonClientException ace)
         {
             ace.printStackTrace();
+        }
+        catch(Exception e){
+            e.printStackTrace();
         }
     }
 }
