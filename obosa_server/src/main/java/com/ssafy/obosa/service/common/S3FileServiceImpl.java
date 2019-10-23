@@ -36,18 +36,6 @@ public class S3FileServiceImpl implements FileService
     {
         try
         {
-            String dirName = filePath.substring(0, filePath.lastIndexOf("/"));
-
-            File f = new File(filePath);
-            if(!f.getParentFile().exists())
-            {
-                f.getParentFile().mkdirs();
-            }
-            if(!f.exists())
-            {
-                f.createNewFile();
-            }
-
             File convFile = new File(multipartFile.getOriginalFilename());
             convFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(convFile);
