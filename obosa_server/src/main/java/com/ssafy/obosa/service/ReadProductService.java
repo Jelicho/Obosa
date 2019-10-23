@@ -35,9 +35,9 @@ public class ReadProductService {
         User user = optionalUser.get();
         List<Product> productAllList = productRepository.findByUser(user);
         if(productAllList==null){
-            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_PRODUCTS);
+            return DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_PRODUCTS);
         }else{
-            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.READED_ALL_PRODUCTS, productAllList);
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.READED_ALL_PRODUCTS, productAllList);
         }
 
     }
@@ -47,7 +47,7 @@ public class ReadProductService {
         int pid = readProductDto.getId();
         Optional<Product> optionalProduct = productRepository.findByPid(pid);
         if(!optionalProduct.isPresent()){
-            return DefaultRes.res(StatusCode.OK, ResponseMessage.NOT_FOUND_PRODUCT);
+            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_PRODUCT);
         }
         Product product = optionalProduct.get();
         return DefaultRes.res(StatusCode.OK, ResponseMessage.READED_PRODUCT, product);

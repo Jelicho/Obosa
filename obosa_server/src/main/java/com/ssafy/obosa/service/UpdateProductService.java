@@ -53,7 +53,7 @@ public class UpdateProductService {
 
             //유효성 검사
             if(!optionalProduct.isPresent()){
-                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_PRODUCT);
+                return DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_PRODUCT);
             }
 
             Product product = optionalProduct.get();
