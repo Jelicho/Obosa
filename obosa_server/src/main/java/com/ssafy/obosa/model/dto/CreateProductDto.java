@@ -16,5 +16,5 @@ public class CreateProductDto {
     private String pname;
     private String pdescription;
     private int uid;
-    List<MultipartFile> productImgs;
+    private List<MultipartFile> productImgs;
 }
