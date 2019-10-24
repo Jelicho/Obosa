@@ -31,6 +31,11 @@ public enum ResponseMessage {
     NOT_FOUND_PRODUCTS("등록된 상품이 없습니다."),
     READED_ALL_PRODUCTS("유저 등록 물품 탐색 성공"),
     READED_PRODUCT("물품 탐색 성공"),
+    //Auction
+    CREATED_AUCTION("경매 등록 성공"),
+    NOT_FOUND_AUCTION("해당 경매를 찾을 수 없습니다."),
+    DELETED_AUCTION("경매 삭제 성공"),
+    UPDATED_AUCTION("경매 수정 성공"),
     //Common
     INTERNAL_SERVER_ERROR("서버 내부 에러"),
     DB_ERROR("데이터베이스 에러"),
