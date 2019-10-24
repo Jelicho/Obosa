@@ -27,6 +27,16 @@ public class ResponseMessage
     public static final String DB_ERROR = "데이터베이스 에러";
     public static final String BAD_REQUEST = "올바르지 않은 요청";
 
+    //Product
+    public static final String CREATED_PRODUCT = "물품 등록 성공";
+    public static final String NOT_FOUND_PRODUCT = "해당 물품을 찾을 수 없습니다.";
+    public static final String NOT_MATCHED_USER_AND_PRODUCT = "해당 유저의 물품이 아닙니다.";
+    public static final String DELETED_PRODUCT = "물품 삭제 성공";
+    public static final String UPDATED_PRODUCT = "물품 수정 성공";
+    public static final String NOT_FOUND_PRODUCTS = "등록된 상품이 없습니다.";
+    public static final String READED_ALL_PRODUCTS = "유저 등록 물품 탐색 성공";
+    public static final String READED_PRODUCT = "물품 탐색 성공";
+
     //My Page
     public static final String READ_MYINFO = "마이페이지 정보 조회 성공";
 }
