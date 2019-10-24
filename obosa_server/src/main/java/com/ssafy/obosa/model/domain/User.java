@@ -123,6 +123,7 @@ public class User extends DateEntity
                 .profileImg(this.profileImg)
                 .name(this.name)
                 .nickname(this.nickname)
+                .phone(this.phone)
                 .zipCode(this.zipCode)
                 .address(this.address)
                 .build();

@@ -56,6 +56,7 @@ public class MyinfoService {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
         }
     }
@@ -83,7 +84,7 @@ public class MyinfoService {
                String newPassword = sha256Util.SHA256Util(myinfoChangeDto.getPassword()+user.getSalt());
                user.setPassword(newPassword);
            }
-           
+
            user.setPhone(aes256Util.aesEncoding(myinfoChangeDto.getPhone()));
            user.setZipCode(aes256Util.aesEncoding(myinfoChangeDto.getZipCode()));
            user.setAddress(aes256Util.aesEncoding(myinfoChangeDto.getAddress()));
