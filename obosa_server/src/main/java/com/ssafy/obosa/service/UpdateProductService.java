@@ -58,12 +58,6 @@ public class UpdateProductService {
 
             Product product = optionalProduct.get();
 
-            //uid와 product매칭 확인
-            //TODO : admin 구현이 완료될시, 관리자에 대한 유효성은 통과히켜주는 조건 포함해야한다.
-            if(product.getUser().getUid()!=uid){
-                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_MATCHED_USER_AND_PRODUCT);
-            }
-
             product.setPname(updateProductDto.getPname());
             product.setPdescription(updateProductDto.getPdescription());
 
