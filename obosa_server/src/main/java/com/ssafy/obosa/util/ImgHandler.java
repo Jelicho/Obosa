@@ -38,12 +38,12 @@ public class ImgHandler {
         product.setImgCount(imgCount);
     }
 
-    public static void deleteProductImgs(FileService fileService, Product product, int uid) {
+    public static void deleteProductImgs(FileService fileService, Product product) {
         int imgCount = product.getImgCount();
         int forFilename_count = 1;
         while (forFilename_count <= imgCount) {
             String filePath = new StringBuilder(ProductsDir)
-                    .append(uid)
+                    .append(product.getUser().getUid())
                     .append('/')
                     .append(product.getDirS3())
                     .append('/')
@@ -52,10 +52,10 @@ public class ImgHandler {
         }
     }
 
-    public static void updateProductImgs(FileService fileService, Product product, List<MultipartFile> productImgs, int uid) {
+    public static void updateProductImgs(FileService fileService, Product product, List<MultipartFile> productImgs) {
 
         if(productImgs==null){
-            deleteProductImgs(fileService, product, uid);
+            deleteProductImgs(fileService, product);
             product.setImgCount(0);
         }
         else{
@@ -63,7 +63,7 @@ public class ImgHandler {
             int after_imgCount = productImgs.size();
             while (after_imgCount <= before_imgCount) {
                 String filePath = new StringBuilder(ProductsDir)
-                        .append(uid)
+                        .append(product.getUser().getUid())
                         .append('/')
                         .append(product.getDirS3())
                         .append('/')
@@ -76,7 +76,7 @@ public class ImgHandler {
             }
             for (MultipartFile productImg : productImgs) {
                 String filePath = new StringBuilder(ProductsDir)
-                        .append(uid)
+                        .append(product.getUser().getUid())
                         .append('/')
                         .append(product.getDirS3())
                         .append('/')

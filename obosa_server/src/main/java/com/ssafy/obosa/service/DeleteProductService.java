@@ -3,7 +3,6 @@ package com.ssafy.obosa.service;
 
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.Product;
-import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.DeleteProductDto;
 import com.ssafy.obosa.repository.ProductRepository;
 import com.ssafy.obosa.repository.UserRepository;
@@ -36,15 +35,6 @@ public class DeleteProductService {
     {
         try
         {
-            int uid = deleteProductDto.getUid();
-            Optional<User> optionalUser = userRepository.findByUid(uid);
-            if(!optionalUser.isPresent())
-            {
-                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_USER);
-            }
-
-            User user = optionalUser.get();
-
             //삭제할 Product  객체 가져오기
             int pid = deleteProductDto.getPid();
             Optional<Product> optionalProduct = productRepository.findByPid(pid);
@@ -57,7 +47,7 @@ public class DeleteProductService {
             Product product = optionalProduct.get();
 
             if(product.getImgCount()>0){
-                ImgHandler.deleteProductImgs(fileService, product, uid);
+                ImgHandler.deleteProductImgs(fileService, product);
             }
 
             productRepository.delete(product);

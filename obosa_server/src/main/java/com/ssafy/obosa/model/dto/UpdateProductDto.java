@@ -16,6 +16,5 @@ public class UpdateProductDto {
     private int pid;
     private String pname;
     private String pdescription;
-    private int uid;
     private List<MultipartFile> productImgs;
 }

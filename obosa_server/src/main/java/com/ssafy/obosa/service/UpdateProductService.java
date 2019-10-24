@@ -38,15 +38,6 @@ public class UpdateProductService {
     {
         try
         {
-            int uid = updateProductDto.getUid();
-            Optional<User> optionalUser = userRepository.findByUid(uid);
-            if(!optionalUser.isPresent())
-            {
-                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_USER);
-            }
-
-            User user = optionalUser.get();
-
             //삭제할 Product  객체 가져오기
             int pid = updateProductDto.getPid();
             Optional<Product> optionalProduct = productRepository.findByPid(pid);
@@ -62,7 +53,7 @@ public class UpdateProductService {
             product.setPdescription(updateProductDto.getPdescription());
 
 
-            ImgHandler.updateProductImgs(fileService, product, productImgs, uid);
+            ImgHandler.updateProductImgs(fileService, product, productImgs);
 
             product.setImgCount(productImgs.size());
 
