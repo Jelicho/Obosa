@@ -3,6 +3,8 @@ package com.ssafy.obosa.aop;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.JwtService;
+import com.ssafy.obosa.util.ResponseMessage;
+import com.ssafy.obosa.util.StatusCode;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -47,8 +49,8 @@ public class AuthAop
         if(validToken() == false)
         {
             return DefaultRes.builder()
-                    .status(401)
-                    .message("인증 실패")
+                    .status(StatusCode.UNAUTHORIZED.getCode())
+                    .message(ResponseMessage.AUTH_FAIL.getMessage())
                     .build();
         }
         return pjp.proceed(pjp.getArgs());

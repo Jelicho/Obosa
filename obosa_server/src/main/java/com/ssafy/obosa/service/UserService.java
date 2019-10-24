@@ -20,10 +20,6 @@ import java.util.UUID;
 @Service
 public class UserService
 {
-    public static final String TOKEN_INVALID = "invalidToken";
-    public static final String TOKEN_EXPIRED = "expired";
-    public static final String TOKEN_VALID = "valid";
-
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final VerificationTokenRepository tokenRepository;
@@ -82,10 +78,10 @@ public class UserService
         return userRepository.findByUid(uid);
     }
 
-    public String validateVerificationToken(String token) {
+    public ResponseMessage validateVerificationToken(String token) {
         final VerificationToken verificationToken = tokenRepository.findByToken(token);
         if (verificationToken == null) {
-            return TOKEN_INVALID;
+            return ResponseMessage.TOKEN_INVALID;
         }
 
         final User user = verificationToken.getUser();
@@ -95,13 +91,13 @@ public class UserService
                 - cal.getTime()
                 .getTime()) <= 0) {
             tokenRepository.delete(verificationToken);
-            return TOKEN_EXPIRED;
+            return ResponseMessage.TOKEN_EXPIRED;
         }
 
         user.setState(true);
         // tokenRepository.delete(verificationToken);
         userRepository.save(user);
-        return TOKEN_VALID;
+        return ResponseMessage.TOKEN_VALID;
     }
 
     private boolean emailExists(final String email) {

@@ -1,15 +1,22 @@
 package com.ssafy.obosa.util;
 
-public class StatusCode
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public enum StatusCode
 {
-    public static final int OK = 200;
-    public static final int CREATED = 201;
-    public static final int NO_CONTENT = 204;
-    public static final int BAD_REQUEST =  400;
-    public static final int UNAUTHORIZED = 401;
-    public static final int FORBIDDEN = 403;
-    public static final int NOT_FOUND = 404;
-    public static final int INTERNAL_SERVER_ERROR = 500;
-    public static final int SERVICE_UNAVAILABLE = 503;
-    public static final int DB_ERROR = 600;
+    OK(200),
+    CREATED(201),
+    NO_CONTENT(204),
+    BAD_REQUEST(400),
+    UNAUTHORIZED(401),
+    FORBIDDEN(403),
+    NOT_FOUND(404),
+    INTERNAL_SERVER_ERROR(500),
+    SERVICE_UNAVAILABLE(503),
+    DB_ERROR(600);
+
+    private int code;
 }
