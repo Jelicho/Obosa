@@ -1,24 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import signupModule from '@/store/modules/signupModule'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    isSigned: true,
-    user: {
-      id: 0, // 사용자 아이디 저장
-      hasWallet: false // 지갑을 가지고 있는지 여부 조회
-    },
-    address : 'default'
-  },
-  setMessageAction(newValue) {
-    if (this.debug) console.log('setMessageAction triggered with', newValue)
-    this.state.message = newValue
-  },
-  clearMessageAction() {
-    if (this.debug) console.log('clearMessageAction triggered')
-    this.state.message = ''
+  modules: {
+    signupModule,
   }
 })
 // check session storage for logined user

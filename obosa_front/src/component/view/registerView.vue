@@ -112,7 +112,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col @click="openapi()">
+                <v-col @click="addressDialog = !addressDialog">
                   <v-text-field
                     required
                     full-width
@@ -127,7 +127,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col @click="openapi()">
+                <v-col @click="addressDialog = !addressDialog">
                   <v-text-field
                     required
                     full-width
@@ -198,7 +198,7 @@
                     ripple
                     color="teal"
                     id="sign-up"
-                    @click="register()"
+                    @click="onSubmit()"
                   >회원가입</v-btn>
                 </v-col>
               </v-row>
@@ -215,6 +215,7 @@
 </template>
 
 <script>
+import {mapState, mapActions } from 'vuex'
 import addressPopUp from "@/component/api/addressPopUp";
 
 export default {
@@ -235,8 +236,6 @@ export default {
         address: "",
         phone: "",
         profileImg: "",
-        // State : false,
-        // salt: 0
       },
       no1: "",
       no2: "",
@@ -255,12 +254,11 @@ export default {
           value == this.user.password || "비밀번호를 확인해주세요",
         phone: value => value.length <= 4 || "전화번호를 정확히 입력해주세요."
       },
-      message: "",
       alert: {
         isAlert: false,
         message: "",
         type: "success"
-      }
+      },
     };
   },
   components: {
@@ -269,28 +267,33 @@ export default {
   mounted() {
     this.profilePreview = require("@/assets/user.png");
   },
+  computed: {
+    ...mapState({
+      response : state => state.signupService.signupResponse
+    })
+  },
+  watch: {
+    response(){
+      console.log(this.response);
+      this.alert.message = this.response.message;
+      this.alert.type = this.response.status == 200 ? 'success' : 'error'
+      this.alert.isAlert = true;
+    }
+  },
   methods: {
-    register: function() {
-      var scope = this;
+    ...mapActions('signupService', ['signup']),
+    ...mapActions('signupService', ['duplicateEmail']),
+    ...mapActions('signupService', ['duplicateNickname']),
+    async onSubmit() {
       var regiFormData = new FormData();
-      this.user.phone = this.no1 + "-" + this.no2 + "-" + this.no3;
-      var route = this.$router
 
       if (this.$refs.regiform.validate()) {
+        this.user.phone = this.no1 + "-" + this.no2 + "-" + this.no3;
         for (var key in this.user) {
           regiFormData.append(key, this.user[key]);
         }
-        console.log("send data");
-        this.$userService.signUp(regiFormData).then(response => {
-          console.log(response);
-          
-          if (response.status == 200) {
-            route.push('/login');
-            }
-        })
-      } else {
-        this.snackbar = true;
-      }
+        await this.signup(regiFormData)
+      } 
     },
     upload() {
       $("#profile").trigger("click");
@@ -308,49 +311,28 @@ export default {
       };
       reader.readAsDataURL(imgfile);
     },
-    openapi() {
-      this.addressDialog = !this.addressDialog;
-    },
     setAddress(fulladdress) {
       this.user.address = fulladdress.address + ", " + fulladdress.detail;
       this.user.zipCode = fulladdress.code;
       this.addressDialog = false;
     },
     async duplicateCheck(column) {
-      const scope = this;
-      var duplicatecheck = null;
+      const _this = this;
 
       if (column == "email" && this.$refs.regiform.inputs[0].validate()) {
-        duplicatecheck = this.$userService.duplicateEmail(this.user.email);
+        await this.duplicateEmail(this.user.email).then(response => {
+          _this.emailDuplicated = response.status == 200 ? false : true;
+        })
       } else if ( column == "nickname" && this.$refs.regiform.inputs[2].validate() ) {
-        duplicatecheck = this.$userService.duplicateNickname(this.user.nickname);
-      }
-
-      if (duplicatecheck != null) {
-        duplicatecheck.then(response => {
-          if (response.status == 200) {
-            scope.alert.message = response.message + "합니다.";
-            scope.alert.type = "success";
-            scope.alert.isAlert = "true";
-            scope.emailDuplicated = false;
-            /*
-             * TODO :
-             * 이메일 중복 검사 완료 시 사용자가 이메일을 변경할 경우를 대비하여
-             * 중복검사 버튼은 이메일 재변경 버튼으로 변경
-             */
-          } else {
-            scope.alert.message = response.message + "입니다.";
-            scope.alert.type = "error";
-            scope.alert.isAlert = "true";
-            scope.emailDuplicated = true;
-          }
-        });
+        await this.duplicateNickname(this.user.nickname).then(response => {
+          _this.nicknameDuplicated = response.status == 200 ? false : true;
+        })
       } else {
-        scope.alert.message = "정확히 입력해주세요";
-        scope.alert.type = "error";
-        scope.alert.isAlert = "true";
+        this.alert.message = "정확히 입력해주세요";
+        this.alert.type = "error";
+        this.alert.isAlert = "true";
       }
-    }
+    },
   }
 };
 </script>
