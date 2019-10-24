@@ -125,7 +125,7 @@ public class SignUpService
 
     public DefaultRes confirmEmail(String token) {
         try {
-            String responseMessage = userService.validateVerificationToken(token);
+            ResponseMessage responseMessage = userService.validateVerificationToken(token);
             return DefaultRes.res(StatusCode.OK, responseMessage, true);
         } catch (Exception e) {
             e.printStackTrace();
