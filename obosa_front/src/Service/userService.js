@@ -9,9 +9,6 @@ export default {
             data: regiFormData,
             processData: false,
             contentType: false,
-            // success: function(response) {
-            //     callback(response);
-            // }
         });
     },
     login: function(email, password, callback, whenError) {
