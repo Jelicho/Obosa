@@ -1,1 +1,1 @@
-const API_BASE_URL = "http://123.123.123.123:8080"
+API_BASE_URL = "http://localhost:8080"

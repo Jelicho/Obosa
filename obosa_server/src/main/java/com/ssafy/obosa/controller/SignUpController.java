@@ -24,12 +24,14 @@ public class SignUpController
     @Autowired
     SignUpService signUpService;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("duplicateEmail")
     public ResponseEntity duplicateUserEmail(@RequestParam String email)
     {
         return new ResponseEntity(signUpService.duplicateEmail(email), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity signup(SignupFormDto signupFormDto, @RequestPart(value="profileImgFile", required = false) final MultipartFile profileImgFile)
     {
