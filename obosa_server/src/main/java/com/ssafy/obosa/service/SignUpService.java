@@ -27,23 +27,17 @@ public class SignUpService
 
     private final ApplicationEventPublisher eventPublisher;
 
-    private final SHA256Util sha256Util;
-
-    public SignUpService(final UserService userService, final UserRepository userRepository, VerificationTokenRepository tokenRepository, final FileService fileService, final ApplicationEventPublisher eventPublisher, final SHA256Util sha256Util)
+    public SignUpService(final UserService userService, final UserRepository userRepository, VerificationTokenRepository tokenRepository, final FileService fileService, final ApplicationEventPublisher eventPublisher)
     {
         this.userService = userService;
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.fileService = fileService;
         this.eventPublisher = eventPublisher;
-        this.sha256Util = sha256Util;
     }
 
     @Value("${uploadpath.user}")
     private String baseDir;
-
-//    @Value("${PASSWORD.KEY}")
-//    private String pwdKey;
 
     @Value("${AES.SECRET}")
     private String aesKey;
@@ -62,11 +56,11 @@ public class SignUpService
             String pw = user.getPassword();
             int salt = user.getSalt();
 
+            SHA256Util sha256Util = new SHA256Util();
             String newPw = sha256Util.SHA256Util(pw+salt);
             user.setPassword(newPw);
 
             AES256Util aes256Util = new AES256Util(aesKey);
-
             String name = aes256Util.aesEncoding(user.getName());
             String phone = aes256Util.aesEncoding(user.getPhone());
             String zipCode = aes256Util.aesEncoding(user.getZipCode());

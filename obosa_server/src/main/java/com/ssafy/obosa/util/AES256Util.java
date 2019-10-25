@@ -16,16 +16,12 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
-@Component
 public class AES256Util
 {
     private String iv;
     private Key keySpec;
 
-    @Value("${AES.SECRET}")
-    private String key;
-
-    public AES256Util() throws UnsupportedEncodingException
+    public AES256Util(String key) throws UnsupportedEncodingException
     {
         this.iv = key.substring(0, 16);
 

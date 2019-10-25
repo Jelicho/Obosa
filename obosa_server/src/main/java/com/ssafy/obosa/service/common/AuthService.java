@@ -11,17 +11,16 @@ public class AuthService
 {
     private final UserRepository userRepository;
 
-    private final SHA256Util sha256Util;
 
-    public AuthService(final UserRepository userRepository, final SHA256Util sha256Util)
+    public AuthService(final UserRepository userRepository)
     {
         this.userRepository = userRepository;
-        this.sha256Util = sha256Util;
     }
 
     public boolean loginCheck(LoginReq loginReq)
     {
         final User user = userRepository.findUserByEmail(loginReq.getEmail());
+        SHA256Util sha256Util = new SHA256Util();
         if(user != null)
         {
             String hashedPw = sha256Util.SHA256Util(loginReq.getPassword()+user.getSalt());

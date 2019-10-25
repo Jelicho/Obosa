@@ -59,14 +59,11 @@ public class User extends DateEntity
     @JsonIgnore
     private List<Product> userProductList = new ArrayList<>();
 
-    @Autowired
-    @JsonIgnore
-    private AES256Util aes256Util;
-
     public String getDecodedName()
     {
         try
         {
+            AES256Util aes256Util = new AES256Util();
             return aes256Util.aesDecoding(this.name);
         }
         catch (Exception e)
@@ -79,6 +76,7 @@ public class User extends DateEntity
     {
         try
         {
+            AES256Util aes256Util = new AES256Util();
             return aes256Util.aesDecoding(this.phone);
         }
         catch (Exception e)
@@ -91,6 +89,7 @@ public class User extends DateEntity
     {
         try
         {
+            AES256Util aes256Util = new AES256Util();
             return aes256Util.aesDecoding(this.zipCode);
         }
         catch (Exception e)
@@ -103,6 +102,7 @@ public class User extends DateEntity
     {
         try
         {
+            AES256Util aes256Util = new AES256Util();
             return aes256Util.aesDecoding(this.address);
         }
         catch (Exception e)
