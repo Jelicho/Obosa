@@ -21,6 +21,10 @@ public class MyinfoService {
 
     private final FileService fileService;
 
+    private final SHA256Util sha256Util;
+
+    private final AES256Util aes256Util;
+
     @Value("${uploadpath.user}")
     private String baseDir;
 
@@ -30,25 +34,29 @@ public class MyinfoService {
     @Value("${AES.SECRET}")
     private String aesKey;
 
-    public MyinfoService(UserRepository userRepository, FileService fileService)
+    public MyinfoService(UserRepository userRepository, FileService fileService, final SHA256Util sha256Util, final AES256Util aes256Util)
     {
         this.userRepository = userRepository;
         this.fileService = fileService;
+        this.sha256Util = sha256Util;
+        this.aes256Util = aes256Util;
     }
 
     public DefaultRes<MyinfoDto> readMypage(User user)
     {
         try
         {
-            AES256Util aes256Util = new AES256Util(aesKey);
-
             MyinfoDto myinfoDto = user.getMyinfoDto();
-            myinfoDto.setNickname(user.getNickname());
-            myinfoDto.setEmail(user.getEmail());
-            myinfoDto.setName(aes256Util.aesDecoding(myinfoDto.getName()));
-            myinfoDto.setPhone(aes256Util.aesDecoding(myinfoDto.getPhone()));
-            myinfoDto.setZipCode(aes256Util.aesDecoding(myinfoDto.getZipCode()));
-            myinfoDto.setAddress(aes256Util.aesDecoding(myinfoDto.getAddress()));
+
+            myinfoDto.builder()
+                    .nickname(user.getNickname())
+                    .email(user.getEmail())
+                    .name(aes256Util.aesDecoding(myinfoDto.getName()))
+                    .phone(aes256Util.aesDecoding(myinfoDto.getPhone()))
+                    .zipCode(aes256Util.aesDecoding(myinfoDto.getZipCode()))
+                    .address(aes256Util.aesDecoding(myinfoDto.getAddress()))
+                    .profileImg(S3Util.getImgPath(s3Endpoint, user.getProfileImg()))
+                    .build();
 
             myinfoDto.setProfileImg(S3Util.getImgPath(s3Endpoint, user.getProfileImg()));
 
@@ -65,8 +73,6 @@ public class MyinfoService {
     {
         try
         {
-            AES256Util aes256Util = new AES256Util(aesKey);
-            SHA256Util sha256Util = new SHA256Util();
             if(profileImg != null)
            {
                fileService.fileDelete(baseDir+user.getProfileImg());
@@ -102,7 +108,6 @@ public class MyinfoService {
 
     public DefaultRes verifyPassword(User user, String password)
     {
-        SHA256Util sha256Util = new SHA256Util();
         try
         {
             if(password == null)

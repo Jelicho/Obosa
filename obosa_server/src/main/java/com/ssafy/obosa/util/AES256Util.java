@@ -1,6 +1,8 @@
 package com.ssafy.obosa.util;
 
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -14,13 +16,16 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
-
+@Component
 public class AES256Util
 {
     private String iv;
     private Key keySpec;
 
-    public AES256Util(String key) throws UnsupportedEncodingException
+    @Value("${AES.SECRET}")
+    private String key;
+
+    public AES256Util() throws UnsupportedEncodingException
     {
         this.iv = key.substring(0, 16);
 

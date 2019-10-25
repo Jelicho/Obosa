@@ -6,18 +6,13 @@ import com.ssafy.obosa.model.dto.MyinfoDto;
 import com.ssafy.obosa.model.dto.SignupFormDto;
 import com.ssafy.obosa.util.AES256Util;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 @Entity
 @Getter
 @Setter
@@ -64,11 +59,14 @@ public class User extends DateEntity
     @JsonIgnore
     private List<Product> userProductList = new ArrayList<>();
 
+    @Autowired
+    @JsonIgnore
+    private AES256Util aes256Util;
+
     public String getDecodedName()
     {
         try
         {
-            AES256Util aes256Util = new AES256Util("171895718919871248975123589");
             return aes256Util.aesDecoding(this.name);
         }
         catch (Exception e)
@@ -81,7 +79,6 @@ public class User extends DateEntity
     {
         try
         {
-            AES256Util aes256Util = new AES256Util("171895718919871248975123589");
             return aes256Util.aesDecoding(this.phone);
         }
         catch (Exception e)
@@ -94,7 +91,6 @@ public class User extends DateEntity
     {
         try
         {
-            AES256Util aes256Util = new AES256Util("171895718919871248975123589");
             return aes256Util.aesDecoding(this.zipCode);
         }
         catch (Exception e)
@@ -107,7 +103,6 @@ public class User extends DateEntity
     {
         try
         {
-            AES256Util aes256Util = new AES256Util("171895718919871248975123589");
             return aes256Util.aesDecoding(this.address);
         }
         catch (Exception e)

@@ -27,13 +27,16 @@ public class SignUpService
 
     private final ApplicationEventPublisher eventPublisher;
 
-    public SignUpService(final UserService userService, final UserRepository userRepository, VerificationTokenRepository tokenRepository, final FileService fileService, final ApplicationEventPublisher eventPublisher)
+    private final SHA256Util sha256Util;
+
+    public SignUpService(final UserService userService, final UserRepository userRepository, VerificationTokenRepository tokenRepository, final FileService fileService, final ApplicationEventPublisher eventPublisher, final SHA256Util sha256Util)
     {
         this.userService = userService;
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.fileService = fileService;
         this.eventPublisher = eventPublisher;
+        this.sha256Util = sha256Util;
     }
 
     @Value("${uploadpath.user}")
@@ -58,8 +61,6 @@ public class SignUpService
             User user = User.setUserBySignupDto(signupFormDto);
             String pw = user.getPassword();
             int salt = user.getSalt();
-
-            SHA256Util sha256Util = new SHA256Util();
 
             String newPw = sha256Util.SHA256Util(pw+salt);
             user.setPassword(newPw);
