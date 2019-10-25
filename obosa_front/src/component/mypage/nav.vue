@@ -1,6 +1,6 @@
 <template>
   <div class="row sub-nav">
-    <div class="col-md-6">
+    <div class="col-md-11">
       <nav class="nav nav-pills nav-fill">
         <router-link
           class="nav-item nav-link"

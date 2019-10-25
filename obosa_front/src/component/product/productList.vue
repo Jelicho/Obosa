@@ -21,7 +21,9 @@ import product from "@/component/product/product";
 export default {
   name: "productList",
   data() {
-    return products: []
+    return {
+      products: []
+    }
   },
   components: {
     product

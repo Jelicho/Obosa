@@ -1,302 +1,373 @@
 <template>
-    <div class="container emp-profile">
-            <form method="post">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
-                            <div class="file btn btn-lg btn-primary">
-                                Change Photo
-                                <input type="file" name="file"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="profile-head">
-                                    <h5>
-                                        Kshiti Ghelani
-                                    </h5>
-                                    <h6>
-                                        Web Developer and Designer
-                                    </h6>
-                                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>User Id</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti123</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti Ghelani</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>kshitighelani@gmail.com</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Phone</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>123 456 7890</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Profession</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
-                                            </div>
-                                        </div>
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Experience</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Hourly Rate</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>10$/hr</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Total Projects</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>230</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>English Level</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Availability</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>6 months</p>
-                                            </div>
-                                        </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label>Your Bio</label><br/>
-                                        <p>Your detail description</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+  <div>
+    <v-form ref="regiform" valid>
+      <v-container class="container">
+        <div id="register-form" class="col-md-10 mx-auto bg-white">
+          <v-row>
+            <v-col sm="6" align="center">
+              <v-img :src="profilePreview" width="300" height="300"></v-img>
+              <v-btn rounded depressed color="#FDD835" @click="upload()">
+                업로드
+                <input
+                  type="file"
+                  style="display:none"
+                  accept=".gif, .jpg, .png"
+                  id="profile"
+                  @change="onFileChange"
+                />
+              </v-btn>
+            </v-col>
+            <v-col sm="6" class="input-form">
+              <v-row>
+                <v-col>
+                  <logo />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    label="이메일"
+                    v-model="user.email"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    :readonly = "true"
+                    :rules="[rules.required, rules.email]"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    label="이름"
+                    v-model="user.name"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    :readonly = "true"
+                    :rules="[rules.required]"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="9">
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    label="닉네임"
+                    v-model="user.nickname"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    :rules="[rules.required , rules.nickname]"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="3" style="align-self:baseline!important">
+                  <v-btn
+                    height="56px"
+                    width="100%"
+                    :color="nicknameDuplicated ? 'red lighten-2' : 'green lighten-2'"
+                    @click="duplicateCheck('nickname')"
+                  >중복 확인</v-btn>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    type="password"
+                    label="비밀번호"
+                    v-model="user.password"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    :rules="[rules.required, rules.password]"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    type="password"
+                    label="비밀번호 확인"
+                    v-model="passwordConfirm"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    :rules="[rules.required, rules.pwConfirm]"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col @click="openapi()">
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    label="우편번호"
+                    v-model="user.zipCode"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    disabled
+                    :rules="[rules.required]"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col @click="openapi()">
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    label="주소"
+                    v-model="user.address"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    disabled
+                    :rules="[rules.required]"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <addressPopUp :dialog="addressDialog" @update:address="setAddress" />
+              <v-row>
+                <v-col sm="3">
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    label="010"
+                    v-model="no1"
+                    :rules="[rules.required, rules.phone]"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    type="number"
+                    class="no-arrow"
+                  ></v-text-field>
+                </v-col>
+                <v-col sm="1">-</v-col>
+                <v-col sm="3">
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    label="1234"
+                    v-model="no2"
+                    :rules="[rules.required, rules.phone]"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    type="number"
+                    class="no-arrow"
+                  ></v-text-field>
+                </v-col>
+                <v-col sm="1">-</v-col>
+                <v-col sm="3">
+                  <v-text-field
+                    required
+                    full-width
+                    single-line
+                    label="5678"
+                    v-model="no3"
+                    :rules="[rules.required, rules.phone]"
+                    background-color="#f4f8f7"
+                    color="grey darken-2"
+                    type="number"
+                    class="no-arrow"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-btn
+                    block
+                    rounded
+                    large
+                    dark
+                    ripple
+                    color="teal"
+                    id="sign-up"
+                    @click="updateInfo()"
+                  >수정하기</v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
         </div>
+      </v-container>
+    </v-form>
+    <v-snackbar v-model="alert.isAlert" middle="true" :color="alert.type" top>
+      {{ alert.message }}
+      <v-btn text @click="alert.isAlert = false">확인</v-btn>
+    </v-snackbar>
+  </div>
 </template>
-
+​
 <script>
+import addressPopUp from "@/component/api/addressPopUp";
+
 export default {
-  name: "changePassword",
+  name: "myInfo",
   data() {
     return {
+      valid: true,
+      addressDialog: false,
+      emailDuplicated: false,
+      nicknameDuplicated: true,
+      profilePreview: require("@/assets/user.png"),
       user: {
-        id: 0,
-        email: "",
-        name: "",
-        password: ""
+        email: "minjun@naver.com",
+        name: "이민준",
+        nickname: "",
+        password: "",
+        zipCode: "",
+        address: "",
+        phone: "",
+        profileImg: ""
       },
-      input: {
-        oldPassword: "",
-        newPassword: "",
-        newPasswordConfirm: ""
+      no1: "",
+      no2: "",
+      no3: "",
+      passwordConfirm: "",
+      rules: {
+        required: value => !!value || "입력해주세요",
+        nickname: value =>
+          (2 <= value.length && value.length <= 6) ||
+          "2자 이상, 6자 이하로 입력해주세요",
+        password: value =>
+          (8 <= value.length && value.length <= 12) ||
+          "8자 이상, 12자 이하로 입력해주세요",
+        email: value => /.+@.+\..+/.test(value) || "이메일 형식을 지켜주세요",
+        pwConfirm: value =>
+          value == this.user.password || "비밀번호를 확인해주세요",
+        phone: value => value.length <= 4 || "전화번호를 정확히 입력해주세요."
       },
-      sharedStates: this.$store.state
+      message: "",
+      alert: {
+        isAlert: false,
+        message: "",
+        type: "success"
+      }
     };
   },
-  methods: {
-    update: function() {
-      // 비밀번호가 회원의 비밀번호와 일치하는지 비교한다.
-      if (this.user.password !== this.input.oldPassword) {
-        alert("입력하신 비밀번호가 일치하지 않습니다.");
-        return;
-      }
-
-      // 비밀번호를 공백으로 입력했는지 확인한다.
-      if (this.input.newPassword === "") {
-        alert("신규 비밀번호를 입력해주세요.");
-        return;
-      }
-
-      // 신규비밀번호와 신규비밀번호 확인이 일치하지 않는 경우를 확인한다.
-      if (this.input.newPassword !== this.input.newPasswordConfirm) {
-        alert("신규 비밀번호와 신규 비밀번호 확인이 일치하지 않습니다.");
-        return;
-      }
-
-      var scope = this;
-      this.$userService.update(
-        {
-          이메일: this.user.email,
-          이름: this.user.name,
-          비밀번호: this.input.newPassword // 신규 비밀번호
-        },
-        function(data) {
-          alert("비밀번호가 변경되었습니다.");
-          scope.$router.go(-1);
-        }
-      );
-    },
-    goBack: function() {
-      this.$router.go(-1);
-    }
+  components: {
+    addressPopUp
   },
-  mounted: function() {
-    var scope = this;
+  mounted() {
+    this.profilePreview = require("@/assets/user.png");
+    this.getUserInfo()
+  },
+  methods: {
+    async getUserInfo(){
+      await this.$store.dispatch('getUserInfo')
+      this.setUserInfo()
+    },
+    setUserInfo(){
+      profilePreview = this.$store.state.user[0].profileImg,
+      user.email= this.$store.state.user[0].email,
+      user.name = this.$store.state.user[0].name,
+      user.nickname = this.$store.state.user[0].nickname,
+      user.password = this.$store.state.user[0].password,
+      user.zipCode = this.$store.state.user[0].zipCode,
+      user.address = this.$store.state.user[0].address,
+      user.phone = this.$store.state.user[0].phone,
+      user.profileImg = this.$store.state.user[0].profileImg
+      splitPhone(user.phone)
+    },
+    splitPhone(phone){
+      var phSplit = phone.split('-');
+      no1 = phSplit[0]
+      no2 = phSplit[1]
+      no3 = phSplit[2]
+    },
 
-    this.$userService.findById(this.sharedStates.user.id, function(data) {
-      scope.user.id = data["id"];
-      scope.user.email = data["이메일"];
-      scope.user.name = data["이름"];
-      scope.user.password = data["비밀번호"];
-    });
+    updateInfo: function() {
+      var scope = this;
+      var regiFormData = new FormData();
+      this.user.phone = this.no1 + "-" + this.no2 + "-" + this.no3;
+      var route = this.$router
+
+      if (this.$refs.regiform.validate()) {
+        for (var key in this.user) {
+        }
+        regiFormData.append(key, this.user[key]);
+        console.log("send data");
+        this.$userService.signUp(regiFormData).then(response => {
+          console.log(response);
+
+          if (response.status == 200) {
+            route.push('/login');
+            }
+        })
+      } else {
+        this.snackbar = true;
+      }
+    },
+    upload() {
+      $("#profile").trigger("click");
+    },
+    onFileChange(e) {
+      this.user.profileImg = profile;
+      var profile = e.target.files[0];
+      this.setPreview(profile);
+    },
+    setPreview(imgfile) {
+      var reader = new FileReader(0);
+      var _this = this;
+      reader.onload = e => {
+        _this.profilePreview = e.target.result;
+      };
+      reader.readAsDataURL(imgfile);
+    },
+    openapi() {
+      this.addressDialog = !this.addressDialog;
+    },
+    setAddress(fulladdress) {
+      this.user.address = fulladdress.address + ", " + fulladdress.detail;
+      this.user.zipCode = fulladdress.code;
+      this.addressDialog = false;
+    },
+    async duplicateCheck(column) {
+      const scope = this;
+      var duplicatecheck = null;
+
+        duplicatecheck = this.$userService.duplicateNickname(this.user.nickname);
+        if ( column == "nickname" && this.$refs.regiform.inputs[2].validate() ) {
+      }
+
+      if (duplicatecheck != null) {
+        duplicatecheck.then(response => {
+          if (response.status == 200) {
+            scope.alert.message = response.message + "합니다.";
+            scope.alert.type = "success";
+            scope.alert.isAlert = "true";
+            scope.emailDuplicated = false;
+            /*
+             * TODO :
+             * 이메일 중복 검사 완료 시 사용자가 이메일을 변경할 경우를 대비하여
+             * 중복검사 버튼은 이메일 재변경 버튼으로 변경
+             */
+          } else {
+            scope.alert.message = response.message + "입니다.";
+            scope.alert.type = "error";
+            scope.alert.isAlert = "true";
+            scope.emailDuplicated = true;
+          }
+        });
+      } else {
+        scope.alert.message = "정확히 입력해주세요";
+        scope.alert.type = "error";
+        scope.alert.isAlert = "true";
+      }
+    }
   }
 };
 </script>
 
 <style>
-body{
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-}
-.emp-profile{
-    padding: 3%;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    border-radius: 0.5rem;
-    background: #fff;
-}
-.profile-img{
-    text-align: center;
-}
-.profile-img img{
-    width: 70%;
-    height: 100%;
-}
-.profile-img .file {
-    position: relative;
-    overflow: hidden;
-    margin-top: -20%;
-    width: 70%;
-    border: none;
-    border-radius: 0;
-    font-size: 15px;
-    background: #212529b8;
-}
-.profile-img .file input {
-    position: absolute;
-    opacity: 0;
-    right: 0;
-    top: 0;
-}
-.profile-head h5{
-    color: #333;
-}
-.profile-head h6{
-    color: #0062cc;
-}
-.profile-edit-btn{
-    border: none;
-    border-radius: 1.5rem;
-    width: 70%;
-    padding: 2%;
-    font-weight: 600;
-    color: #6c757d;
-    cursor: pointer;
-}
-.proile-rating{
-    font-size: 12px;
-    color: #818182;
-    margin-top: 5%;
-}
-.proile-rating span{
-    color: #495057;
-    font-size: 15px;
-    font-weight: 600;
-}
-.profile-head .nav-tabs{
-    margin-bottom:5%;
-}
-.profile-head .nav-tabs .nav-link{
-    font-weight:600;
-    border: none;
-}
-.profile-head .nav-tabs .nav-link.active{
-    border: none;
-    border-bottom:2px solid #0062cc;
-}
-.profile-work{
-    padding: 14%;
-    margin-top: -15%;
-}
-.profile-work p{
-    font-size: 12px;
-    color: #818182;
-    font-weight: 600;
-    margin-top: 10%;
-}
-.profile-work a{
-    text-decoration: none;
-    color: #495057;
-    font-weight: 600;
-    font-size: 14px;
-}
-.profile-work ul{
-    list-style: none;
-}
-.profile-tab label{
-    font-weight: 600;
-}
-.profile-tab p{
-    font-weight: 600;
-    color: #0062cc;
-}
 </style>
