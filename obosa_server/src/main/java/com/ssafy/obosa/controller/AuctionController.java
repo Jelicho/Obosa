@@ -2,48 +2,58 @@ package com.ssafy.obosa.controller;
 
 import com.ssafy.obosa.model.dto.CreateAuctionDto;
 import com.ssafy.obosa.model.dto.DeleteAuctionDto;
+import com.ssafy.obosa.model.dto.ReadAuctionDto;
 import com.ssafy.obosa.model.dto.UpdateAuctionDto;
 import com.ssafy.obosa.repository.AuctionRepository;
 import com.ssafy.obosa.service.CreateAuctionService;
 import com.ssafy.obosa.service.DeleteAuctionService;
+import com.ssafy.obosa.service.ReadAuctionService;
 import com.ssafy.obosa.service.UpdateAuctionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 @RequestMapping("auction")
 public class AuctionController {
 
-    @Autowired
-    AuctionRepository auctionRepository;
+    private final AuctionRepository auctionRepository;
+    private final ReadAuctionService readAuctionService;
+    private final CreateAuctionService createAuctionService;
+    private final DeleteAuctionService deleteAuctionService;
+    private final UpdateAuctionService updateAuctionService;
+    AuctionController(final AuctionRepository auctionRepository, final ReadAuctionService readAuctionService,
+                      final CreateAuctionService createAuctionService, final DeleteAuctionService deleteAuctionService,
+                      final UpdateAuctionService updateAuctionService){
+        this.auctionRepository=auctionRepository;
+        this.readAuctionService=readAuctionService;
+        this.createAuctionService=createAuctionService;
+        this.deleteAuctionService=deleteAuctionService;
+        this.updateAuctionService=updateAuctionService;
+    }
+    @GetMapping("/{aid}")
+    public ResponseEntity readAuction(@PathVariable("aid") int aid)
+    {
+        ReadAuctionDto readAuctionDto = new ReadAuctionDto(aid);
+        return new ResponseEntity(readAuctionService.readAuctionByAid(readAuctionDto), HttpStatus.OK);
+    }
 
-    @Autowired
-    CreateAuctionService createAuctionService;
-
-    @Autowired
-    DeleteAuctionService deleteAuctionService;
-
-    @Autowired
-    UpdateAuctionService updateAuctionService;
-//    @GetMapping("/{aid}")
-//    public ResponseEntity readAuction(ReadAuctionService readAuctionService, @PathVariable("aid") int aid)
-//    {
-//        return new ResponseEntity(readAuctionService.readOneAuctionByAid(aid), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/{startingIndex}")
-//    public ResponseEntity readAuctions(ReadAuctionService readAuctionService, @PathVariable("startingIndex") int startingIndex)
-//    {
-//        return new ResponseEntity(readAuctionService.readAllAuctions(startingIndex), HttpStatus.OK);
-//    }
+    @GetMapping
+    public ResponseEntity readAllAuction(Pageable pageable)
+    {
+        return new ResponseEntity(readAuctionService.readAllAuctions(pageable), HttpStatus.OK);
+    }
 
 
+    @GetMapping("/search")
+    public ResponseEntity readAll(@RequestParam String type, @RequestParam String searchStr, Pageable pageable)
+    {
+        ReadAuctionDto readAuctionDto = new ReadAuctionDto(type, searchStr);
+        return new ResponseEntity(readAuctionService.readSearchByType(readAuctionDto, pageable), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity createAuction(CreateAuctionDto createAuctionDto)
