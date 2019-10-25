@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-@Component
 public class SHA256Util
 {
     public String SHA256Util(String str)

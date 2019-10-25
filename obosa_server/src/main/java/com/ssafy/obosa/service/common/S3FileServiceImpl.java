@@ -3,6 +3,7 @@ package com.ssafy.obosa.service.common;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
@@ -26,7 +27,7 @@ public class S3FileServiceImpl implements FileService
     @Autowired
     private AmazonS3 s3Client;
 
-    @Value("${cloud.aws.bucket")
+    @Value("${cloud.aws.bucket}")
     private String bucketName;
 
     @Async
@@ -35,18 +36,6 @@ public class S3FileServiceImpl implements FileService
     {
         try
         {
-            String dirName = filePath.substring(0, filePath.lastIndexOf("/"));
-
-            File f = new File(filePath);
-            if(!f.getParentFile().exists())
-            {
-                f.getParentFile().mkdirs();
-            }
-            if(!f.exists())
-            {
-                f.createNewFile();
-            }
-
             File convFile = new File(multipartFile.getOriginalFilename());
             convFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(convFile);
@@ -71,6 +60,9 @@ public class S3FileServiceImpl implements FileService
         {
             e.printStackTrace();
         }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -91,6 +83,28 @@ public class S3FileServiceImpl implements FileService
         }
         catch (IOException e)
         {
+            e.printStackTrace();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void fileDelete(String filePath)
+    {
+        try
+        {
+            s3Client.deleteObject(new DeleteObjectRequest(bucketName, filePath));
+        }
+        catch(AmazonServiceException ase)
+        {
+            ase.printStackTrace();
+        }
+        catch(AmazonClientException ace)
+        {
+            ace.printStackTrace();
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
     }

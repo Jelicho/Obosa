@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
+    //todo constructor injection으로 바꾸기
     @Autowired
     private UserService userService;
 

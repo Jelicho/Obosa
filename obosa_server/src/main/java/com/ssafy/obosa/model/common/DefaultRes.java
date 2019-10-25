@@ -15,16 +15,30 @@ public class DefaultRes<T>
     private String message;
     private T data;
 
-    public DefaultRes(final int status, final String message)
+    public DefaultRes(final StatusCode status, final ResponseMessage message)
     {
+        this(status.getCode(), message.getMessage());
+    }
+
+    public DefaultRes(final int status, final String message) {
         this.status = status;
         this.message = message;
         this.data = null;
     }
 
-    public static<T> DefaultRes<T> res(final int status, final String message)
+    public static<T> DefaultRes<T> res(StatusCode status, ResponseMessage message)
+    {
+        return res(status.getCode(), message.getMessage(), null);
+    }
+
+    public static<T> DefaultRes<T> res(int status, String message)
     {
         return res(status, message, null);
+    }
+
+    public static<T> DefaultRes<T> res(final StatusCode status, final ResponseMessage message, final T t)
+    {
+        return res(status.getCode(), message.getMessage(), t);
     }
 
     public static<T> DefaultRes<T> res(final int status, final String message, final T t)
