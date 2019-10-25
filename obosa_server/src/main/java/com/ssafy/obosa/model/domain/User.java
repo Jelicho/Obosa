@@ -63,7 +63,7 @@ public class User extends DateEntity
     {
         try
         {
-            AES256Util aes256Util = new AES256Util();
+            AES256Util aes256Util = new AES256Util("j5nt51SDgt35sdgklnG45AD3Adsg5nDG");
             return aes256Util.aesDecoding(this.name);
         }
         catch (Exception e)
@@ -76,7 +76,7 @@ public class User extends DateEntity
     {
         try
         {
-            AES256Util aes256Util = new AES256Util();
+            AES256Util aes256Util = new AES256Util("j5nt51SDgt35sdgklnG45AD3Adsg5nDG");
             return aes256Util.aesDecoding(this.phone);
         }
         catch (Exception e)
@@ -89,7 +89,7 @@ public class User extends DateEntity
     {
         try
         {
-            AES256Util aes256Util = new AES256Util();
+            AES256Util aes256Util = new AES256Util("j5nt51SDgt35sdgklnG45AD3Adsg5nDG");
             return aes256Util.aesDecoding(this.zipCode);
         }
         catch (Exception e)
@@ -102,7 +102,7 @@ public class User extends DateEntity
     {
         try
         {
-            AES256Util aes256Util = new AES256Util();
+            AES256Util aes256Util = new AES256Util("j5nt51SDgt35sdgklnG45AD3Adsg5nDG");
             return aes256Util.aesDecoding(this.address);
         }
         catch (Exception e)
