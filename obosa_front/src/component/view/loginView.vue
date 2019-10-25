@@ -34,7 +34,7 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-btn block rounded large dark ripple color="teal" id="sign-up" @click="login()">로그인</v-btn>
+            <v-btn block rounded large dark ripple color="teal" id="sign-up" @click="onSubmit()">로그인</v-btn>
           </v-col>
         </v-row>
       </div>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 
 export default {
   name: "Login",
@@ -55,13 +56,13 @@ export default {
     };
   },
   methods: {
-    login() {
+    ...mapActions('userModule', ['login']),
+    async onSubmit() {
       var email = this.user.email
       var password = this.user.password
       // LOGIN 액션 실행
-      this.$store.dispatch('LOGIN', {email, password})
-        .then(() => this.redirect())
-        .catch(({message}) => this.msg = message)
+      await this.login({email, password})
+      this.redirect()
     },
     redirect() {
       console.log('entered redirect')

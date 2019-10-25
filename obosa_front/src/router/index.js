@@ -8,6 +8,7 @@ import registerView   from '@/component/view/registerView'
 import auctionView    from '@/component/view/auctionView'
 import mypageView     from '@/component/view/mypageView'
 // mypage children router
+import passwordRe from '@/component/mypage/passwordRe'
 import myAuction from '@/component/mypage/auctionList'
 import myProduct from '@/component/mypage/productList'
 import myInfo from '@/component/mypage/info'
@@ -44,6 +45,11 @@ export default new Router({
       name: "auction",
       path: '/auction',
       component: auctionView
+    },
+    {
+      name: "passwordRe",
+      path: '/passwordRe',
+      component: passwordRe
     },
     {
       name: "mypage",

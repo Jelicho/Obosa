@@ -6,14 +6,15 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
   name: "App",
   async beforeMount() {
-    if ((this.$store.state.accessToken==null)
-        && localStorage.accessToken ){
-      this.$store.state.accessToken = await localStorage.accessToken
-      this.$store.state.isSigned = true
-    }
+    await this.reLogin()
+  },
+  methods:{
+    ...mapActions('userModule', ['reLogin'])
   }
 
 };
