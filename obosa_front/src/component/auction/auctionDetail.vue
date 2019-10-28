@@ -3,16 +3,7 @@
     <v-row align="start">
       <v-col md="6">
         <v-row>
-          <v-carousel cycle interval="2000">
-            <!-- S3에서 product의 이미지를 가져옵니다. -->
-            <v-carousel-item v-for="(productImg, i) in productImgList" :key="productImg">
-              <v-sheet :color="productImg" height="100%" tile>
-                <v-row class="fill-height" align="center" justify="center">
-                  <div class="display-3">Slide {{ i + 1 }}</div>
-                </v-row>
-              </v-sheet>
-            </v-carousel-item>
-          </v-carousel>
+          <imageSlide :imageList="productImgList" />
         </v-row>
       </v-col>
       <v-col md="6" class="auction-detail-info">
@@ -64,11 +55,12 @@
 
 <script>
 import auctionDescription from "@/component/auction/auctionDescription";
+import imageSlide from '@/component/common/imageSlide'
 
 export default {
   name: "auctionDetail",
   components: {
-    auctionDescription
+    auctionDescription, imageSlide
   },
   data() {
     return {

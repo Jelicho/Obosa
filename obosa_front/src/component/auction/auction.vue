@@ -30,9 +30,6 @@ export default {
       progressColor: "amber"
     };
   },
-  mounted() {
-    console.log(this.auction);
-  },
   methods: {
     imgsrc(src) {
       return require("@/assets/user.png");
@@ -54,7 +51,6 @@ export default {
       if (diff < 0) {
         return "경매 마감";
       } else {
-        // UNIX Timestamp를 자바스크립트 Date객체로 변환한다.
         var d = new Date(diff);
         var days = d.getDate();
         var hours = d.getHours();

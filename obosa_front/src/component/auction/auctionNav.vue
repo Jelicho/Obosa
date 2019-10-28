@@ -8,7 +8,10 @@
         <router-link to="/auction/endDate">마감 임박</router-link>
       </v-btn>
       <v-btn text class="nav-link">
-        <router-link to="/auction/regDate">신규 순</router-link>
+        <router-link to="/auction/registeredDate">신규 순</router-link>
+      </v-btn>
+      <v-btn text class="nav-link">
+        <router-link :to="{ name: 'auction.register'}">신규 순</router-link>
       </v-btn>
     </v-toolbar-items>
   </v-toolbar>
