@@ -32,6 +32,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "passwordRe",
   data() {
@@ -43,12 +44,11 @@ export default {
   },
   methods: {
     ...mapActions('userModule', ['passwordReChk']),
+    ...mapState('userModule', ['rechecked']),
     async onSubmit() {
-      const params = {
-        password : this.user.password
-      }
-      var isCorrect = await this.passwordReChk(params)
-      if (isCorrect) {
+      var password = this.user.password
+      await this.passwordReChk(password)
+      if (this.rechecked) {
         this.$router.push("/mypage/info")
       } else {
         window.alert("rejected : 비밀번호를 확인해주세요.")

@@ -9,14 +9,19 @@ export default {
       , password
     })
   },
-  passwordReChk(params) {
-    return axios.post(`${apiUrl}/auth/passReChk`, {
-      params,
-    })
+  passwordReChk(password) {
+    console.log(password)
+    var config = {
+    headers: {
+        'Content-Type': 'text/plain'
+      }
+    };
+
+    return axios.post(`${apiUrl}/auth/verification`,
+      password, config
+    )
   },
-  getUserInfo(params) {
-    return axios.post(`${apiUrl}/auth/passReChk`, {
-      params,
-    })
+  getUserInfo() {
+    return axios.get(`${apiUrl}/mypage`)
   }
 }
