@@ -10,6 +10,7 @@ import mypageView from '@/component/view/mypageView'
 
 import auctionList from '@/component/auction/auctionList'
 import auctionDetail from '@/component/auction/auctionDetail'
+import auctionRegister from '@/component/auction/auctionRegister'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ export default new Router({
           name: 'auction.detail',
           path: 'detail/:auction',
           component: auctionDetail,
+        },
+        {
+          name: 'auction.register',
+          path: 'register/:product',
+          component: auctionRegister
         }
       ]
     },
