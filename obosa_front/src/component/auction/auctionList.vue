@@ -5,11 +5,11 @@
         <v-select append-icon="fas fa-caret-down" class="search" color="amber" item-color="amber" :items="items" outlined v-model="params.type" hide-details></v-select>
       </v-col>
       <v-col xs="12" sm="8" >
-        <v-text-field class="search" color="amber" background-color="#fff0" outlined clearable hide-details v-model="params.searchStr" @keyup.enter="auctionRequest"></v-text-field>
+        <v-text-field class="search" color="amber" background-color="#fff0" outlined clearable hide-details v-model="params.searchStr" @keyup.enter="auctionSearch"></v-text-field>
       </v-col>
     </v-row>
     <v-layout row wrap pa-5>
-      <v-flex pa-5 xs12 sm6 md4 lg3 v-for="auction in auctionList" >
+      <v-flex pa-5 xs12 sm6 md4 lg3 v-for="auction in auctionList" v-bind:key="auction.aid">
         <auction :auction="auction" :height="300" />
       </v-flex>
       <v-flex pa-5 xs12 sm6 md4 lg3>
@@ -74,6 +74,12 @@ export default {
         this.params.page ++;
         this.params.size = 4;
       }
+    },
+    async auctionSearch() {
+      this.params.page = 0
+      this.params.size = 10
+      this.setHasMoreAuctions(true)
+      this.auctionRequest()
     },
     onscroll(){
       let _this = this

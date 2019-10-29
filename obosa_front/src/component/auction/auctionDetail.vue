@@ -36,7 +36,7 @@
               :step="auction.upprice"
               height="80px"
               class="price"
-              :hint="auction.upprice+'원 단위로 입찰할 수 있습니다!'"
+              :hint="auction.upPrice+'원 단위로 입찰할 수 있습니다!'"
               persistent-hint
             ></v-text-field>
           </v-col>

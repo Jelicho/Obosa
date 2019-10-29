@@ -10,16 +10,13 @@
       <v-btn text class="nav-link">
         <router-link to="/auction/registeredDate">신규 순</router-link>
       </v-btn>
-      <v-btn text class="nav-link">
-        <router-link :to="{ name: 'auction.register'}">신규 순</router-link>
-      </v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
 export default {
-  name: "auctionNav"
+  name: "auctionNav",
 };
 </script>
 
