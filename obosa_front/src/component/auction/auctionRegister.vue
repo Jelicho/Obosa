@@ -20,32 +20,20 @@
             :min="today"></v-date-picker>
           </v-col>
           <v-col cols="12" lg='4'>
-            <v-row >
-              <p class="auction-sub-title">시작</p>
-              <v-text-field :value="dates[0]" width="80%" outlined hide-details disabled ></v-text-field>  
-            </v-row>
-            <v-row>
-              <v-select hide-details outlined class='time-select' :items="hours" filled ></v-select>
-              <p class="auction-sub-title">시</p>
-              <v-select hide-details outlined class='time-select' :items="minutes" filled ></v-select>
-              <p class="auction-sub-title">분</p>
-            </v-row>
             <v-row class="auction-sub-title">
-              <p class="auction-sub-title">마감</p>
+              <p class="auction-sub-title">경매 마감 일시</p>
               <v-text-field :value="dates[1]" outlined hide-details disabled ></v-text-field>  
             </v-row>
             <v-row>
               <v-select hide-details outlined class='time-select' :items="hours" filled ></v-select>
               <p class="auction-sub-title">시</p>
-              <v-select hide-details outlined class='time-select' :items="minutes" filled ></v-select>
-              <p class="auction-sub-title">분</p>
             </v-row>
           </v-col>
         </v-row>
         <v-row>
           <v-textarea outlined no-resize  hide-details v-model="auction.description"></v-textarea>
-          <v-text-field outlined hide-details type='number' min='1000' v-model="auction.lowPrice"></v-text-field>  
-          <v-text-field outlined hide-details type='number' min='1000' v-model="auction.upprice"></v-text-field>  
+          <v-text-field outlined hide-details type='number' min='1000' v-model="auction.lowPrice" step="1000"></v-text-field>  
+          <v-text-field outlined hide-details type='number' min='1000' v-model="auction.upPrice" step="1000"></v-text-field>  
         </v-row>
       </v-col>
     </v-row>
@@ -68,13 +56,13 @@ export default {
       productImgList: [],
       dates: [],
       today: '',
-      hours: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'],
-      minutes: ['00', '15', '30', '45'],
+      hours: [],
       auction: {
         pid : '',
         lowPrice: 1000,
         description : '',
-        endDate: ''
+        endDate: '',
+        upPrice: 1000
       }
     };
   },
@@ -89,10 +77,25 @@ export default {
   watch: {
     response(){
       console.log(this.response);
+    },
+    dates(to){
+      if(to[1]==null){
+        this.dates[1] = this.dates[0];
+        this.dates[0] = this.today;
+      }
+      if(this.dates[0] == this.dates[1]) {
+        this.getHours(new Date().getHours() + 1)
+      } else {
+        this.getHours(-1)
+      }
     }
   },
   mounted() {
     this.today = this.dateformat(new Date())
+    this.dates[0] = this.today
+    this.dates[1] = this.today
+    this.getHours(new Date().getHours() + 1)
+
     // this.product = this.$route.params.product;
     this.product = {
       pid: 2,
@@ -119,8 +122,25 @@ export default {
     registerRequest(){
       this.auction.pid = this.product.pid,
       this.auction.endDate = this.dates[1]
+
+      var regiFormData = new FormData();
+
+      for (var key in this.auction) {
+        regiFormData.append(key, this.auction[key]);
+      }
       console.log(this.auction);
-      this.createAuction(this.auction)
+
+      this.createAuction(regiFormData)
+    },
+    getHours(start){
+      if(start == -1){
+        this.hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+      } else {
+        this.hours = []
+        for(var i = start; i<25; i++){
+          this.hours.push(i)
+        }
+      }
     }
   }
 };
