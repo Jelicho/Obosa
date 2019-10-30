@@ -210,7 +210,9 @@
 ​
 <script>
 import addressPopUp from "@/component/api/addressPopUp";
-
+import { mapActions } from "vuex";
+import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "myInfo",
   data() {
@@ -258,55 +260,75 @@ export default {
   components: {
     addressPopUp
   },
-  mounted() {
-    this.profilePreview = require("@/assets/user.png");
-    this.getUserInfo()
+  computed: {
+    ...mapState('userModule', ['userInfo']),
+  },
+  watch: {
+    userInfo : function() {
+      this.setUserInfo()
+    }
+  },
+  async beforeMount(){
+    await this.readUserInfo()
+  },
+  async mounted() {
+    // this.profilePreview = require("@/assets/user.png");
+    await this.setUserInfo()
   },
   methods: {
-    async getUserInfo(){
-      await this.$store.dispatch('getUserInfo')
-      this.setUserInfo()
+    ...mapActions('userModule', ['getUserInfo', 'updateUser']),
+    ...mapGetters('userModule', ['getUser']),
+    async readUserInfo(){
+      await this.getUserInfo()
     },
-    setUserInfo(){
-      profilePreview = this.$store.state.user[0].profileImg,
-      user.email= this.$store.state.user[0].email,
-      user.name = this.$store.state.user[0].name,
-      user.nickname = this.$store.state.user[0].nickname,
-      user.password = this.$store.state.user[0].password,
-      user.zipCode = this.$store.state.user[0].zipCode,
-      user.address = this.$store.state.user[0].address,
-      user.phone = this.$store.state.user[0].phone,
-      user.profileImg = this.$store.state.user[0].profileImg
-      splitPhone(user.phone)
+    async setUserInfo(){
+      var userStore = await this.getUser();
+      console.log(userStore);
+      // profilePreview = this.user.profileImg,
+      console.log(userStore.email);
+      this.user.email= userStore.email,
+      this.user.name = userStore.name,
+      this.user.nickname = userStore.nickname,
+      this.user.zipCode = userStore.zipCode,
+      this.user.address = userStore.address,
+      this.user.phone = userStore.phone,
+      this.user.profileImg = userStore.profileImg
+      this.splitPhone(userStore.phone)
     },
     splitPhone(phone){
       var phSplit = phone.split('-');
-      no1 = phSplit[0]
-      no2 = phSplit[1]
-      no3 = phSplit[2]
+      this.no1 = phSplit[0]
+      this.no2 = phSplit[1]
+      this.no3 = phSplit[2]
     },
 
     updateInfo: function() {
-      var scope = this;
-      var regiFormData = new FormData();
+
       this.user.phone = this.no1 + "-" + this.no2 + "-" + this.no3;
-      var route = this.$router
+      // var form = new FormData()
+      // console.log(this.user.password);
+      // form.append('password', this.user.password)
+      // form.append('phone', this.user.phone)
+      // form.append('profileImg', this.user.profileImg)
+      // form.append('zipCode', this.user.zipCode)
+      // form.append('address', this.user.address)
+      // form.append('profileImg', this.user.profileImg)
+      // console.log(form);
+      // this.updateUser(form)
 
-      if (this.$refs.regiform.validate()) {
-        for (var key in this.user) {
-        }
-        regiFormData.append(key, this.user[key]);
-        console.log("send data");
-        this.$userService.signUp(regiFormData).then(response => {
-          console.log(response);
-
-          if (response.status == 200) {
-            route.push('/login');
-            }
+      var password = this.user.password
+      var phone = this.user.phone
+      var profileImg = this.user.profileImg
+      var zipCode = this.user.zipCode
+      var address = this.user.address
+      var profileImg = this.user.profileImg
+      this.updateUser({
+          password
+        , phone
+        , profileImg
+        , zipCode
+        , address
         })
-      } else {
-        this.snackbar = true;
-      }
     },
     upload() {
       $("#profile").trigger("click");

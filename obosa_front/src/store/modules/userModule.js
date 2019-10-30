@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../api/userAPI'
 import axios from 'axios'
 
 // initial state
@@ -6,7 +6,7 @@ const state = {
   isSigned: false,
   accessToken: null,
   rechecked: false,
-  user: {}
+  userInfo: {}
 }
 
 const getters = {
@@ -15,6 +15,9 @@ const getters = {
   },
   getAccessToken(){
     return state.accessToken
+  },
+  getUser(){
+    return state.userInfo
   }
 
 }
@@ -49,7 +52,35 @@ const actions = {
   getUserInfo({commit}){
     console.log("getuserinfo");
     api.getUserInfo().then(({data}) => commit('setUserInfo', data))
-  }
+  },
+  // updateUser ({commit}, form) {
+  //   console.log(form);
+  //   api.updateUser(form)
+  //   .then(response => {
+  //     console.log(response);
+  //   })
+  //
+  // },
+  updateUser ({commit}, {
+      password
+    , phone
+    , profileImg
+    , zipCode
+    , address
+    }) {
+    console.log(password);
+    api.updateUser({
+        password
+      , phone
+      , profileImg
+      , zipCode
+      , address
+      })
+    .then(response => {
+      console.log(response);
+    })
+
+  },
 }
 
 // mutations
@@ -73,8 +104,9 @@ const mutations = {
     localStorage.removeItem("accessToken")
   },
   setUserInfo(state, {data}) {
-    state.user = data
-    console.log(state.user)
+    state.userInfo = data
+    console.log("store : ")
+    console.log(state.userInfo)
   },
 }
 
