@@ -1,7 +1,7 @@
 <template>
   <div>
     <auctionNav />
-    <router-view></router-view>
+    <router-view class="router-view"></router-view>
   </div>
 </template>
 
