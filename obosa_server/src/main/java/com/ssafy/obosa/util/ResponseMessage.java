@@ -41,6 +41,9 @@ public enum ResponseMessage {
     TYPE_ERROR("지원하는 않는 Type입니다."),
     READ_SEARCH_AUCTIONS("경매 검색 성공"),
     NOT_FOUND_SEARCH("경매 검색 해당 항목이 없습니다."),
+    BID_SUCCESS("경매 입찰 성공"),
+    EXPIRED_AUCTION("경매 시간 만료"),
+    BID_LOWER_THAN_CURRENT_HIGHEST("현재 입찰금보다 적은 액수로 입찰할 수 없습니다."),
     //Common
     INTERNAL_SERVER_ERROR("서버 내부 에러"),
     DB_ERROR("데이터베이스 에러"),
