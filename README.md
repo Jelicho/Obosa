@@ -127,4 +127,4 @@ log4j, log4j2, JUL(java.util.logging)과 성능을 비교했을 때 logback은 �
 
 ## 최종 인프라 다이어그램 모델 구상도
 
-![obosa architecture](https://drive.google.com/file/d/1Ak_P5RQ5JkiZmHOyjVQG2RfJnf1MP7RS/view?usp=sharing)
+![obosa architecture]( https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/obosa+Structure.png)
