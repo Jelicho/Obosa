@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     imgsrc(src) {
-      return require("@/assets/user.png");
+      return "https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/user/default_user_img.png";
     },
     calculateDate(start, end) {
       var startDate = new Date(start).getTime();

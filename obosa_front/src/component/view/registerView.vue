@@ -226,7 +226,7 @@ export default {
       addressDialog: false,
       emailDuplicated: true,
       nicknameDuplicated: true,
-      profilePreview: require("@/assets/user.png"),
+      profilePreview: "https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/user/default_user_img.png",
       user: {
         email: "",
         name: "",
@@ -235,7 +235,7 @@ export default {
         zipCode: "",
         address: "",
         phone: "",
-        profileImg: "",
+        profileImg: "https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/user/default_user_img.png"
       },
       no1: "",
       no2: "",
@@ -263,9 +263,6 @@ export default {
   },
   components: {
     addressPopUp
-  },
-  mounted() {
-    this.profilePreview = require("@/assets/user.png");
   },
   computed: {
     ...mapState({
