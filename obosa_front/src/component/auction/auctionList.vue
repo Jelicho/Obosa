@@ -2,10 +2,10 @@
   <div class="item-list">
     <v-row>
       <v-col xs="12" sm="4" >
-        <v-select append-icon="fas fa-caret-down" class="search" color="amber" item-color="amber" :items="items" outlined v-model="params.type" hide-details></v-select>
+        <v-select append-icon="fas fa-caret-down" class="search" color="#994fa980" item-color="amber" :items="items" outlined v-model="params.type" hide-details></v-select>
       </v-col>
       <v-col xs="12" sm="8" >
-        <v-text-field class="search" color="amber" background-color="#fff0" outlined clearable hide-details v-model="params.searchStr" @keyup.enter="auctionSearch"></v-text-field>
+        <v-text-field class="search" color="#994fa980" background-color="#fff0" outlined clearable hide-details v-model="params.searchStr" @keyup.enter="auctionSearch"></v-text-field>
       </v-col>
     </v-row>
     <v-layout row wrap pa-5>
@@ -104,15 +104,4 @@ export default {
 </script>
 
 <style>
-.item-list {
-  padding: 20px;
-}
-.search {
-  border-radius: 0px;
-}
-.search .v-select__selection, .v-text-field__slot {
-  font-weight: bold;
-  font-size: 19px;
-  text-align: center;
-}
 </style>

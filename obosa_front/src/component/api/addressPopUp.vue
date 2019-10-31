@@ -8,11 +8,11 @@
             <v-col sm="5">우편번호</v-col>
             <v-col sm="7">
               <v-text-field
-                full-width
-                single-line
+                outlined
+                class="input_text"
                 v-model="fulladdress.code"
                 background-color="#f4f8f7"
-                color="grey darken-2"
+                color="#994fa980"
                 hide-details
               ></v-text-field>
             </v-col>
@@ -21,11 +21,11 @@
             <v-col sm="5">기본주소</v-col>
             <v-col sm="7">
               <v-text-field
-                full-width
-                single-line
+                outlined
+                class="input_text"
                 v-model="fulladdress.address"
                 background-color="#f4f8f7"
-                color="grey darken-2"
+                color="#994fa980"
                 hide-details
               ></v-text-field>
             </v-col>
@@ -34,17 +34,17 @@
             <v-col sm="5">상세주소</v-col>
             <v-col sm="7">
               <v-text-field
-                full-width
-                single-line
+                outlined
+                class="input_text"
                 v-model="fulladdress.detail"
                 background-color="#f4f8f7"
-                color="grey darken-2"
+                color="#994fa980"
                 hide-details
               ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
-            <v-btn block rounded large dark ripple color="teal" @click="sendAddress()">주소등록</v-btn>
+            <v-btn block tile large dark ripple color="#994fa980" @click="sendAddress()">주소등록</v-btn>
           </v-row>
         </div>
       </v-col>

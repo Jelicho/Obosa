@@ -1,3 +1,7 @@
+/* font */
+@import url("https://fonts.googleapis.com/css?family=Muli:300,400,700");
+@import url("https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css");
+
 body {
     margin: 0;
     padding: 0;
@@ -18,7 +22,9 @@ a {
 
 #app {
     margin-top: 0px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'NanumSquare', sans-serif;
+    font-size: 19px;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -28,6 +34,7 @@ a {
 .router-view {
   min-height: calc(100vh - 64px);
   text-align: -webkit-center;
+  margin-top: 64px;
 }
 
 @media screen and (min-width:1200px) {
@@ -72,6 +79,21 @@ a {
   }
 }
 
+.btn:hover {
+    cursor: pointer;
+}
+.btn-active {
+    background-color: lightgrey!important;
+}
+
+.v-btn.v-size--default, .v-btn.v-size--large {
+    font-size: 18px!important;
+}
+
+/* header */
+.header {
+    border-bottom: 1px solid #4a4a4a4d!important;
+}
 
 /* nav */
 
@@ -79,6 +101,48 @@ a {
     text-align: -webkit-center;
 }
 
+/* logo */
+@media (max-width:992px) {
+    .ghost {
+        display: none!important;
+    }
+    .text li.spaced {
+        padding-left: 0px!important;
+    }
+}
+
+.text {
+    font-family: "Muli", sans-serif;
+    position: fixed;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    list-style: none;
+    border-bottom: 0;
+    margin-left: 215px;
+    width: 450px;
+    padding-left: 0px!important;
+}
+.text li {
+    display: inline-block;
+    float: left;
+    font-weight: 700;
+    font-size: 2em;
+    color: #000;
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+    max-width: 2em;
+}
+.text.hidden li.spaced {
+    padding-left: 0;
+}
+.text li.spaced {
+    padding-left: 0.5em;
+}
+
+.text.hidden li.ghost {
+    opacity: 0;
+    max-width: 0;
+}
 
 /* input form */
 
@@ -90,6 +154,9 @@ a {
     padding: 0px;
 }
 
+.v-text-field{
+    border-radius: 0px !important ;
+}
 
 /* 메인 소개글 스타일 시트 */
 
@@ -105,7 +172,6 @@ a {
 }
 
 #main-overview h4 {
-    font-weight: 300;
     padding-top: 15px;
 }
 
@@ -115,6 +181,10 @@ a {
 
 .container {
     text-align: center;
+    min-height: calc(100vh - 64px);
+}
+.v-divider--vertical {
+    height: auto!important;
 }
 
 .breadcrumb {
@@ -125,7 +195,16 @@ a {
     padding: 10px !important;
 }
 
-
+.text-container {
+    align-self: center;
+}
+.login-text {
+    font-size: 28px;
+    padding: 20px 0px 20px 0px;
+    border-bottom: 3px solid grey;
+    border-top: 3px solid grey;
+    margin: 0px 30px 0px 30px;
+}
 /* 작품 리스트 스타일 시트 */
 
 #auction-list,
@@ -198,34 +277,40 @@ a {
   color: black !important;
 }
 
+.item-list {
+    padding: 20px;
+}
+
 .price {
   font-size: 27px;
   font-weight: bold;
 }
 
-.price .v-input__slot {
-  /* margin-bottom: 0px; */
-}
-
-.price .v-text-field__details {
-  /* display: none; */
-}
-
 /* 로그인 & 회원가입 스타일 시트 */
+.form-container{
+    min-height: inherit;
+}
 
 #register-form,
 #login-form {
     padding: 30px;
     text-align: left;
     margin: auto;
-    border-radius: 30px;
-    border: solid 1px;
+}
+
+.password {
+    font: initial;
 }
 
 .vue-daum-postcode-container {
     min-height: 439px;
 }
 
+.search .input_text .v-select__selection, .v-text-field__slot {
+    font-weight: bold;
+    font-size: 19px;
+    text-align: center;
+}
 
 /* 마이페이지 > 서브 메뉴 */
 

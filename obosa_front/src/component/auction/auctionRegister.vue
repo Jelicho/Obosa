@@ -16,7 +16,7 @@
       <v-col md="6">
         <v-row>
           <v-col cols="12" lg='8'>
-            <v-date-picker v-model="dates" color="amber" no-title range width="100%"
+            <v-date-picker v-model="dates" color="#994fa980" no-title range width="100%"
             :min="today"></v-date-picker>
           </v-col>
           <v-col cols="12" lg='4'>
