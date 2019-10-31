@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class DeleteProductDto {
-    private int pid;
+@NoArgsConstructor
+public class BidDto {
+    String aid;
+    int bidPrice;
 }

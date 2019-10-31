@@ -38,15 +38,6 @@ public class UpdateProductService {
     {
         try
         {
-            int uid = updateProductDto.getUid();
-            Optional<User> optionalUser = userRepository.findByUid(uid);
-            if(!optionalUser.isPresent())
-            {
-                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_USER);
-            }
-
-            User user = optionalUser.get();
-
             //삭제할 Product  객체 가져오기
             int pid = updateProductDto.getPid();
             Optional<Product> optionalProduct = productRepository.findByPid(pid);
@@ -58,17 +49,11 @@ public class UpdateProductService {
 
             Product product = optionalProduct.get();
 
-            //uid와 product매칭 확인
-            //TODO : admin 구현이 완료될시, 관리자에 대한 유효성은 통과히켜주는 조건 포함해야한다.
-            if(product.getUser().getUid()!=uid){
-                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_MATCHED_USER_AND_PRODUCT);
-            }
-
             product.setPname(updateProductDto.getPname());
             product.setPdescription(updateProductDto.getPdescription());
 
 
-            ImgHandler.updateProductImgs(fileService, product, productImgs, uid);
+            ImgHandler.updateProductImgs(fileService, product, productImgs);
 
             product.setImgCount(productImgs.size());
 

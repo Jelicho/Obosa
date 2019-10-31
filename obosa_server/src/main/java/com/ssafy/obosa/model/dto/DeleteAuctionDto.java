@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteProductDto {
-    private int pid;
+public class DeleteAuctionDto {
+    private int aid;
 }
