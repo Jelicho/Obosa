@@ -60,5 +60,13 @@ public class DeleteProductService {
             return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
         }
     }
+//    public void Test(int pid){
+//        try {
+//            long result = productRepository.deleteByPid(pid);
+//            System.out.println(result);
+//        }catch (DataIntegrityViolationException e){
+//            e.printStackTrace();
+//        }
+//    }
 
 }

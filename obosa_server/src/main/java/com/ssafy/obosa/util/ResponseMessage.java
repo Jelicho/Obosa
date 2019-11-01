@@ -44,6 +44,14 @@ public enum ResponseMessage {
     BID_SUCCESS("경매 입찰 성공"),
     EXPIRED_AUCTION("경매 시간 만료"),
     BID_LOWER_THAN_CURRENT_HIGHEST("현재 입찰금보다 적은 액수로 입찰할 수 없습니다."),
+    //WinningBid
+    NOT_FOUND_WINNINGBID("해당 결제는 존재하지 않습니다."),
+    DELETED_WINNINGBID_AND_AUCTION("결제내역과 경매 삭제 성공"),
+    UPDATED_WINNINGBID_STATE("결제내역의 상태가 변경완료됐습니다."),
+    UPDATED_WINNINGBID_ADDRESS("결제내역의 주소가 변경완료됐습니다."),
+    READ_WINNINGBID("결제 상세 내역 조회 성공"),
+    READ_WINNINGBID_SELLER("판매자 결제 내역 조회 성공"),
+    READ_WINNINGBID_WINNER("구매자 결제 내역 조회 성공"),
     //Common
     INTERNAL_SERVER_ERROR("서버 내부 에러"),
     DB_ERROR("데이터베이스 에러"),
@@ -56,4 +64,6 @@ public enum ResponseMessage {
     TOKEN_VALID("이메일 인증 성공");
 
     private String message;
+
+
 }
