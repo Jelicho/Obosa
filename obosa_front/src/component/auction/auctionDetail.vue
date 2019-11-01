@@ -79,20 +79,21 @@ export default {
     this.bidPrice = this.minbidPrice;
 
     // 상품 이미지 리스트를 가져옴
-    this.getProductImgList(this.auction.aid);
+    this.getProductImgList(
+      this.auction.product.dirS3,
+      this.auction.product.imgCount
+    );
   },
   methods: {
-    getProductImgList() {
-      // S3에서 상품 이미지 리스트를 가져오는 로직이 필요합니다.
-      // $auctionService.getProductImgList();
-
-      this.productImgList = [
-        "primary",
-        "error",
-        "warning",
-        "success",
-        "default"
-      ];
+    getProductImgList(dirS3, count) {
+      if (count == 0) {
+        this.productImgList = [DEFAULT_IMG_BASE_URL + "/product.png"];
+      } else {
+        const baseUrl = PRODUCT_IMG_BASE_URL + "/" + dirS3 + "/";
+        for (var i = 1; i <= count; i++) {
+          this.productImgList.push(baseUrl + i);
+        }
+      }
     }
   }
 };

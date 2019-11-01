@@ -1,7 +1,7 @@
 <template>
   <router-link :to="{name: 'auction.detail' , params : { auction: auction }}">
     <v-card height="auto" outlined>
-      <v-img class="item-img" :src="imgsrc(productImg)" />
+      <v-img class="item-img" :src="auction.product.imgCount == 0 ? imgsrc() : productImg" />
       <v-card-title>{{auction.product.pname}}</v-card-title>
       <v-card-subtitle>{{auction.uid}}</v-card-subtitle>
       <v-progress-linear :value="progressDate" :color="progressColor"></v-progress-linear>
@@ -25,14 +25,14 @@ export default {
   props: ["auction", "height"],
   data() {
     return {
-      productImg: "",
+      productImg: PRODUCT_IMG_BASE_URL + "/" + this.auction.product.dirS3 + "/1",
       progressDate: 0,
-      progressColor: "amber"
+      progressColor: "success"
     };
   },
   methods: {
-    imgsrc(src) {
-      return "https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/user/default_user_img.png";
+    imgsrc() {
+      return DEFAULT_IMG_BASE_URL + "/product.png";
     },
     calculateDate(start, end) {
       var startDate = new Date(start).getTime();
@@ -43,7 +43,7 @@ export default {
 
       if (100 <= this.progressDate) {
         this.progressColor = "red";
-      }
+      } 
 
       var diff = endDate - now;
 

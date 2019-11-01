@@ -106,13 +106,6 @@ export default {
       modifiedDate: null,
       imgCount: 2
     };
-    this.productImgList = [
-        "primary",
-        "error",
-        "warning",
-        "success",
-        "default"
-      ];
   },
   methods: {
     ...mapActions('auctionModule', ['createAuction']),
@@ -147,10 +140,4 @@ export default {
 </script>
 
 <style>
-.time-select {
-  width: 35%;
-  border-radius: 0px;
-  background-color: #fff5;
-  margin: 5px;
-}
 </style>
