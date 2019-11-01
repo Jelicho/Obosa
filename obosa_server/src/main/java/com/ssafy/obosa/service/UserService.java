@@ -3,12 +3,11 @@ package com.ssafy.obosa.service;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.domain.VerificationToken;
-import com.ssafy.obosa.model.dto.SignupFormDto;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.repository.VerificationTokenRepository;
 import com.ssafy.obosa.service.common.JwtService;
-import com.ssafy.obosa.util.ResponseMessage;
-import com.ssafy.obosa.util.StatusCode;
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;

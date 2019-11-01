@@ -1,7 +1,7 @@
 package com.ssafy.obosa.model.common;
 
-import com.ssafy.obosa.util.StatusCode;
-import com.ssafy.obosa.util.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
+import com.ssafy.obosa.enumeration.ResponseMessage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

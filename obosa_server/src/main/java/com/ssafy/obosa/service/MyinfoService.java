@@ -1,5 +1,7 @@
 package com.ssafy.obosa.service;
 
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.MyinfoChangeDto;
@@ -8,11 +10,8 @@ import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.FileService;
 import com.ssafy.obosa.util.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.UnsupportedEncodingException;
 
 @Service
 public class MyinfoService {

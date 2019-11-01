@@ -5,8 +5,8 @@ import com.ssafy.obosa.model.domain.WinningBid;
 import com.ssafy.obosa.model.dto.DeleteWinningBidDto;
 import com.ssafy.obosa.repository.AuctionRepository;
 import com.ssafy.obosa.repository.WinningBidRepository;
-import com.ssafy.obosa.util.ResponseMessage;
-import com.ssafy.obosa.util.StatusCode;
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

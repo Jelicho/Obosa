@@ -1,5 +1,7 @@
 package com.ssafy.obosa.service;
 
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.SignupFormDto;
