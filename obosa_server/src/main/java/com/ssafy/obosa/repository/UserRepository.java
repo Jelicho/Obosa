@@ -17,6 +17,6 @@ public interface UserRepository extends JpaRepository<User, String>
     User findUserByNickname(String nickname);
     List<User> findByName(String name);
     @Modifying
-    @Query("update USER U set U.withDraw = TRUE where U.uid = ?2")
+    @Query(value = "update USER u set u.withDraw = TRUE where u.uid = ?1", nativeQuery = true)
     int setFixedWithDrawFromUid(int uid);
 }
