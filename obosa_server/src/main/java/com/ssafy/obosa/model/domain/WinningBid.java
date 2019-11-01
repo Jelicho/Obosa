@@ -2,9 +2,9 @@ package com.ssafy.obosa.model.domain;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;

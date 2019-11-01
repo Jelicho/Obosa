@@ -16,7 +16,7 @@ public interface AuctionRepository extends JpaRepository<Auction, String> {
     Page<Auction> findByProduct_PnameContaining(String searchStr, Pageable pageable);
     Page<Auction> findByUser_NicknameContaining(String searchStr, Pageable pageable);
     @Modifying
-    @Query("update Auction auc set auc.aucState = ?1 where auc.endDate <= ?2")
+    @Query(value = "update Auction auc set auc.aucState = ?1 where auc.endDate <= ?2", nativeQuery = true)
     int setFixedAucStateFromNowDateTime(char aucState, String nowDateTime);
     @Transactional
     long deleteByAid(int aid);

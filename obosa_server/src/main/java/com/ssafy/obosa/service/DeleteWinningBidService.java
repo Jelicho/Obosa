@@ -34,7 +34,7 @@ public class DeleteWinningBidService {
 
             WinningBid winningBid = optionalWinningBid.get();
 
-            winningBidRepository.deleteByBid(wid);
+            winningBidRepository.deleteByWid(wid);
             auctionRepository.deleteByAid(winningBid.getAuction().getAid());
 
             return DefaultRes.res(StatusCode.OK, ResponseMessage.DELETED_WINNINGBID_AND_AUCTION);
