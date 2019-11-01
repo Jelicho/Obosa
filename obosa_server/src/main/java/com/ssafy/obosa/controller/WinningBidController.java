@@ -42,43 +42,37 @@ public class WinningBidController {
     }
 //    //(판매자가) 계좌번호를 보낸다.
 //    @PutMapping("/payback")
-//    public ResponseEntity updateWinningBid(@RequestParam("wid") int wid){
-//        UpdateWinningBidDto updateWinningBidDto = new UpdateWinningBidDto(wid);
+//    public ResponseEntity updateWinningBid(UpdateWinningBidDto updateWinningBidDto){
 //        return new ResponseEntity(updateWinningBidService.updateWinningBidState(updateWinningBidDto), HttpStatus.OK);
 //    }
 
     //낙찰을 받았으나, 결제를 하지 않음
     @PutMapping("/outstanding")
-    public ResponseEntity updateBidStateToOutstanding(@RequestParam("wid") int wid){
-        UpdateWinningBidDto updateWinningBidDto = new UpdateWinningBidDto(wid);
+    public ResponseEntity updateBidStateToOutstanding(UpdateWinningBidDto updateWinningBidDto){
         int bidState = 4;
         return new ResponseEntity(updateWinningBidService.updateWinningBidState(updateWinningBidDto, bidState), HttpStatus.OK);
     }
     //수령확인
     @PutMapping("/receipt")
-    public ResponseEntity updateBidStateToReceipt(@RequestParam("wid") int wid){
-        UpdateWinningBidDto updateWinningBidDto = new UpdateWinningBidDto(wid);
+    public ResponseEntity updateBidStateToReceipt(UpdateWinningBidDto updateWinningBidDto){
         int bidState = 3;
         return new ResponseEntity(updateWinningBidService.updateWinningBidState(updateWinningBidDto, bidState), HttpStatus.OK);
     }
     //배송시작
     @PutMapping("/shipment")
-    public ResponseEntity updateBidStateToShipment(@RequestParam("wid") int wid){
-        UpdateWinningBidDto updateWinningBidDto = new UpdateWinningBidDto(wid);
+    public ResponseEntity updateBidStateToShipment(UpdateWinningBidDto updateWinningBidDto){
         int  bidState = 2;
         return new ResponseEntity(updateWinningBidService.updateWinningBidState(updateWinningBidDto, bidState), HttpStatus.OK);
     }
     //결제완료
     @PutMapping("/pay")
-    public ResponseEntity updateBidStateToPay(@RequestParam("wid") int wid){
-        UpdateWinningBidDto updateWinningBidDto = new UpdateWinningBidDto(wid);
+    public ResponseEntity updateBidStateToPay(UpdateWinningBidDto updateWinningBidDto){
         int bidState = 1;
         return new ResponseEntity(updateWinningBidService.updateWinningBidState(updateWinningBidDto, bidState), HttpStatus.OK);
     }
     //주소수정
     @PutMapping
-    public ResponseEntity updateAddress(@RequestParam("address") String address, @RequestParam("wid") int wid){
-        UpdateWinningBidDto updateWinningBidDto = new UpdateWinningBidDto(wid, address);
+    public ResponseEntity updateAddress(UpdateWinningBidDto updateWinningBidDto){
         return new ResponseEntity(updateWinningBidService.updateAddress(updateWinningBidDto), HttpStatus.OK);
     }
 
