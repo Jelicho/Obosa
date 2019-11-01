@@ -1,7 +1,8 @@
 import signupAPI from '@/store/api/signupAPI'
 
 const state = {
-    signupResponse: []
+    signupResponse: [],
+    duplicateResponse: []
 }
 
 const actions = {
@@ -11,12 +12,12 @@ const actions = {
     },
     async duplicateEmail({commit}, email) {
         const response = await signupAPI.duplicateEmail(email)
-        commit('setSignupResponse', response.data)
+        commit('setDuplicateResponse', response.data)
         return response.data
     },
     async duplicateNickname({commit}, params) {
         const response = await signupAPI.duplicateNickname(params)
-        commit('setSignupResponse', response.data)
+        commit('setDuplicateResponse', response.data)
         return response.data
     }
 }
@@ -24,6 +25,9 @@ const actions = {
 const mutations = {
     setSignupResponse(state, response){
         state.signupResponse = response
+    },
+    setDuplicateResponse(state, response) {
+        state.duplicateResponse = response
     }
 }
 
