@@ -219,7 +219,7 @@ export default {
       addressDialog: false,
       emailDuplicated: true,
       nicknameDuplicated: true,
-      profilePreview: "https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/user/default_user_img.png",
+      profilePreview: USER_IMG_BASE_URL + "/default_user_img.png",
       user: {
         email: "",
         name: "",
@@ -228,7 +228,7 @@ export default {
         zipCode: "",
         address: "",
         phone: "",
-        profileImg: "https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/user/default_user_img.png"
+        profileImg: USER_IMG_BASE_URL + "/default_user_img.png"
       },
       no1: "",
       no2: "",
@@ -259,15 +259,28 @@ export default {
   },
   computed: {
     ...mapState({
-      response : state => state.signupService.signupResponse
+      signupResponse: state => state.signupService.signupResponse,
+      duplicateResponse: state => state.signupService.duplicateResponse
     })
   },
   watch: {
-    response(){
-      console.log(this.response);
-      this.alert.message = this.response.message;
-      this.alert.type = this.response.status == 200 ? 'success' : 'error'
+    duplicateResponse(response) {
+      console.log(response);
+      this.alert.message = response.message;
+      this.alert.type = response.status == 200 ? "success" : "error";
       this.alert.isAlert = true;
+    },
+    signupResponse(response) {
+      console.log(response);
+      if (response.statue == 200) {
+        this.$router.push({
+          name: 'home'
+        });
+      } else {
+        this.alert.message = response.message;
+        this.alert.type = "error";
+        this.alert.isAlert = true;
+      }
     }
   },
   methods: {
@@ -312,17 +325,20 @@ export default {
       if (column == "email" && this.$refs.regiform.inputs[0].validate()) {
         await this.duplicateEmail(this.user.email).then(response => {
           _this.emailDuplicated = response.status == 200 ? false : true;
-        })
-      } else if ( column == "nickname" && this.$refs.regiform.inputs[2].validate() ) {
+        });
+      } else if (
+        column == "nickname" &&
+        this.$refs.regiform.inputs[2].validate()
+      ) {
         await this.duplicateNickname(this.user.nickname).then(response => {
           _this.nicknameDuplicated = response.status == 200 ? false : true;
-        })
+        });
       } else {
         this.alert.message = "정확히 입력해주세요";
         this.alert.type = "error";
         this.alert.isAlert = "true";
       }
-    },
+    }
   }
 };
 </script>

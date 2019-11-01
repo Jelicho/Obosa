@@ -18,12 +18,12 @@ export default {
     };
   },
   mounted() {
-    this.images.push("https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/intro/introImg1.jpg");
-    this.images.push("https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/intro/introImg2.jpg");
-    this.images.push("https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/intro/introImg3.jpg");
-    this.images.push("https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/intro/introImg4.jpg");
-    this.images.push("https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/intro/introImg5.jpg");
-    this.images.push("https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/intro/introImg6.jpg");
+    this.images.push(INTRO_BASE_URL + "/introImg1.jpg");
+    this.images.push(INTRO_BASE_URL + "/introImg2.jpg");
+    this.images.push(INTRO_BASE_URL + "/introImg3.jpg");
+    this.images.push(INTRO_BASE_URL + "/introImg4.jpg");
+    this.images.push(INTRO_BASE_URL + "/introImg5.jpg");
+    this.images.push(INTRO_BASE_URL + "/introImg6.jpg");
   },
 };
 </script>
