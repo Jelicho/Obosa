@@ -1,26 +1,29 @@
 <template>
+  <v-layout py-4 h-100>
+    <v-dialog width="40%">
   <v-card
     class="mx-auto"
     max-width="400"
+    @onclick=""
   >
     <v-img
       class="white--text align-end"
       height="200px"
-      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+      :src="this.pImgs[0]"
     >
-      <v-card-title>상품명이 들어갑니다.</v-card-title>
+      <v-card-title>{{pName}}</v-card-title>
     </v-img>
 
     <v-card-text class="text--primary">
-      <div>상품 설명</div>
+      <div>{{pDesc}}</div>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="orange" text>
+      <v-btn color="orange" text @onclick="updateProd">
         경매등록
       </v-btn>
 
-      <v-btn color="orange" text>
+      <v-btn color="red" text @onclick="deleteProd">
         상품삭제
       </v-btn>
     </v-card-actions>
@@ -28,7 +31,7 @@
 </template>
 
 <script>
-
+import {mapActions} from "vuex"
 export default {
   name: 'product',
   data() {
@@ -37,20 +40,28 @@ export default {
     }
   },
   props: {
-    pid: '',
+    pId: '',
     pName: '',
     pDesc: '',
-    pImg: [],
+    pImgs: [],
+  },
+  mounted(){
+    console.log(this.pImgs);
   },
   methods: {
-    deleteProduct(){
-      // TODO: 상품삭제 메소드 바인딩 params : pid
-    },
-    updatePost(){
+    ...mapActions('productModule', ['updateProduct', 'deleteProduct']),
+    updateProd(){
       // TODO: 상품삭제 메소드 바인딩 params : pid, pname, pdesc, pImg
+      let formData = new formDate()
+      this.updateProduct(formData)
+    },
+    deleteProd(){
+      // TODO: 상품삭제 메소드 바인딩 params : pid
+      this.deleteProduct({pid})
     },
     auctionRegister(){
       // TODO: quctionRegister binding(From. MK)
+
     }
   }
 }

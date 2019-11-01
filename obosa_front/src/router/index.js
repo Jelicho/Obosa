@@ -64,7 +64,7 @@ export default new Router({
             {
               name: "mypage.product",
               path: 'product',
-              component: homeView
+              component: myProduct
             },
             {
               name: "mypage.info",

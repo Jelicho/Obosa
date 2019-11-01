@@ -1,115 +1,86 @@
 <template>
   <div>
-    <!-- <v-nav></v-nav>
-    <v-breadcrumb title="마이페이지" description="고객님의 등록된 상품들 입니다. 상품을 업로드 할 수 있습니다."></v-breadcrumb>
-    <div class="container">
-      <v-mypage-nav></v-mypage-nav>
-      <div class="row">
-        <div class="col-md-12 text-right">
-          <router-link to="/products/create" class="btn btn-outline-secondary">내 상품 등록하기</router-link>
-        </div>
-      </div>
-      <div id="my-product" class="row">
-        <div class="col-md-12 mt-5">
-          <h4>등록된 상품</h4>
-          <div class="row">
-            <div class="col-md-3 product" v-for="item in products" v-if="isExistproduct">
-              <div class="card">
-                <div class="card-body">
-                  <h4>{{ item["이름"] }}</h4>
-                  <p v-if="item['설명'] != null">{{ item["설명"] }}</p>
-                  <p v-if="item['설명'] == null">-</p>
-                  <router-link
-                    :to="{ name: 'product.detail', params: { id: item['id'] } }"
-                    class="btn btn-block btn-secondary"
-                  >자세히보기</router-link>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-8 mt-3" v-if="!isExistproduct">
-              <div class="alert alert-warning">보유중인 작품이 없습니다.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <h1>my product</h1>
-  </div>
+  <v-layout mt-5 wrap>
+    <!-- <v-flex v-for="i in products.length > limits ? limits : products.length" xs12 sm6 md4 lg3>
+      <Product
+      :pId="products[i-1].pid"
+      :pName="products[i-1].pname"
+      :pDesc="products[i-1].pdescription"
+      :prodImgs="products[i-1].productImgs"
+      ></Product> -->
+      <v-flex v-for="product in products" xs12 sm6 >
+        <Product
+        :pId="product.pid"
+        :pName="product.pname"
+        :pDesc="product.pdescription"
+        :pImgs="product.productImgs"
+        ></Product>
+      <v-divider></v-divider>
+    </v-flex>
+    <!-- <v-flex xs12 text-xs-center round my-5 v-if="loadMore">
+      <v-btn color="info" dark v-on:click="loadMorePosts"><v-icon size="25" class="mr-2">fa-plus</v-icon> 더 보기</v-btn>
+    </v-flex> -->
+  </v-layout>
+  <productRegister></productRegister>
+</div>
 </template>
-
 <script>
-import productList from "@/component/product/productList";
-import productRegister from "@/component/product/productRegister";
-
+import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
+import { mapState } from "vuex";
+import productRegister from "../product/productRegister"
+import Product from "../product/product"
 export default {
-  name: "myProductList",
+  props: {
+    column: {type: Number, default: 1},
+    limits: {type: Number, default: 4},
+    loadMore: {type: Boolean, default: true}
+  },
   data() {
     return {
-      sharedStates: this.$store.state,
-      products: []
-    };
-  },
-  components: {
-    productList,
-    productRegister
-  },
-  methods: {
-    calculateDate(date) {
-      var now = new Date();
-      var endDate = new Date(date);
-      var diff = endDate.getTime() - now.getTime();
-
-      // 만약 종료일자가 지났다면 "경매 마감"을 표시한다.
-      if (diff < 0) {
-        return "경매 마감";
-      } else {
-        // UNIX Timestamp를 자바스크립트 Date객체로 변환한다.
-        var d = new Date(diff);
-        var days = d.getDate();
-        var hours = d.getHours();
-        var minutes = d.getMinutes();
-
-        return "남은시간: " + days + "일 " + hours + "시간 " + minutes + "분";
-      }
-    },
-    fetchproduct(userId) {
-      var scope = this;
-      this.$productService.findProductsByOwner(userId, function(product) {
-        if (product) {
-          scope.products = product;
-        }
-      });
+      products: [],
+      dialog: false
     }
   },
-  mounted: function() {
-    var scope = this;
-    var userId = this.sharedStates.user.id;
-
-    /**
-     * TODO 1. 회원의 작품 목록을 가져옵니다.
-     * Backend와 API 연동합니다.
-     * 작품 마다 소유권 이력을 보여줄 수 있어야 합니다.
-     */
-    // 여기에 작성하세요.
-    this.fetchproduct(userId);
-
-    /**
-     * TODO 2. 회원의 경매 목록을 가져옵니다.
-     * Backend와 API 연동합니다.
-     * 경매 중인 작품 마다 소유권 이력을 보여줄 수 있어야 합니다.
-     */
-    // 여기에 작성하세요.
+  watch: {
+    productList: function() {
+      this.setProductList()
+      console.log("error")
+    }
   },
   computed: {
-    isExistproduct() {
-      if (this.products.length > 0) {
-        return true;
-      }
-      return false;
-    }
-  }
-};
-</script>
+    ...mapState('productModule', ['productList'])
+  },
+  components: {
+    Product,
+    productRegister
+  },
+  async beforeMount() {
+    // this.getProductList()
+    await this.setProductList()
+  },
+  methods: {
+    ...mapActions('productModule', ['readProduct']),
+    ...mapGetters('productModule', ['getProductState']),
+    // productCRUD
+    getProductList(){
+      this.readProduct()
+    },
+    async setProductList(){
+      console.log("set productlist");
+      this.products = await this.getProductState()
+      console.log(this.products);
+      console.log("len : " + this.products.length);
+      console.log("pid : " + this.products[0].productImgs);
+      console.log("pid : " + this.productList[0].productImgs);
 
+    },
+  }
+}
+</script>
 <style>
+.mw-700 {
+  max-width: 700px;
+  margin: auto;
+}
 </style>
