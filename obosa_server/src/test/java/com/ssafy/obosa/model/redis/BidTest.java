@@ -8,9 +8,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,6 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BidTest {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Autowired
     private BidRedisRepository bidRedisRepository;
@@ -127,4 +133,33 @@ public class BidTest {
         assertThat(afterBidding.getHighestBid()).isEqualTo(12000);
         assertThat(afterBidding.getHighestBidder()).isEqualTo(2);
     }
+
+    @Test
+    public void 입찰_횟수_증가_기능() {
+        // given
+        String aid = "1";
+        LocalDateTime endTime = LocalDateTime.now();
+        int highestBid = 10000;
+        int highestBidder = 1;
+
+        Bid bid = Bid.builder()
+                .id(aid)
+                .highestBid(highestBid)
+                .highestBidder(highestBidder)
+                .endTime(endTime)
+                .build();
+
+        bidRedisRepository.save(bid);
+        Bid savedBid = bidRedisRepository.findById("1").get();
+
+        // when
+        savedBid.bid(12000, 2, LocalDateTime.now().minusDays(1));
+        bidRedisRepository.save(savedBid);
+
+        // then
+        Bid afterBidding = bidRedisRepository.findById("1").get();
+        assertThat(afterBidding.getBidCount()).isEqualTo(1);
+    }
+
+
 }
