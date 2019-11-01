@@ -1,6 +1,4 @@
 <template>
-  <v-layout py-4 h-100>
-    <v-dialog width="40%">
   <v-card
     class="mx-auto"
     max-width="400"
