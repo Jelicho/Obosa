@@ -1,39 +1,64 @@
 <template>
   <div>
-    <v-row full-width >경매 등록하기</v-row>
-    <v-row align="start" >
-      <v-col md="6">
-        <v-row align="center">
+    <v-row full-width justify="center" class="register_title">경매 등록하기</v-row>
+    <v-divider class="pb-8"/>
+    <v-row align="start">
+      <v-col md="4">
+        <v-row align="center" class="pb-5">
           <h1 class="auction-detail-title">{{product.pname}}</h1>
         </v-row>
-        <v-row>
+        <v-row class="pb-5">
           <imageSlide :imageList="productImgList" />
         </v-row>
         <v-row>
           <auctionDescription subtitle="상품 설명" :description="product.pdescription" />
         </v-row>
       </v-col>
-      <v-col md="6">
-        <v-row>
-          <v-col cols="12" lg='8'>
-            <v-date-picker v-model="dates" color="#994fa980" no-title range width="100%"
-            :min="today"></v-date-picker>
+      <v-col md="8" class="pl-10">
+        <v-row class="pb-5">
+          <v-col cols="12" lg="8">
+            <v-date-picker
+              v-model="dates"
+              color="#dc143c"
+              no-title
+              range
+              width="100%"
+              :min="today"
+            ></v-date-picker>
           </v-col>
-          <v-col cols="12" lg='4'>
-            <v-row class="auction-sub-title">
-              <p class="auction-sub-title">경매 마감 일시</p>
-              <v-text-field :value="dates[1]" outlined hide-details disabled ></v-text-field>  
+          <v-col cols="12" lg="4">
+            <v-row class="auction-sub-title" justify="center">
+              <p>경매 마감 일시</p>
+              <p class="end_date">{{dates[1]}}</p>
             </v-row>
             <v-row>
-              <v-select hide-details outlined class='time-select' :items="hours" filled ></v-select>
+              <v-select hide-details outlined class="time-select" :items="hours" filled></v-select>
               <p class="auction-sub-title">시</p>
             </v-row>
           </v-col>
         </v-row>
-        <v-row>
-          <v-textarea outlined no-resize  hide-details v-model="auction.description"></v-textarea>
-          <v-text-field outlined hide-details type='number' min='1000' v-model="auction.lowPrice" step="1000"></v-text-field>  
-          <v-text-field outlined hide-details type='number' min='1000' v-model="auction.upPrice" step="1000"></v-text-field>  
+        <v-row class="pb-5">
+          <v-textarea label="경매 설명"  outlined no-resize hide-details v-model="auction.description"></v-textarea>
+        </v-row>
+        <v-row class="pb-5">
+          <v-text-field label="최저가 설정"  
+            outlined
+            hide-details
+            type="number"
+            min="1000"
+            v-model="auction.lowPrice"
+            step="1000"
+          ></v-text-field>
+        </v-row>
+        <v-row class="pb-5">
+          <v-text-field label="최소 입찰액 단위"  
+            outlined
+            hide-details
+            type="number"
+            min="1000"
+            v-model="auction.upPrice"
+            step="1000"
+          ></v-text-field>
         </v-row>
       </v-col>
     </v-row>
@@ -44,9 +69,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import auctionDescription from '@/component/auction/auctionDescription'
-import imageSlide from '@/component/common/imageSlide'
+import { mapState, mapActions } from "vuex";
+import auctionDescription from "@/component/auction/auctionDescription";
+import imageSlide from "@/component/common/imageSlide";
 
 export default {
   name: "auctionRegister",
@@ -55,46 +80,56 @@ export default {
       product: {},
       productImgList: [],
       dates: [],
-      today: '',
+      today: "",
       hours: [],
       auction: {
-        pid : '',
+        pid: "",
         lowPrice: 1000,
-        description : '',
-        endDate: '',
+        description: "",
+        endDate: "",
         upPrice: 1000
       }
     };
   },
   components: {
-    auctionDescription, imageSlide
+    auctionDescription,
+    imageSlide
   },
   computed: {
     ...mapState({
-      response : state => state.auctionModule.auctionResponse
+      response: state => state.auctionModule.auctionResponse
     })
   },
   watch: {
-    response(){
-      console.log(this.response);
+    response(response) {
+      console.log(response);
+      if (response.status == 200) {
+        this.$router.push({
+          name: 'home'
+        });
+      } else {
+        this.alert.message = response.message;
+        this.alert.type = "error";
+        this.alert.isAlert = true;
+      }
     },
-    dates(to){
-      if(to[1]==null){
+    dates(to) {
+      if (to[1] == null) {
         this.dates[1] = this.dates[0];
         this.dates[0] = this.today;
       }
-      if(this.dates[0] == this.dates[1]) {
-        this.getHours(new Date().getHours() + 1)
+      if (this.dates[0] == this.dates[1]) {
+        this.getHours(new Date().getHours() + 1);
       } else {
-        this.getHours(-1)
+        this.getHours(-1);
       }
     }
   },
   mounted() {
-    this.today = this.dateformat(new Date())
-    this.dates[0] = this.today
-    this.dates[1] = this.today
-    this.getHours(new Date().getHours() + 1)
+    this.today = this.dateformat(new Date());
+    this.dates[0] = this.today;
+    this.dates[1] = this.today;
+    this.getHours(new Date().getHours() + 1);
 
     // this.product = this.$route.params.product;
     this.product = {
@@ -108,13 +143,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions('auctionModule', ['createAuction']),
-    dateformat(date){
-      return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()    
+    ...mapActions("auctionModule", ["createAuction"]),
+    dateformat(date) {
+      return (
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + ("00"+date.getDate()).slice(-2)
+      );
     },
-    registerRequest(){
-      this.auction.pid = this.product.pid,
-      this.auction.endDate = this.dates[1]
+    registerRequest() {
+      (this.auction.pid = this.product.pid), (this.auction.endDate = this.dates[1]);
 
       var regiFormData = new FormData();
 
@@ -123,15 +159,15 @@ export default {
       }
       console.log(this.auction);
 
-      this.createAuction(regiFormData)
+      this.createAuction(regiFormData);
     },
-    getHours(start){
+       getHours(start){
       if(start == -1){
         this.hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-      } else {
-        this.hours = []
-        for(var i = start; i<25; i++){
-          this.hours.push(i)
+           } else {
+        this.hours = [];
+        for (var i = start; i < 25; i++) {
+          this.hours.push(i);
         }
       }
     }

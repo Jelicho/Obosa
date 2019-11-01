@@ -3,14 +3,12 @@ import auctionAPI from '@/store/api/auctionAPI'
 const state = {
     auctionList: [],
     hasMoreAuctions: true,
-    auctionsResponse: {}
+    auctionResponse: {}
 }
 
 const actions = {
     async getAuctionList({ commit }, params) {
         await auctionAPI.getAuctionList(params).then(response => {
-            console.log(response.data);
-            
             if(response.data.status == 200) {
                 if(response.data.data.first){
                     commit('setAuctionList', response.data.data.content)
@@ -34,7 +32,7 @@ const actions = {
     },
     async createAuction({ commit }, params) {
         const response = await auctionAPI.createAuction(params)
-        commit('setAuctionsResponse', response)
+        commit('setAuctionResponse', response)
     }
 }
 
@@ -50,8 +48,8 @@ const mutations = {
     setHasMoreAuctions(state, response) {
         state.hasMoreAuctions = response
     },
-    setAuctionsResponse(state, response) {
-        state.auctionsResponse = response
+    setAuctionResponse(state, response) {
+        state.auctionResponse = response
     }
 }
 
