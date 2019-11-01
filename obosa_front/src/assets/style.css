@@ -250,7 +250,7 @@ a {
 }
 
 .auction-detail-info {
-  height: 500px;
+    /* height: 500px; */
 }
 
 .auction-detail-info>* {
@@ -274,7 +274,45 @@ a {
 }
 
 .auction-description>.v-card__text {
-  color: black !important;
+    color: black !important;
+}
+
+.price .price_low {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.price_high {
+    font-size: 50px;
+    color: crimson;
+    font-weight: 700;
+    border-left: 1px grey solid;
+}
+
+.end_date {
+    font-size: 40px;
+    color: crimson;
+    font-weight: 700;
+}
+
+.auction-detail-container {
+    min-height: inherit;
+}
+
+.v-input input {
+    max-height: inherit;
+}
+
+.price input[type=number] {
+    font-size: 40px;
+    color: crimson!important;
+    border-left: 0px;
+}
+
+.time-select .v-select__selections {
+    font-size: 30px;
+    line-height: 1.5;
+    text-align: center;
 }
 
 .item-list {
@@ -282,10 +320,52 @@ a {
 }
 
 .price {
-  font-size: 27px;
-  font-weight: bold;
+    font-size: 27px;
+    font-weight: bold;
+}
+.time-select {
+    width: 35%;
+    border-radius: 0px;
+    background-color: #fff5;
+    margin: 5px;
+}
+  .register_title {
+    font-size: 50px;
+    font-weight: 700;
+    padding: 30px 0px 30px 0px;
 }
 
+/* intro */
+
+.intro-view {
+    width: 100vw!important;
+    margin-top: -97px;
+    margin-left: calc(-50vw + 50%)!important;
+}
+.intro-item {
+    margin-top: 30px;
+    /* height: 250px; */
+    background-color: #fff0!important;
+}
+.intro-card {
+    padding: 30px !important;
+    height: 100%;
+    text-align: left;
+}
+.intro-card > p {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+}
+.intro-card-1 {
+    background-color: rgba(93, 114, 87, 0.603);
+}
+.intro-card-2 {
+    background-color: rgba(75, 45, 53, 0.603);
+}
+.v-carousel{
+    width: 100vw;
+}
 /* 로그인 & 회원가입 스타일 시트 */
 .form-container{
     min-height: inherit;

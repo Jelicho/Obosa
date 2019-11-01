@@ -29,9 +29,4 @@ export default {
 </script>
 
 <style>
-.intro-view {
-  width: 100vw;
-  margin-top: -97px;
-  margin-left: calc(-50vw + 50%);
-}
 </style>

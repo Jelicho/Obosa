@@ -26,25 +26,4 @@ export default {
 </script>
 
 <style>
-.intro-item {
-  margin-top: 30px;
-  /* height: 250px; */
-  background-color: #fff0!important;
-}
-.intro-card {
-  padding: 30px !important;
-  height: 100%;
-  text-align: left;
-}
-.intro-card > p {
-  font-size: 30px;
-  font-weight: 700;
-  color: white;
-}
-.intro-card-1 {
-  background-color: rgba(93, 114, 87, 0.603);
-}
-.intro-card-2 {
-  background-color: rgba(75, 45, 53, 0.603);
-}
 </style>
