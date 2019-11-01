@@ -10,16 +10,16 @@
       <v-btn text>
         <router-link class="nav-link" to="/auction">경매참여하기</router-link>
       </v-btn>
-      <v-btn text v-if="sharedState.isSigned">
-        <router-link class="nav-link" to="/mypage">마이페이지</router-link>
+      <v-btn text v-if="getSignedState">
+        <router-link class="nav-link" to="/passwordRe">마이페이지</router-link>
       </v-btn>
-      <v-btn text v-if="!sharedState.isSigned">
+      <v-btn text v-if="!getSignedState">
         <router-link class="nav-link" to="/login">로그인</router-link>
       </v-btn>
-      <v-btn text v-if="!sharedState.isSigned">
+      <v-btn text v-if="!getSignedState">
         <router-link class="nav-link" to="/register">회원가입</router-link>
       </v-btn>
-      <v-btn text v-if="sharedState.isSigned">
+      <v-btn text v-if="getSignedState">
         <router-link class="nav-link" to="/logout">로그아웃</router-link>
       </v-btn>
     </v-toolbar-items>
@@ -27,16 +27,17 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
   name: "navbar",
   props: ["isSigned"],
   data() {
     return {
-      store: this.$store,
-      sharedState: this.$store.state
     };
   },
+  computed: {
+    ...mapGetters('userModule',['getSignedState'])
+  }
 };
 </script>
 
