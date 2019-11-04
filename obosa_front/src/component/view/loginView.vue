@@ -43,7 +43,7 @@
                 ripple
                 color="#994fa980"
                 id="sign-up"
-                @click="login()"
+                @click="onSubmit()"
               >로그인</v-btn>
             </v-col>
           </v-row>
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 
 export default {
   name: "Login",
@@ -66,38 +67,22 @@ export default {
     };
   },
   methods: {
-    login: function() {
-      var scope = this;
-      var store = this.$store
-
-      console.log(this.user);
-
-      this.$userService.login(
-        this.user.email,
-        this.user.password,
-        function(data) {
-          store.state.isSigned = true;
-          store.state.user.id = data.id;
-
-          this.$walletService.findById(store.state.user.id, function(response) {
-            if (response.status == 204) {
-              store.state.user.hasWallet = false;
-            } else if (response["소유자id"] == store.state.user.id) {
-              store.state.user.hasWallet = true;
-            } else {
-              alert("Unexpected status code : " + response.status);
-            }
-            sessionStorage.setItem("state", JSON.stringify(store.state));
-            scope.$router.push("/");
-          });
-        },
-        function(error) {
-          alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
-        }
-      );
+    ...mapActions('userModule', ['login']),
+    async onSubmit() {
+      var email = this.user.email
+      var password = this.user.password
+      console.log(email, password);
+      
+      // LOGIN 액션 실행
+      await this.login({email, password})
+      this.redirect()
+    },
+    redirect() {
+      console.log('entered redirect')
+      this.$router.replace(this.$route.query.redirect || '/')
     }
   }
-};
+}
 </script>
 
 <style>

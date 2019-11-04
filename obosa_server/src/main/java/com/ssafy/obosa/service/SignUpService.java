@@ -2,7 +2,6 @@ package com.ssafy.obosa.service;
 
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
-import com.ssafy.obosa.model.domain.VerificationToken;
 import com.ssafy.obosa.model.dto.SignupFormDto;
 import com.ssafy.obosa.registration.OnRegistrationCompleteEvent;
 import com.ssafy.obosa.repository.UserRepository;

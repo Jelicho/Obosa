@@ -208,7 +208,7 @@
 </template>
 
 <script>
-import {mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import addressPopUp from "@/component/api/addressPopUp";
 
 export default {
@@ -259,8 +259,8 @@ export default {
   },
   computed: {
     ...mapState({
-      signupResponse: state => state.signupService.signupResponse,
-      duplicateResponse: state => state.signupService.duplicateResponse
+      signupResponse: state => state.signupModule.signupResponse,
+      duplicateResponse: state => state.signupModule.duplicateResponse
     })
   },
   watch: {

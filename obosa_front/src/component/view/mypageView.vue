@@ -1,25 +1,17 @@
 <template>
   <div>
     <mypageNav />
-
+    <router-view class="router-view"></router-view>
   </div>
 </template>
 
 <script>
 import mypageNav from "@/component/mypage/nav";
-import myUpdate from "@/component/mypage/update";
-import myAuctionList from "@/component/mypage/auctionList";
-import myProductList from "@/component/mypage/productList";
-import myChangePassword from "@/component/mypage/changePassword";
 
 export default {
   name: "MypageView",
   components: {
-    mypageNav,
-    myUpdate,
-    myAuctionList,
-    myProductList,
-    myChangePassword
+    mypageNav
   }
 };
 </script>

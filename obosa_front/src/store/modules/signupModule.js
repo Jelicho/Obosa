@@ -1,8 +1,8 @@
 import signupAPI from '@/store/api/signupAPI'
 
 const state = {
-    signupResponse: [],
-    duplicateResponse: []
+    signupResponse: {},
+    duplicateResponse: {}
 }
 
 const actions = {

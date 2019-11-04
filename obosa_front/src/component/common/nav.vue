@@ -10,16 +10,16 @@
       <v-btn text @click="to('auction.list', 'count')" id="auclist">
         경매참여하기
       </v-btn>
-      <v-btn text @click="to('mypage')" id="mypage" v-if="sharedState.isSigned">
+      <v-btn text v-if="getSignedState" @click="to('passwordRe')" id="passwordRe" >
         마이페이지
       </v-btn>
-      <v-btn text @click="to('login')" id="login" v-if="!sharedState.isSigned">
+      <v-btn text v-if="!getSignedState" @click="to('login')" id="login" >
         로그인
       </v-btn>
-      <v-btn text @click="to('register')" id="register" v-if="!sharedState.isSigned">
+      <v-btn text v-if="!getSignedState" @click="to('register')" id="register" >
         회원가입
       </v-btn>
-      <v-btn text @click="to('logout')" id="logout" v-if="sharedState.isSigned">
+      <v-btn text v-if="getSignedState" @click="to('logout')" id="logout" >
         로그아웃
       </v-btn>
     </v-toolbar-items>
@@ -27,14 +27,12 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
   name: "navbar",
   props: ["isSigned"],
   data() {
     return {
-      store: this.$store,
-      sharedState: this.$store.state
     };
   },
   methods: {
@@ -49,9 +47,12 @@ export default {
         name: name,
         params : { sortby : params || null }
       });
-    }
+    },
+  },
+  computed: {
+    ...mapGetters('userModule',['getSignedState'])
   }
-};
+}
 </script>
 
 <style>

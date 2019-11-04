@@ -16,6 +16,7 @@
     "popper.js": "^1.15.0",
     "request": "^2.79.0",
     "vue": "^2.5.2",
+    "vue-cookie": "^1.1.4",
     "vue-daum-postcode": "^0.7.0",
     "vue-router": "^3.0.1",
     "vuetify": "^2.1.5",
