@@ -1,5 +1,7 @@
 package com.ssafy.obosa.service;
 
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.MyinfoChangeDto;
@@ -8,11 +10,9 @@ import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.FileService;
 import com.ssafy.obosa.util.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.UnsupportedEncodingException;
 
 @Service
 public class MyinfoService {
@@ -36,6 +36,7 @@ public class MyinfoService {
         this.fileService = fileService;
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes<MyinfoDto> readMypage(User user)
     {
         try
@@ -43,7 +44,7 @@ public class MyinfoService {
             MyinfoDto myinfoDto = user.getMyinfoDto();
             AES256Util aes256Util = new AES256Util(aesKey);
 
-            myinfoDto.builder()
+            myinfoDto = myinfoDto.builder()
                     .nickname(user.getNickname())
                     .email(user.getEmail())
                     .name(aes256Util.aesDecoding(myinfoDto.getName()))
@@ -103,6 +104,7 @@ public class MyinfoService {
         }
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes verifyPassword(User user, String password)
     {
         try

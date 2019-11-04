@@ -1,4 +1,4 @@
-package com.ssafy.obosa.util;
+package com.ssafy.obosa.enumeration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

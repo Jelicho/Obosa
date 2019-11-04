@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequestMapping("mypage")
+@CrossOrigin(origins = "*")
 @Controller
 public class MyinfoController
 {
@@ -31,7 +32,7 @@ public class MyinfoController
         this.userService = userService;
         this.readProductService = readProductService;
     }
-
+//    @CrossOrigin(origins = "*")
     @GetMapping
     public ResponseEntity readMyinfo(@RequestHeader(value = "Authorization", required = false) String jwtToken)
     {
