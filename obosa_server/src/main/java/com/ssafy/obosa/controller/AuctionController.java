@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 @RequestMapping("auction")
 public class AuctionController {
@@ -38,6 +38,7 @@ public class AuctionController {
 
     @PostMapping("/{aid}")
     public ResponseEntity bidAuction(BidDto bidDto, @RequestHeader("Authorization") String jwtToken) {
+        System.out.println(bidDto.getAid() + " / " + bidDto.getBidPrice());
         int uid = userService.getUserByJwtToken(jwtToken).getUid();
         return new ResponseEntity(bidService.newBid(bidDto, uid), HttpStatus.OK);
     }
@@ -50,6 +51,7 @@ public class AuctionController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity readAllAuction(Pageable pageable)
     {
         return new ResponseEntity(readAuctionService.readAllAuctions(pageable), HttpStatus.OK);

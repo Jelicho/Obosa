@@ -70,7 +70,7 @@ const actions = {
     commit('delAccessToken')
   },
   async passwordReChk ({commit}, password) {
-    await  api.passwordReChk("min3248").then(response => {
+    await  api.passwordReChk(password).then(response => {
       if(response.data.status == 200){
         console.log("communication : success");
         state.rechecked = true;

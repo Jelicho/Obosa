@@ -1,206 +1,198 @@
 <template>
   <div>
-    <v-form ref="regiform" valid>
-      <v-container class="container">
-        <div id="register-form" class="col-md-10 mx-auto bg-white">
-          <v-row>
-            <v-col sm="6" align="center">
-              <v-img :src="profilePreview" width="300" height="300"></v-img>
-              <v-btn rounded depressed color="#FDD835" @click="upload()">
-                업로드
-                <input
-                  type="file"
-                  style="display:none"
-                  accept=".gif, .jpg, .png"
-                  id="profile"
-                  @change="onFileChange"
-                />
-              </v-btn>
-            </v-col>
-            <v-col sm="6" class="input-form">
-              <v-row>
-                <v-col>
-                  <logo />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="이메일"
-                    v-model="user.email"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :readonly = "true"
-                    :rules="[rules.required, rules.email]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="이름"
-                    v-model="user.name"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :readonly = "true"
-                    :rules="[rules.required]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="9">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="닉네임"
-                    v-model="user.nickname"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :rules="[rules.required , rules.nickname]"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="3" style="align-self:baseline!important">
-                  <v-btn
-                    height="56px"
-                    width="100%"
-                    :color="nicknameDuplicated ? 'red lighten-2' : 'green lighten-2'"
-                    @click="duplicateCheck('nickname')"
-                  >중복 확인</v-btn>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    type="password"
-                    label="비밀번호"
-                    v-model="user.password"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :rules="[rules.required, rules.password]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    type="password"
-                    label="비밀번호 확인"
-                    v-model="passwordConfirm"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :rules="[rules.required, rules.pwConfirm]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col @click="openapi()">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="우편번호"
-                    v-model="user.zipCode"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    disabled
-                    :rules="[rules.required]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col @click="openapi()">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="주소"
-                    v-model="user.address"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    disabled
-                    :rules="[rules.required]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <addressPopUp :dialog="addressDialog" @update:address="setAddress" />
-              <v-row>
-                <v-col sm="3">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="010"
-                    v-model="no1"
-                    :rules="[rules.required, rules.phone]"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    type="number"
-                    class="no-arrow"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="1">-</v-col>
-                <v-col sm="3">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="1234"
-                    v-model="no2"
-                    :rules="[rules.required, rules.phone]"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    type="number"
-                    class="no-arrow"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="1">-</v-col>
-                <v-col sm="3">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="5678"
-                    v-model="no3"
-                    :rules="[rules.required, rules.phone]"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    type="number"
-                    class="no-arrow"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-btn
-                    block
-                    rounded
-                    large
-                    dark
-                    ripple
-                    color="teal"
-                    id="sign-up"
-                    @click="updateInfo()"
-                  >수정하기</v-btn>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-        </div>
-      </v-container>
-    </v-form>
+    <v-container class="container">
+      <v-form ref="regiform" valid>
+        <v-row class="form-container" >
+          <div class="col-md-5 text_container" >
+                <v-img :src="profilePreview" style="margin:auto" width="300px" height="300"></v-img>
+                <v-btn rounded depressed color="#FDD835" @click="upload()">
+                  업로드
+                  <input
+                    type="file"
+                    style="display:none"
+                    accept=".gif, .jpg, .png"
+                    id="profile"
+                    @change="onFileChange"
+                  />
+                </v-btn>
+          </div>
+        <v-divider vertical />
+          <div id="register-form" class="col-md-6 mx-auto bg-white">
+            <v-row>
+              <v-col sm="9" >
+                    <v-text-field
+                      required
+                      outlined
+                      class="input_text"
+                      label="이메일"
+                      v-model="user.email"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      :readonly = "true"
+                      :rules="[rules.required, rules.email]"
+                    ></v-text-field>
+                  </v-col>
+            </v-row>
+            <v-row>
+                  <v-col>
+                    <v-text-field
+                      required
+                      outlined
+                      class="input_text"
+                      label="이름"
+                      v-model="user.name"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      :readonly = "true"
+                      :rules="[rules.required]"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="9">
+                    <v-text-field
+                      required
+                      outlined
+                      class="input_text"
+                      label="닉네임"
+                      v-model="user.nickname"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      :rules="[rules.required , rules.nickname]"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="3" style="align-self:baseline!important">
+                    <v-btn
+                      height="56px"
+                      width="100%" tile
+                      :color="nicknameDuplicated ? 'red lighten-2' : 'green lighten-2'"
+                      @click="duplicateCheck('nickname')"
+                    >중복 확인</v-btn>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <v-text-field
+                      required
+                      outlined
+                      class="input_text password"
+                      type="password"
+                      label="비밀번호"
+                      v-model="user.password"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      :rules="[rules.required, rules.password]"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <v-text-field
+                      required
+                      outlined
+                      type="password"
+                      class="input_text password"
+                      label="비밀번호 확인"
+                      v-model="passwordConfirm"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      :rules="[rules.required, rules.pwConfirm]"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col @click="openapi()">
+                    <v-text-field
+                      required
+                      outlined
+                      class="input_text"
+                      label="우편번호"
+                      v-model="user.zipCode"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      disabled
+                      :rules="[rules.required]"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col @click="openapi()">
+                    <v-text-field
+                      required
+                      outlined
+                      class="input_text"
+                      label="주소"
+                      v-model="user.address"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      disabled
+                      :rules="[rules.required]"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <addressPopUp :dialog="addressDialog" @update:address="setAddress" />
+                <v-row>
+                  <v-col sm="3">
+                    <v-text-field
+                      required
+                      outlined
+                      class="input_text no-arrow"
+                      label="010"
+                      v-model="no1"
+                      :rules="[rules.required, rules.phone]"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      type="number"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col sm="1">-</v-col>
+                  <v-col sm="3">
+                    <v-text-field
+                      required
+                      outlined
+                      class="input_text no-arrow"
+                      label="1234"
+                      v-model="no2"
+                      :rules="[rules.required, rules.phone]"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      type="number"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col sm="1">-</v-col>
+                  <v-col sm="3">
+                    <v-text-field
+                      required
+                      outlined
+                      class="input_text no-arrow"
+                      label="5678"
+                      v-model="no3"
+                      :rules="[rules.required, rules.phone]"
+                      background-color="#f4f8f7"
+                      color="#994fa980"
+                      type="number"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <v-btn
+                      block
+                      tile
+                      large
+                      dark
+                      ripple
+                      color="#994fa980"
+                      id="sign-up"
+                      @click="updateInfo()"
+                    >수정하기</v-btn>
+                  </v-col>
+                </v-row>
+          </div>
+        </v-row>
+
+      </v-form>
+    </v-container>
     <v-snackbar v-model="alert.isAlert" middle="true" :color="alert.type" top>
       {{ alert.message }}
       <v-btn text @click="alert.isAlert = false">확인</v-btn>
@@ -221,7 +213,7 @@ export default {
       addressDialog: false,
       emailDuplicated: false,
       nicknameDuplicated: true,
-      profilePreview: require("@/assets/user.png"),
+      profilePreview: "",
       user: {
         email: "minjun@naver.com",
         name: "이민준",
@@ -289,6 +281,7 @@ export default {
       this.user.address = userStore.address,
       this.user.phone = userStore.phone,
       this.user.profileImg = userStore.profileImg
+      this.profilePreview = this.user.profileImg
       this.splitPhone(userStore.phone)
     },
     splitPhone(phone){
