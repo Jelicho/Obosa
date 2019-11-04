@@ -44,7 +44,7 @@ public class MyinfoService {
             MyinfoDto myinfoDto = user.getMyinfoDto();
             AES256Util aes256Util = new AES256Util(aesKey);
 
-            myinfoDto.builder()
+            myinfoDto = myinfoDto.builder()
                     .nickname(user.getNickname())
                     .email(user.getEmail())
                     .name(aes256Util.aesDecoding(myinfoDto.getName()))
