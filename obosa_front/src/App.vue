@@ -11,10 +11,10 @@ import {mapActions} from 'vuex'
 export default {
   name: "App",
   async beforeMount() {
-    await this.reLogin()
+    await this.reFresh()
   },
   methods:{
-    ...mapActions('userModule', ['reLogin'])
+    ...mapActions('userModule', ['reFresh'])
   }
 
 };
