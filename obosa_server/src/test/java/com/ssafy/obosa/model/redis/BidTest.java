@@ -8,9 +8,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,6 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BidTest {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Autowired
     private BidRedisRepository bidRedisRepository;
@@ -126,5 +132,79 @@ public class BidTest {
         Bid afterBidding = bidRedisRepository.findById("1").get();
         assertThat(afterBidding.getHighestBid()).isEqualTo(12000);
         assertThat(afterBidding.getHighestBidder()).isEqualTo(2);
+    }
+
+    @Test
+    public void 입찰_횟수_증가_기능() {
+        // given
+        String aid = "1";
+        LocalDateTime endTime = LocalDateTime.now();
+        int highestBid = 10000;
+        int highestBidder = 1;
+
+        Bid bid = Bid.builder()
+                .id(aid)
+                .highestBid(highestBid)
+                .highestBidder(highestBidder)
+                .endTime(endTime)
+                .build();
+
+        bidRedisRepository.save(bid);
+        Bid savedBid = bidRedisRepository.findById("1").get();
+
+        // when
+        savedBid.bid(12000, 2, LocalDateTime.now().minusDays(1));
+        bidRedisRepository.save(savedBid);
+
+        // then
+        Bid afterBidding = bidRedisRepository.findById("1").get();
+        assertThat(afterBidding.getBidCount()).isEqualTo(1);
+    }
+
+    @Test
+    public void 입찰_횟수순_정렬_기능() {
+        // given
+        LocalDateTime endTime = LocalDateTime.now();
+        int highestBid = 10000;
+        int highestBidder = 1;
+
+        Bid bid = Bid.builder()
+                .id("1")
+                .highestBid(highestBid)
+                .highestBidder(highestBidder)
+                .endTime(endTime)
+                .bidCount(1)
+                .build();
+
+        bidRedisRepository.save(bid);
+
+        bid = Bid.builder()
+                .id("2")
+                .highestBid(highestBid)
+                .highestBidder(highestBidder)
+                .endTime(endTime)
+                .bidCount(3)
+                .build();
+
+        bidRedisRepository.save(bid);
+
+        bid = Bid.builder()
+                .id("3")
+                .highestBid(highestBid)
+                .highestBidder(highestBidder)
+                .endTime(endTime)
+                .bidCount(2)
+                .build();
+
+        bidRedisRepository.save(bid);
+
+//        // when
+//        List<Bid> bids = bidRedisRepository.findAll();
+//        System.out.println(bids);
+//
+//        // then
+//        assertThat(bids.get(0).getBidCount()).isEqualTo(3);
+//        assertThat(bids.get(1).getBidCount()).isEqualTo(2);
+//        assertThat(bids.get(2).getBidCount()).isEqualTo(1);
     }
 }
