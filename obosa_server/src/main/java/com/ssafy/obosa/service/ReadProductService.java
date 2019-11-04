@@ -38,10 +38,10 @@ public class ReadProductService {
     {
         Optional<Product> optionalProduct = productRepository.findByPid(pid);
         if(!optionalProduct.isPresent()){
-            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_PRODUCT);
+            return DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_PRODUCT);
         }
         Product product = optionalProduct.get();
-        if(product.getUser()!=user){
+        if(product.getUser().getUid()!=user.getUid()){
             return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
         }
         return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_PRODUCT, ProductDto.setProductDtoByProduct(product));

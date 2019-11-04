@@ -46,7 +46,7 @@ public class DeleteProductService {
             }
 
             Product product = optionalProduct.get();
-            if(product.getUser()!=user){
+            if(product.getUser().getUid()!=user.getUid()){
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
             }
 

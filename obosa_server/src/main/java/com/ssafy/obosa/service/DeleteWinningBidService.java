@@ -34,7 +34,7 @@ public class DeleteWinningBidService {
             }
 
             WinningBid winningBid = optionalWinningBid.get();
-            if(winningBid.getAuction().getUser()!=user){
+            if(winningBid.getAuction().getUser().getUid()!=user.getUid()){
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
             }
             winningBidRepository.delete(winningBid);

@@ -33,7 +33,7 @@ public class ReadWinningBidService {
                 return DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_WINNINGBID);
             }
             WinningBid winningBid = optionalWinningBid.get();
-            if(winningBid.getUser()!=user&&winningBid.getAuction().getUser()!=user){
+            if(winningBid.getUser().getUid()!=user.getUid()&&winningBid.getAuction().getUser().getUid()!=user.getUid()){
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
             }
             return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_WINNINGBID, WinningBidDto.setWinningBidDtoByWinningBid(winningBid));

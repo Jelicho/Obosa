@@ -32,7 +32,7 @@ public class UpdateAuctionService {
             return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_AUCTION);
         }
         Auction auction = optionalAuction.get();
-        if(auction.getUser()!=user){
+        if(auction.getUser().getUid()!=user.getUid()){
             return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
         }
         Auction.updateAuctionByAuctionDto(auction, updateProductDto);

@@ -31,7 +31,7 @@ public class DeleteAuctionService {
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_AUCTION);
             }
             Auction auction = optionalAuction.get();
-            if(auction.getUser()!=user){
+            if(auction.getUser().getUid()!=user.getUid()){
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
             }
             auctionRepository.delete(auction);

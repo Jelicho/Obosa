@@ -35,7 +35,7 @@ public class CreateAuctionService {
             }
 
             Product product = optionalProduct.get();
-            if(user!=product.getUser()){
+            if(user.getUid()!=product.getUser().getUid()){
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
             }
             Auction auction = Auction.setAuctionByAuctionDto(createAuctionDto, user, product);

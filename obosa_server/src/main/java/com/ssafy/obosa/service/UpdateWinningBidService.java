@@ -36,7 +36,7 @@ public class UpdateWinningBidService {
             if(winningBid.getBidState()!=0){
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.ALREADY_PASS_BIDSTATE);
             }
-            else if(winningBid.getUser()!=user){
+            else if(winningBid.getUser().getUid()!=user.getUid()){
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
             }
             winningBid.setAddress(address);
@@ -69,16 +69,16 @@ public class UpdateWinningBidService {
             User winner = winningBid.getUser();
             switch(bidState){
                 case 1:
-                    if(winner!=user)return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+                    if(winner.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
                     break;
                 case 2:
-                    if(seller!=user)return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+                    if(seller.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
                     break;
                 case 3:
-                    if(winner!=user)return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+                    if(winner.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
                     break;
                 case 4:
-                    if(winner!=user)return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+                    if(winner.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
                     else{
                         DateTime bidDate = new DateTime(winningBid.getBidDate());
                         DateTime banDatetime = bidDate.plusDays(3);
