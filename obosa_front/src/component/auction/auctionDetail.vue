@@ -42,7 +42,7 @@
             ></v-text-field>
           </v-col>
           <v-col md="4" style="align-self: start!important;">
-            <v-btn depressed large tile color="#ff0000d4" class="white--text" height="80px">
+            <v-btn depressed large tile color="#ff0000d4" class="white--text" height="80px" @click="bidRequest()">
               내가 현재 최고가로
               <br />
               <h2 style="display:contents;">입찰하기</h2>
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import auctionDescription from "@/component/auction/auctionDescription";
 import imageSlide from '@/component/common/imageSlide'
 
@@ -86,6 +87,7 @@ export default {
     );
   },
   methods: {
+    ...mapActions("auctionModule", ["bidAuction"]),
     getProductImgList(dirS3, count) {
       if (count == 0) {
         this.productImgList = [DEFAULT_IMG_BASE_URL + "/product.png"];
@@ -95,6 +97,9 @@ export default {
           this.productImgList.push(baseUrl + i);
         }
       }
+    },
+    bidRequest(){
+      this.bidAuction({ aid : this.auction.aid, bidPrice : Number(this.bidPrice) })
     }
   }
 };

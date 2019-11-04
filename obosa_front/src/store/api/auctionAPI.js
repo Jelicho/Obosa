@@ -26,5 +26,9 @@ export default {
             processData: false,
             contentType: false,
         });
+    },
+    bidAuction({ aid, bidPrice }) {
+        return axios.post(`${apiUrl}/${aid}`, 
+                { aid, bidPrice })
     }
 }
