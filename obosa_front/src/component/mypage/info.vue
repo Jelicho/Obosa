@@ -271,10 +271,6 @@ export default {
   async beforeMount(){
     await this.readUserInfo()
   },
-  async mounted() {
-    // this.profilePreview = require("@/assets/user.png");
-    await this.setUserInfo()
-  },
   methods: {
     ...mapActions('userModule', ['getUserInfo', 'updateUser']),
     ...mapGetters('userModule', ['getUser']),
