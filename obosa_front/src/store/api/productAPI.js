@@ -15,6 +15,11 @@ export default {
     return axios.get(`${apiUrl}/mypage/product`)
   },
   update() {
+    var config = {
+    headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
     return axios.put(`${apiUrl}/product`, formData, config)
   },
   delete() {

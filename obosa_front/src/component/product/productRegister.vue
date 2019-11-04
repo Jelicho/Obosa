@@ -35,7 +35,7 @@
                             type="file"
                             style="display:none"
                             accept=".gif, .jpg, .png"
-                            id="profile"
+                            id="prodImgFile"
                             @change="onFileChange"
                           />
                         </v-btn>
@@ -136,7 +136,7 @@ export default {
           this.createProduct(formData)
       },
       upload() {
-        $("#profile").trigger("click");
+        $("#prodImgFile").trigger("click");
       },
       onFileChange(e) {
         var prodImg = e.target.files[0];
