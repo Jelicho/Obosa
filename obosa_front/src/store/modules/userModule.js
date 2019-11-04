@@ -26,41 +26,60 @@ const getters = {
 const actions = {
   login ({commit}, {email, password}) {
     api.login({email, password})
-    .then(({data}) => commit('setAccessToken', data))
+    .then(({data}) => commit('setToken', data))
 
+    // DESC : status 401 (AccessToken Expired)
+   axios.interceptors.response.use(function (response) {
+     return response
+   }, function (error) {
+     const originalRequest = error.config
+     if (error.response.status === 401){
+       originalRequest._retry = true
+       this.reFresh()
+       originalRequest.headers['Authorization'] = state.accessToken
+       return axios(originalRequest)
+     }
+     return Promise.reject(error)
+   })
   },
-  reLogin ({commit}) {
-    if ((state.accessToken==null)
-        && localStorage.accessToken ){
-          commit('reSetAccessToken')
-    }
-  },
+  reFresh ({commit}) {
+    if (localStorage.refreshToken ){
+      console.log("refreshToken:"+localStorage.refreshToken);
+      axios.defaults.headers.common['Authorization'] = localStorage.refreshToken;
+      api.reFresh()
+      .then(({data}) => {
+        console.log(data);
+        commit('reSetToken', data.data)
+      })
+      // DESC : status 401 (AccessToken Expired)
+     axios.interceptors.response.use(function (response) {
+       return response
+     }, function (error) {
+       const originalRequest = error.config
+       if (error.response.status === 401){
+         originalRequest._retry = true
+         this.reFresh()
+         originalRequest.headers['Authorization'] = state.accessToken
+         return axios(originalRequest)
+       }
+       return Promise.reject(error)
+     })
+  }
+},
   logout({commit}) {
     commit('delAccessToken')
   },
   async passwordReChk ({commit}, password) {
-    // const resp = api.passwordReChk("min3248")
     await  api.passwordReChk("min3248").then(response => {
       if(response.data.status == 200){
         console.log("communication : success");
         state.rechecked = true;
       }
     })
-    // const accessToken = resp.data.accessToken.data
-    // commit('login', accessToken)
   },
   getUserInfo({commit}){
-    console.log("getuserinfo");
     api.getUserInfo().then(({data}) => commit('setUserInfo', data))
   },
-  // updateUser ({commit}, form) {
-  //   console.log(form);
-  //   api.updateUser(form)
-  //   .then(response => {
-  //     console.log(response);
-  //   })
-  //
-  // },
   updateUser ({commit}, {
       password
     , phone
@@ -68,7 +87,6 @@ const actions = {
     , zipCode
     , address
     }) {
-    console.log(password);
     api.updateUser({
         password
       , phone
@@ -77,7 +95,6 @@ const actions = {
       , address
       })
     .then(response => {
-      console.log(response);
     })
 
   },
@@ -85,28 +102,27 @@ const actions = {
 
 // mutations
 const mutations = {
-  setAccessToken (state, {data}) {
+  setToken (state, {data}) {
     state.accessToken = data.accessToken.data
     state.isSigned = true
-    console.log(state.accessToken)
-    // 토큰을 로컬 스토리지에 저장
     axios.defaults.headers.common['Authorization'] = state.accessToken;
     localStorage.accessToken = data.accessToken.data
+    localStorage.refreshToken = data.refreshToken.data
   },
-  reSetAccessToken (state) {
-    state.accessToken = localStorage.accessToken
+  reSetToken (state, {data}) {
+    state.accessToken = data
+    localStorage.accessToken = state.accessToken
     state.isSigned = true
     axios.defaults.headers.common['Authorization'] = state.accessToken;
   },
-  delAccessToken (state) {
+  delToken (state) {
     state.accessToken = null
     state.isSigned = false
     localStorage.removeItem("accessToken")
+    localStorage.removeItem("refreshToken")
   },
   setUserInfo(state, {data}) {
     state.userInfo = data
-    console.log("store : ")
-    console.log(state.userInfo)
   },
 }
 

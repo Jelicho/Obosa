@@ -10,7 +10,6 @@ export default {
     })
   },
   passwordReChk(password) {
-    console.log(password)
     var config = {
     headers: {
         'Content-Type': 'text/plain'
@@ -42,6 +41,9 @@ export default {
       , zipCode
       , address
       }, config
-  )
+    )
+  },
+  reFresh(){
+    return axios.post(`${apiUrl}/auth/refresh`)
   }
 }
