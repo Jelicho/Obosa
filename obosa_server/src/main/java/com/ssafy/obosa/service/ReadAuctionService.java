@@ -11,6 +11,7 @@ import com.ssafy.obosa.enumeration.StatusCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class ReadAuctionService {
         this.auctionRepository=auctionRepository;
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes<Auction> readAuctionByAid(ReadAuctionDto readAuctionDto)
     {
         Optional<Auction> optionalAuction = auctionRepository.findAuctionByAid(readAuctionDto.getAid());
@@ -32,6 +34,7 @@ public class ReadAuctionService {
         return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_AUCTION, auction);
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes<Page<Auction>> readAllAuctions(Pageable pageable)
     {
         Page<Auction> auctions = auctionRepository.findAll(pageable);
@@ -41,6 +44,8 @@ public class ReadAuctionService {
             return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_ALL_AUCTIONS, auctions);
         }
     }
+
+    @Transactional(readOnly = true)
     public DefaultRes<Page<Auction>> readSearchByType(ReadAuctionDto readAuctionDto, Pageable pageable)
     {
         Page<Auction> auctions;

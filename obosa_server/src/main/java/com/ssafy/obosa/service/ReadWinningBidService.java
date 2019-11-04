@@ -11,6 +11,7 @@ import com.ssafy.obosa.enumeration.StatusCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public class ReadWinningBidService {
         this.winningBidRepository = winningBidRepository;
         this.userRepository = userRepository;
     }
+
+    @Transactional(readOnly = true)
     public DefaultRes<WinningBid> readWinningBid(ReadWinningBidDto readWinningBidDto){
         try{
             int wid = readWinningBidDto.getId();
@@ -36,6 +39,8 @@ public class ReadWinningBidService {
             return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Transactional(readOnly = true)
     public DefaultRes<Page<WinningBid>> readWinningBidsForWinner(ReadWinningBidDto readWinningBidDto, Pageable pageable)
     {
         try{
@@ -53,6 +58,8 @@ public class ReadWinningBidService {
             return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Transactional(readOnly = true)
     public DefaultRes<Page<WinningBid>> readWinningBidsForSeller(ReadWinningBidDto readWinningBidDto, Pageable pageable)
     {
         try{

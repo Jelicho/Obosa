@@ -11,6 +11,7 @@ import com.ssafy.obosa.service.common.FileService;
 import com.ssafy.obosa.util.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -35,6 +36,7 @@ public class MyinfoService {
         this.fileService = fileService;
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes<MyinfoDto> readMypage(User user)
     {
         try
@@ -102,6 +104,7 @@ public class MyinfoService {
         }
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes verifyPassword(User user, String password)
     {
         try

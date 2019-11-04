@@ -9,6 +9,7 @@ import com.ssafy.obosa.service.common.JwtService;
 import com.ssafy.obosa.enumeration.ResponseMessage;
 import com.ssafy.obosa.enumeration.StatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.List;
@@ -30,6 +31,7 @@ public class UserService
         this.tokenRepository = tokenRepository;
     }
 
+    @Transactional(readOnly = true)
     public User getUser(final String verificationToken) {
         final VerificationToken token = tokenRepository.findByToken(verificationToken);
         if (token != null) {
@@ -38,6 +40,7 @@ public class UserService
         return null;
     }
 
+    @Transactional(readOnly = true)
     public VerificationToken getVerificationToken(final String VerificationToken) {
         return tokenRepository.findByToken(VerificationToken);
     }
@@ -69,10 +72,12 @@ public class UserService
         return vToken;
     }
 
+    @Transactional(readOnly = true)
     public Optional<User> findUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
+    @Transactional(readOnly = true)
     public Optional<User> getUserByUID(final int uid) {
         return userRepository.findByUid(uid);
     }
@@ -103,6 +108,7 @@ public class UserService
         return userRepository.findByEmail(email) != null;
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes<List<User>>  readuserList()
     {
         final List<User> userList = userRepository.findAll();
@@ -110,6 +116,7 @@ public class UserService
         return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_USER, userList);
     }
 
+    @Transactional(readOnly = true)
     public User getUserByJwtToken(String jwtToken)
     {
         String email = jwtService.decode(jwtToken);

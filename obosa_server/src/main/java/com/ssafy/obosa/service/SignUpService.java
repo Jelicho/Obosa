@@ -13,6 +13,7 @@ import com.ssafy.obosa.util.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -107,6 +108,7 @@ public class  SignUpService
         }
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes duplicateEmail(String email)
     {
         if(userRepository.findByEmail(email).isPresent())
@@ -119,6 +121,7 @@ public class  SignUpService
         }
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes confirmEmail(String token) {
         try {
             ResponseMessage responseMessage = userService.validateVerificationToken(token);
