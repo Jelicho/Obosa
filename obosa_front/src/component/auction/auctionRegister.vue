@@ -82,6 +82,7 @@ export default {
       dates: [],
       today: "",
       hours: [],
+      startHours: 1,
       auction: {
         pid: "",
         lowPrice: 1000,
@@ -119,28 +120,31 @@ export default {
         this.dates[0] = this.today;
       }
       if (this.dates[0] == this.dates[1]) {
-        this.getHours(new Date().getHours() + 1);
+        this.startHours = new Date().getHours() + 1;
       } else {
-        this.getHours(-1);
+        this.startHours = 1;
       }
+    },
+    startHours(startHours) {
+      this.hours = this.range(startHours, 24)
     }
   },
   mounted() {
     this.today = this.dateformat(new Date());
     this.dates[0] = this.today;
     this.dates[1] = this.today;
-    this.getHours(new Date().getHours() + 1);
+    this.startHours = new Date().getHours() + 1
 
-    // this.product = this.$route.params.product;
-    this.product = {
-      pid: 2,
-      pname: "백만송이 장미",
-      pdescription: "아주 좋은 장미",
-      uid: "3",
-      registeredDate: "2019-10-18",
-      modifiedDate: null,
-      imgCount: 2
-    };
+    this.product = this.$route.params.product;
+    // this.product = {
+    //   pid: 2,
+    //   pname: "백만송이 장미",
+    //   pdescription: "아주 좋은 장미",
+    //   uid: "3",
+    //   registeredDate: "2019-10-18",
+    //   modifiedDate: null,
+    //   imgCount: 2
+    // };
   },
   methods: {
     ...mapActions("auctionModule", ["createAuction"]),
@@ -157,19 +161,11 @@ export default {
       for (var key in this.auction) {
         regiFormData.append(key, this.auction[key]);
       }
-      console.log(this.auction);
 
       this.createAuction(regiFormData);
     },
-       getHours(start){
-      if(start == -1){
-        this.hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-           } else {
-        this.hours = [];
-        for (var i = start; i < 25; i++) {
-          this.hours.push(i);
-        }
-      }
+    range(start, end){
+      return Array(end - start + 1).fill().map((_, idx) => start + idx)
     }
   }
 };
