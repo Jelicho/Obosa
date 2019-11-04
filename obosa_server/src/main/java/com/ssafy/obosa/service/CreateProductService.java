@@ -8,8 +8,8 @@ import com.ssafy.obosa.repository.ProductRepository;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.FileService;
 import com.ssafy.obosa.util.ImgHandler;
-import com.ssafy.obosa.util.ResponseMessage;
-import com.ssafy.obosa.util.StatusCode;
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

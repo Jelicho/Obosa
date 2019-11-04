@@ -2,10 +2,7 @@ package com.ssafy.obosa.model.redis;
 
 import com.ssafy.obosa.exception.LowerThanCurrentBidPriceException;
 import com.ssafy.obosa.exception.TimeExpiredException;
-import com.ssafy.obosa.model.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -13,9 +10,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @RedisHash("bid")
+@ToString
 public class Bid implements Serializable {
 
     @Id
@@ -23,6 +22,11 @@ public class Bid implements Serializable {
     private int highestBid;
     private int highestBidder; //uid
     private LocalDateTime endTime;
+    private int bidCount;
+
+    public Bid(String id, int highestBid, int highestBidder, LocalDateTime endTime) {
+        this(id, highestBid, highestBidder, endTime, 0);
+    }
 
     public void bid(int bidPrice, int bidder, LocalDateTime bidTime) {
         if (bidTime.isAfter(this.endTime)) {
@@ -34,5 +38,6 @@ public class Bid implements Serializable {
 
         this.highestBid = bidPrice;
         this.highestBidder = bidder;
+        this.bidCount++;
     }
 }

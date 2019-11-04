@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 @ToString
 public class MyinfoDto
 {
