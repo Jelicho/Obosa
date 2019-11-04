@@ -18,12 +18,9 @@ export default {
     };
   },
   mounted() {
-    this.images.push(INTRO_BASE_URL + "/introImg1.jpg");
-    this.images.push(INTRO_BASE_URL + "/introImg2.jpg");
-    this.images.push(INTRO_BASE_URL + "/introImg3.jpg");
-    this.images.push(INTRO_BASE_URL + "/introImg4.jpg");
-    this.images.push(INTRO_BASE_URL + "/introImg5.jpg");
-    this.images.push(INTRO_BASE_URL + "/introImg6.jpg");
+    for(let i = 1; i <= 6; i++){
+      this.images.push(`${INTRO_BASE_URL}/introImg${i}.jpg`);
+    }
   },
 };
 </script>
