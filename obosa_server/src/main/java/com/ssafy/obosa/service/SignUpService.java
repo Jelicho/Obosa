@@ -84,7 +84,7 @@ public class  SignUpService
             }
             else
             {
-                user.setProfileImg("default_user_img.png");
+                user.setProfileImg("obosa/user/default_user_img.png");
                 //디폴트 이미지 넣는 로직 간단하게
             }
 
