@@ -30,8 +30,8 @@ public enum ResponseMessage {
     DELETED_PRODUCT("물품 삭제 성공"),
     UPDATED_PRODUCT("물품 수정 성공"),
     NOT_FOUND_PRODUCTS("등록된 상품이 없습니다."),
-//    READ_ALL_PRODUCTS("유저 등록 물품 탐색 성공"),
-//    READ_PRODUCT("물품 탐색 성공"),
+    READ_ALL_PRODUCTS("유저 등록 물품 탐색 성공"),
+    READ_PRODUCT("물품 탐색 성공"),
     //Auction
     CREATED_AUCTION("경매 등록 성공"),
     NOT_FOUND_AUCTION("해당 경매를 찾을 수 없습니다."),

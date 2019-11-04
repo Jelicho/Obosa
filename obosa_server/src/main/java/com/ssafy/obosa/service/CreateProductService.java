@@ -5,7 +5,6 @@ import com.ssafy.obosa.model.domain.Product;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.CreateProductDto;
 import com.ssafy.obosa.repository.ProductRepository;
-import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.FileService;
 import com.ssafy.obosa.util.ImgHandler;
 import com.ssafy.obosa.util.ResponseMessage;

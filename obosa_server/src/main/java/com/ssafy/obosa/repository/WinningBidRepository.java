@@ -13,12 +13,17 @@ import java.util.Optional;
 
 public interface WinningBidRepository extends JpaRepository<WinningBid, String> {
     Optional<WinningBid> findWinningBidByWid(int wid);
+
+    @Transactional
     @Modifying
     @Query(value = "update WinningBid WB set WB.bidState = ?1 where WB.wid = ?2", nativeQuery = true)
     int setFixedBidStateFromWid(int bidState, int wid);
+
+    @Transactional
     @Modifying
     @Query(value = "update WinningBid WB set WB.address = ?1 where WB.wid = ?2", nativeQuery = true)
     int setFixedAddressFromWid(String address, int wid);
+
     @Transactional
     long deleteByWid(int wid);
 
