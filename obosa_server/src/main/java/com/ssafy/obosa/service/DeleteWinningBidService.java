@@ -21,7 +21,7 @@ public class DeleteWinningBidService {
         this.winningBidRepository=winningBidRepository;
     }
 
-    public DefaultRes<DeleteWinningBidDto> deleteBidAndAuction(DeleteWinningBidDto deleteWinningBidDto){
+    public DefaultRes<DeleteWinningBidDto> deleteBidAndAuction(User user, DeleteWinningBidDto deleteWinningBidDto){
         try
         {
             //삭제할 WinningBid  객체 가져오기

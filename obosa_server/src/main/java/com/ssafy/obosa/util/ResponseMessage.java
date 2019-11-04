@@ -53,6 +53,9 @@ public enum ResponseMessage {
     READ_WINNINGBID("결제 상세 내역 조회 성공"),
     READ_WINNINGBID_SELLER("판매자 결제 내역 조회 성공"),
     READ_WINNINGBID_WINNER("구매자 결제 내역 조회 성공"),
+    NOT_FOUND_SELL_WINNINGBID("낙찰된 판매 상품이 존재하지 않습니다."),
+    NOT_FOUND_WIN_WINNINGBID("낙찰된 구매 상품이 존재하지 않습니다."),
+    ALREADY_PASS_BIDSTATE("해당 결제 단계에서 불가능한 기능입니다."),
     //Common
     INTERNAL_SERVER_ERROR("서버 내부 에러"),
     DB_ERROR("데이터베이스 에러"),

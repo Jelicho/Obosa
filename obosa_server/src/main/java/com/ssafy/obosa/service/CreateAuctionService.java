@@ -26,7 +26,7 @@ public class CreateAuctionService {
         this.productRepository=productRepository;
     }
 
-    public DefaultRes<CreateProductDto> newAuction(CreateAuctionDto createAuctionDto){
+    public DefaultRes<CreateProductDto> newAuction(User user, CreateAuctionDto createAuctionDto){
         try{
             int pid = createAuctionDto.getPid();
             Optional<Product> optionalProduct = productRepository.findByPid(pid);

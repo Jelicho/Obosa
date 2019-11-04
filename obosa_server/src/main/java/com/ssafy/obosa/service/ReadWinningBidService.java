@@ -4,6 +4,7 @@ import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.domain.WinningBid;
 import com.ssafy.obosa.model.dto.ReadWinningBidDto;
+import com.ssafy.obosa.model.dto.WinningBidDto;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.repository.WinningBidRepository;
 import com.ssafy.obosa.util.ResponseMessage;
@@ -49,14 +50,19 @@ public class ReadWinningBidService {
             }else{
                 User user = optionalUser.get();
                 Page<WinningBid> winningBids = winningBidRepository.findByUser(user, pageable);
-                return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_WINNINGBID_WINNER, winningBids);
+                if(winningBids.isEmpty()){
+                    return DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_WIN_WINNINGBID);
+                }else{
+                    return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_WINNINGBID_WINNER, WinningBidDto.setProductDtoListByProductList(winningBids, pageable));
+                }
+
             }
         }catch (Exception e){
             e.printStackTrace();
             return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
         }
     }
-    public DefaultRes<Page<WinningBid>> readWinningBidsForSeller(ReadWinningBidDto readWinningBidDto, Pageable pageable)
+    public DefaultRes<Page<WinningBidDto>> readWinningBidsForSeller(ReadWinningBidDto readWinningBidDto, Pageable pageable)
     {
         try{
             int uid = readWinningBidDto.getId();
@@ -66,7 +72,11 @@ public class ReadWinningBidService {
             }else{
                 User user = optionalUser.get();
                 Page<WinningBid> winningBids = winningBidRepository.findByAuction_User(user, pageable);
-                return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_WINNINGBID_SELLER, winningBids);
+                if(winningBids.isEmpty()){
+                    return DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_SELL_WINNINGBID);
+                }else{
+                    return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_WINNINGBID_SELLER, WinningBidDto.setProductDtoListByProductList(winningBids, pageable));
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
