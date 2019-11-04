@@ -1,212 +1,205 @@
 <template>
   <div>
-    <v-form ref="regiform" valid>
-      <v-container class="container">
-        <div id="register-form" class="col-md-10 mx-auto bg-white">
-          <v-row>
-            <v-col sm="6" align="center">
-              <v-img :src="profilePreview" width="300" height="300"></v-img>
-              <v-btn rounded depressed color="#FDD835" @click="upload()">
-                업로드
-                <input
-                  type="file"
-                  style="display:none"
-                  accept=".gif, .jpg, .png"
-                  id="profile"
-                  @change="onFileChange"
-                />
-              </v-btn>
-            </v-col>
-            <v-col sm="6" class="input-form">
-              <v-row>
-                <v-col>
-                  <logo />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="9">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="이메일"
-                    v-model="user.email"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :rules="[rules.required, rules.email]"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="3" style="align-self:baseline!important">
-                  <v-btn
-                    height="56px"
-                    width="100%"
-                    :color="emailDuplicated ? 'red lighten-2' : 'green lighten-2'"
-                    @click="duplicateCheck('email')"
-                  >중복 확인</v-btn>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="이름"
-                    v-model="user.name"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :rules="[rules.required]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="9">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="닉네임"
-                    v-model="user.nickname"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :rules="[rules.required , rules.nickname]"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="3" style="align-self:baseline!important">
-                  <v-btn
-                    height="56px"
-                    width="100%"
-                    :color="nicknameDuplicated ? 'red lighten-2' : 'green lighten-2'"
-                    @click="duplicateCheck('nickname')"
-                  >중복 확인</v-btn>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    type="password"
-                    label="비밀번호"
-                    v-model="user.password"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :rules="[rules.required, rules.password]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    type="password"
-                    label="비밀번호 확인"
-                    v-model="passwordConfirm"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    :rules="[rules.required, rules.pwConfirm]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col @click="openapi()">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="우편번호"
-                    v-model="user.zipCode"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    disabled
-                    :rules="[rules.required]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col @click="openapi()">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="주소"
-                    v-model="user.address"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    disabled
-                    :rules="[rules.required]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <addressPopUp :dialog="addressDialog" @update:address="setAddress" />
-              <v-row>
-                <v-col sm="3">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="010"
-                    v-model="no1"
-                    :rules="[rules.required, rules.phone]"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    type="number"
-                    class="no-arrow"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="1">-</v-col>
-                <v-col sm="3">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="1234"
-                    v-model="no2"
-                    :rules="[rules.required, rules.phone]"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    type="number"
-                    class="no-arrow"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="1">-</v-col>
-                <v-col sm="3">
-                  <v-text-field
-                    required
-                    full-width
-                    single-line
-                    label="5678"
-                    v-model="no3"
-                    :rules="[rules.required, rules.phone]"
-                    background-color="#f4f8f7"
-                    color="grey darken-2"
-                    type="number"
-                    class="no-arrow"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-btn
-                    block
-                    rounded
-                    large
-                    dark
-                    ripple
-                    color="teal"
-                    id="sign-up"
-                    @click="register()"
-                  >회원가입</v-btn>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-        </div>
-      </v-container>
-    </v-form>
+    <v-container class="container">
+      <v-form ref="regiform" valid>
+        <v-row class="form-container" >
+          <div class="col-md-5 text-container ">
+            <v-img :src="profilePreview" style="margin:auto" width="300px" height="300"></v-img>
+            <v-btn rounded depressed color="#FDD835" @click="upload()">
+              업로드
+              <input
+                type="file"
+                style="display:none"
+                accept=".gif, .jpg, .png"
+                id="profile"
+                @change="onFileChange"
+              />
+            </v-btn>
+          </div>
+          <v-divider vertical />
+          <div id="register-form" class="col-md-6 mx-auto bg-white">
+            <v-row>
+              <v-col cols="9">
+                <v-text-field
+                  required
+                  outlined
+                  class="input_text"
+                  label="이메일"
+                  v-model="user.email"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  :rules="[rules.required, rules.email]"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="3" style="align-self:baseline!important">
+                <v-btn
+                  height="56px"
+                  width="100%"
+                  tile
+                  :color="emailDuplicated ? 'red lighten-2' : 'green lighten-2'"
+                  @click="duplicateCheck('email')"
+                >중복 확인</v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  required
+                  outlined
+                  class="input_text"
+                  label="이름"
+                  v-model="user.name"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  :rules="[rules.required]"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="9">
+                <v-text-field
+                  required
+                  outlined
+                  class="input_text"
+                  label="닉네임"
+                  v-model="user.nickname"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  :rules="[rules.required , rules.nickname]"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="3" style="align-self:baseline!important">
+                <v-btn
+                  height="56px"
+                  width="100%"
+                  tile
+                  :color="nicknameDuplicated ? 'red lighten-2' : 'green lighten-2'"
+                  @click="duplicateCheck('nickname')"
+                >중복 확인</v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  required
+                  outlined
+                  class="input_text password"
+                  type="password"
+                  label="비밀번호"
+                  v-model="user.password"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  :rules="[rules.required, rules.password]"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  required
+                  outlined
+                  type="password"
+                  class="input_text password"
+                  label="비밀번호 확인"
+                  v-model="passwordConfirm"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  :rules="[rules.required, rules.pwConfirm]"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col @click="addressDialog = !addressDialog">
+                <v-text-field
+                  required
+                  outlined
+                  class="input_text"
+                  label="우편번호"
+                  v-model="user.zipCode"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  disabled
+                  :rules="[rules.required]"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col @click="addressDialog = !addressDialog">
+                <v-text-field
+                  required
+                  outlined
+                  class="input_text"
+                  label="주소"
+                  v-model="user.address"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  disabled
+                  :rules="[rules.required]"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <addressPopUp :dialog="addressDialog" @update:address="setAddress" />
+            <v-row>
+              <v-col sm="3">
+                <v-text-field
+                  required
+                  outlined
+                  class="input_text no-arrow"
+                  label="010"
+                  v-model="no1"
+                  :rules="[rules.required, rules.phone]"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  type="number"
+                ></v-text-field>
+              </v-col>
+              <v-col sm="1">-</v-col>
+              <v-col sm="3">
+                <v-text-field
+                  required
+                  outlined
+                  class="input_text no-arrow"
+                  label="1234"
+                  v-model="no2"
+                  :rules="[rules.required, rules.phone]"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  type="number"
+                ></v-text-field>
+              </v-col>
+              <v-col sm="1">-</v-col>
+              <v-col sm="3">
+                <v-text-field
+                  required
+                  outlined
+                  class="input_text no-arrow"
+                  label="5678"
+                  v-model="no3"
+                  :rules="[rules.required, rules.phone]"
+                  background-color="#f4f8f7"
+                  color="#994fa980"
+                  type="number"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-btn
+                  block
+                  tile
+                  large
+                  dark
+                  ripple
+                  color="#994fa980"
+                  id="sign-up"
+                  @click="onSubmit()"
+                >회원가입</v-btn>
+              </v-col>
+            </v-row>
+          </div>
+        </v-row>
+      </v-form>
+    </v-container>
     <v-snackbar v-model="alert.isAlert" middle="true" :color="alert.type" top>
       {{ alert.message }}
       <v-btn text @click="alert.isAlert = false">확인</v-btn>
@@ -215,6 +208,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import addressPopUp from "@/component/api/addressPopUp";
 
 export default {
@@ -225,7 +219,7 @@ export default {
       addressDialog: false,
       emailDuplicated: true,
       nicknameDuplicated: true,
-      profilePreview: require("@/assets/user.png"),
+      profilePreview: USER_IMG_BASE_URL + "/default_user_img.png",
       user: {
         email: "",
         name: "",
@@ -234,9 +228,7 @@ export default {
         zipCode: "",
         address: "",
         phone: "",
-        profileImg: "",
-        // State : false,
-        // salt: 0
+        profileImg: USER_IMG_BASE_URL + "/default_user_img.png"
       },
       no1: "",
       no2: "",
@@ -255,42 +247,56 @@ export default {
           value == this.user.password || "비밀번호를 확인해주세요",
         phone: value => value.length <= 4 || "전화번호를 정확히 입력해주세요."
       },
-      message: "",
       alert: {
         isAlert: false,
         message: "",
         type: "success"
-      }
+      },
     };
   },
   components: {
     addressPopUp
   },
-  mounted() {
-    this.profilePreview = require("@/assets/user.png");
+  computed: {
+    ...mapState({
+      signupResponse: state => state.signupModule.signupResponse,
+      duplicateResponse: state => state.signupModule.duplicateResponse
+    })
+  },
+  watch: {
+    duplicateResponse(response) {
+      console.log(response);
+      this.alert.message = response.message;
+      this.alert.type = response.status == 200 ? "success" : "error";
+      this.alert.isAlert = true;
+    },
+    signupResponse(response) {
+      console.log(response);
+      if (response.statue == 200) {
+        this.$router.push({
+          name: 'home'
+        });
+      } else {
+        this.alert.message = response.message;
+        this.alert.type = "error";
+        this.alert.isAlert = true;
+      }
+    }
   },
   methods: {
-    register: function() {
-      var scope = this;
+    ...mapActions("signupModule", ["signup"]),
+    ...mapActions("signupModule", ["duplicateEmail"]),
+    ...mapActions("signupModule", ["duplicateNickname"]),
+    async onSubmit() {
       var regiFormData = new FormData();
-      this.user.phone = this.no1 + "-" + this.no2 + "-" + this.no3;
-      var route = this.$router
 
       if (this.$refs.regiform.validate()) {
+        this.user.phone = this.no1 + "-" + this.no2 + "-" + this.no3;
         for (var key in this.user) {
           regiFormData.append(key, this.user[key]);
         }
-        console.log("send data");
-        this.$userService.signUp(regiFormData).then(response => {
-          console.log(response);
-          
-          if (response.status == 200) {
-            route.push('/login');
-            }
-        })
-      } else {
-        this.snackbar = true;
-      }
+        await this.signup(regiFormData)
+      } 
     },
     upload() {
       $("#profile").trigger("click");
@@ -308,47 +314,29 @@ export default {
       };
       reader.readAsDataURL(imgfile);
     },
-    openapi() {
-      this.addressDialog = !this.addressDialog;
-    },
     setAddress(fulladdress) {
       this.user.address = fulladdress.address + ", " + fulladdress.detail;
       this.user.zipCode = fulladdress.code;
       this.addressDialog = false;
     },
     async duplicateCheck(column) {
-      const scope = this;
-      var duplicatecheck = null;
+      const _this = this;
 
       if (column == "email" && this.$refs.regiform.inputs[0].validate()) {
-        duplicatecheck = this.$userService.duplicateEmail(this.user.email);
-      } else if ( column == "nickname" && this.$refs.regiform.inputs[2].validate() ) {
-        duplicatecheck = this.$userService.duplicateNickname(this.user.nickname);
-      }
-
-      if (duplicatecheck != null) {
-        duplicatecheck.then(response => {
-          if (response.status == 200) {
-            scope.alert.message = response.message + "합니다.";
-            scope.alert.type = "success";
-            scope.alert.isAlert = "true";
-            scope.emailDuplicated = false;
-            /*
-             * TODO :
-             * 이메일 중복 검사 완료 시 사용자가 이메일을 변경할 경우를 대비하여
-             * 중복검사 버튼은 이메일 재변경 버튼으로 변경
-             */
-          } else {
-            scope.alert.message = response.message + "입니다.";
-            scope.alert.type = "error";
-            scope.alert.isAlert = "true";
-            scope.emailDuplicated = true;
-          }
+        await this.duplicateEmail(this.user.email).then(response => {
+          _this.emailDuplicated = response.status == 200 ? false : true;
+        });
+      } else if (
+        column == "nickname" &&
+        this.$refs.regiform.inputs[2].validate()
+      ) {
+        await this.duplicateNickname(this.user.nickname).then(response => {
+          _this.nicknameDuplicated = response.status == 200 ? false : true;
         });
       } else {
-        scope.alert.message = "정확히 입력해주세요";
-        scope.alert.type = "error";
-        scope.alert.isAlert = "true";
+        this.alert.message = "정확히 입력해주세요";
+        this.alert.type = "error";
+        this.alert.isAlert = "true";
       }
     }
   }
