@@ -1,8 +1,9 @@
 package com.ssafy.obosa.service;
 
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
-import com.ssafy.obosa.model.domain.VerificationToken;
 import com.ssafy.obosa.model.dto.SignupFormDto;
 import com.ssafy.obosa.registration.OnRegistrationCompleteEvent;
 import com.ssafy.obosa.repository.UserRepository;
@@ -12,6 +13,7 @@ import com.ssafy.obosa.util.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -82,7 +84,7 @@ public class  SignUpService
             }
             else
             {
-                user.setProfileImg("파일 없음");
+                user.setProfileImg("user.png");
                 //디폴트 이미지 넣는 로직 간단하게
             }
 
@@ -106,6 +108,7 @@ public class  SignUpService
         }
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes duplicateEmail(String email)
     {
         if(userRepository.findByEmail(email).isPresent())
@@ -118,6 +121,7 @@ public class  SignUpService
         }
     }
 
+    @Transactional(readOnly = true)
     public DefaultRes confirmEmail(String token) {
         try {
             ResponseMessage responseMessage = userService.validateVerificationToken(token);

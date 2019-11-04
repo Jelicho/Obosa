@@ -7,25 +7,19 @@ import $ from 'jquery'
 window.$ = $
 
 /* service */
-import constant from '@/service/constant'
-import auctionService  from '@/service/auctionService'
-import productService from '@/service/productService'
-import userService from '@/service/userService'
-import axios from 'axios'
-
-Vue.prototype.$auctionService = auctionService
-Vue.prototype.$productService = productService
-Vue.prototype.$userService = userService
-Vue.prototype.$axios = axios
+import constant from '@/util/constant'
 
 /* style */
 import './assets/style.css'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 
-
-const opts = {theme: {themes: {light: {primary: '#3f51b5',secondary: '#b0bec5',accent: '#8c9eff',error: '#b71c1c',},},},}
+const opts = {
+    theme: { themes: { light: { primary: '#3f51b5', secondary: '#b0bec5', accent: '#8c9eff', error: '#b71c1c', }, }, },
+    icons: { iconfont: 'fa' }
+}
 
 Vue.use(Vuetify, opts);
 
@@ -35,7 +29,11 @@ new Vue({
   el: '#app',
   router,
   store,
-  data:{API_BASE_URL : constant.API_BASE_URL},
+  data:{API_BASE_URL : constant.API_BASE_URL, 
+        USER_IMG_BASE_URL : constant.USER_IMG_BASE_URL,
+        PRODUCT_IMG_BASE_URL : constant.PRODUCT_IMG_BASE_URL,
+        DEFAULT_IMG_BASE_URL : constant.DEFAULT_IMG_BASE_URL,
+        INTRO_BASE_URL : constant.INTRO_BASE_URL},
   components: { App },
   template: '<App/>',
   vuetify: new Vuetify(),

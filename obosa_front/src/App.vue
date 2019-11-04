@@ -6,8 +6,17 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
-  name: "App"
+  name: "App",
+  async beforeMount() {
+    await this.reLogin()
+  },
+  methods:{
+    ...mapActions('userModule', ['reLogin'])
+  }
+
 };
 </script>
 

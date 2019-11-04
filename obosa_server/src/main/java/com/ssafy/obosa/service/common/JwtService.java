@@ -9,10 +9,9 @@ import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.common.JwtToken;
 import com.ssafy.obosa.model.common.LoginReq;
 import com.ssafy.obosa.model.common.Token;
-import com.ssafy.obosa.util.ResponseMessage;
-import com.ssafy.obosa.util.StatusCode;
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
