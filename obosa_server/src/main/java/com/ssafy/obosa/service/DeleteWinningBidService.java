@@ -1,6 +1,7 @@
 package com.ssafy.obosa.service;
 
 import com.ssafy.obosa.model.common.DefaultRes;
+import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.domain.WinningBid;
 import com.ssafy.obosa.model.dto.DeleteWinningBidDto;
 import com.ssafy.obosa.repository.AuctionRepository;
@@ -33,9 +34,11 @@ public class DeleteWinningBidService {
             }
 
             WinningBid winningBid = optionalWinningBid.get();
-
-            winningBidRepository.deleteByWid(wid);
-            auctionRepository.deleteByAid(winningBid.getAuction().getAid());
+            if(winningBid.getAuction().getUser()!=user){
+                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }
+            winningBidRepository.delete(winningBid);
+            auctionRepository.delete(winningBid.getAuction());
 
             return DefaultRes.res(StatusCode.OK, ResponseMessage.DELETED_WINNINGBID_AND_AUCTION);
         }

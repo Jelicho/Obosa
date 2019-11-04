@@ -22,21 +22,24 @@ public class ReadWinningBidService {
         this.winningBidRepository = winningBidRepository;
         this.userRepository = userRepository;
     }
-    public DefaultRes<WinningBid> readWinningBid(ReadWinningBidDto readWinningBidDto){
+    public DefaultRes<WinningBidDto> readWinningBid(User user, ReadWinningBidDto readWinningBidDto){
         try{
             int wid = readWinningBidDto.getId();
             Optional<WinningBid> optionalWinningBid = winningBidRepository.findWinningBidByWid(wid);
             if(!optionalWinningBid.isPresent()){
                 return DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_WINNINGBID);
-            }else{
-                return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_WINNINGBID, optionalWinningBid.get());
             }
+            WinningBid winningBid = optionalWinningBid.get();
+            if(winningBid.getUser()!=user&&winningBid.getAuction().getUser()!=user){
+                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_WINNINGBID, WinningBidDto.setWinningBidDtoByWinningBid(winningBid));
         }catch (Exception e){
             e.printStackTrace();
             return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
         }
     }
-    public DefaultRes<Page<WinningBid>> readWinningBidsForWinner(ReadWinningBidDto readWinningBidDto, Pageable pageable)
+    public DefaultRes<Page<WinningBidDto>> readWinningBidsForWinner(ReadWinningBidDto readWinningBidDto, Pageable pageable)
     {
         try{
             int uid = readWinningBidDto.getId();

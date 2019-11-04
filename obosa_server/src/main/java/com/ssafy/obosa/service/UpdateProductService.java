@@ -34,7 +34,7 @@ public class UpdateProductService {
         this.fileService = fileService;
         this.userRepository=userRepository;
     }
-    public DefaultRes<UpdateProductDto> updateProduct(UpdateProductDto updateProductDto, List<MultipartFile> productImgs)
+    public DefaultRes<UpdateProductDto> updateProduct(User user, UpdateProductDto updateProductDto)
     {
         try
         {
@@ -48,15 +48,14 @@ public class UpdateProductService {
             }
 
             Product product = optionalProduct.get();
-
+            if(product.getUser()!=user){
+                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }
             product.setPname(updateProductDto.getPname());
             product.setPdescription(updateProductDto.getPdescription());
 
-
+            List<MultipartFile> productImgs = updateProductDto.getProductImgs();
             ImgHandler.updateProductImgs(fileService, product, productImgs);
-
-            product.setImgCount(productImgs.size());
-
             productRepository.save(product);
 
             return DefaultRes.res(StatusCode.OK, ResponseMessage.UPDATED_PRODUCT);

@@ -2,6 +2,7 @@ package com.ssafy.obosa.service;
 
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.Auction;
+import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.DeleteAuctionDto;
 import com.ssafy.obosa.repository.AuctionRepository;
 import com.ssafy.obosa.repository.ProductRepository;
@@ -23,16 +24,16 @@ public class DeleteAuctionService {
         this.productRepository=productRepository;
     }
 
-    public DefaultRes<DeleteAuctionDto> deleteAuction(DeleteAuctionDto deleteAuctionDto){
+    public DefaultRes<DeleteAuctionDto> deleteAuction(User user, DeleteAuctionDto deleteAuctionDto){
             int aid = deleteAuctionDto.getAid();
-
             Optional<Auction> optionalAuction = auctionRepository.findAuctionByAid(aid);
             if(!optionalAuction.isPresent()){
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_AUCTION);
             }
-
             Auction auction = optionalAuction.get();
-
+            if(auction.getUser()!=user){
+                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }
             auctionRepository.delete(auction);
             return DefaultRes.res(StatusCode.OK, ResponseMessage.DELETED_AUCTION);
     }

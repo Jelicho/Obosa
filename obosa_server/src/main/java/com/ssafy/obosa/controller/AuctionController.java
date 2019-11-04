@@ -1,9 +1,9 @@
 package com.ssafy.obosa.controller;
 
+import com.ssafy.obosa.model.common.DefaultRes;
+import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.*;
-import com.ssafy.obosa.repository.AuctionRepository;
 import com.ssafy.obosa.service.*;
-import com.ssafy.obosa.service.common.JwtService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("auction")
 public class AuctionController {
 
-    private final AuctionRepository auctionRepository;
     private final ReadAuctionService readAuctionService;
     private final CreateAuctionService createAuctionService;
     private final DeleteAuctionService deleteAuctionService;
@@ -23,11 +22,10 @@ public class AuctionController {
     private final UserService userService;
     private final BidService bidService;
 
-    AuctionController(final AuctionRepository auctionRepository, final ReadAuctionService readAuctionService,
+    AuctionController(final ReadAuctionService readAuctionService,
                       final CreateAuctionService createAuctionService, final DeleteAuctionService deleteAuctionService,
                       final UpdateAuctionService updateAuctionService, final UserService userService,
                       final BidService bidService){
-        this.auctionRepository=auctionRepository;
         this.readAuctionService=readAuctionService;
         this.createAuctionService=createAuctionService;
         this.deleteAuctionService=deleteAuctionService;
@@ -63,20 +61,57 @@ public class AuctionController {
     }
 
     @PostMapping
-    public ResponseEntity createAuction(CreateAuctionDto createAuctionDto)
+    public ResponseEntity createAuction(@RequestHeader(value = "Authorization", required = false) String jwtToken, CreateAuctionDto createAuctionDto)
     {
-        return new ResponseEntity(createAuctionService.newAuction(createAuctionDto), HttpStatus.OK);
+        try{
+            User user = userService.getUserByJwtToken(jwtToken);
+            if(user == null)
+            {
+                return new ResponseEntity<>(DefaultRes.UNAUTHORIZATION, HttpStatus.UNAUTHORIZED);
+            }
+            return new ResponseEntity(createAuctionService.newAuction(user, createAuctionDto), HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return new ResponseEntity(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping
-    public ResponseEntity deleteAuction(DeleteAuctionDto deleteAuctionDto)
+    public ResponseEntity deleteAuction(@RequestHeader(value = "Authorization", required = false) String jwtToken, DeleteAuctionDto deleteAuctionDto)
     {
-        return new ResponseEntity(deleteAuctionService.deleteAuction(deleteAuctionDto), HttpStatus.OK);
+        try{
+            User user = userService.getUserByJwtToken(jwtToken);
+            if(user == null)
+            {
+                return new ResponseEntity<>(DefaultRes.UNAUTHORIZATION, HttpStatus.UNAUTHORIZED);
+            }
+            return new ResponseEntity(deleteAuctionService.deleteAuction(user, deleteAuctionDto), HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return new ResponseEntity(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @PutMapping
-    public ResponseEntity updateAuction(UpdateAuctionDto updateAuctionDto)
+    public ResponseEntity updateAuction(@RequestHeader(value = "Authorization", required = false) String jwtToken, UpdateAuctionDto updateAuctionDto)
     {
-        return new ResponseEntity(updateAuctionService.updateAuction(updateAuctionDto), HttpStatus.OK);
+        try{
+            User user = userService.getUserByJwtToken(jwtToken);
+            if(user == null)
+            {
+                return new ResponseEntity<>(DefaultRes.UNAUTHORIZATION, HttpStatus.UNAUTHORIZED);
+            }
+            return new ResponseEntity(updateAuctionService.updateAuction(user, updateAuctionDto), HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return new ResponseEntity(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
