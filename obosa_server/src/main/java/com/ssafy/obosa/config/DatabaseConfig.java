@@ -2,6 +2,7 @@ package com.ssafy.obosa.config;
 
 import com.ssafy.obosa.util.DatabaseProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -15,6 +16,7 @@ import javax.sql.DataSource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Configuration
 public class DatabaseConfig
 {
     private final DatabaseProperty databaseProperty;
