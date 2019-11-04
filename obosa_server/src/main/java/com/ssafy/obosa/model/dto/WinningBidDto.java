@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -34,7 +35,7 @@ public class WinningBidDto {
     }
     public static Page<WinningBidDto> setProductDtoListByProductList(Page<WinningBid> winningBids, Pageable pageable)
     {
-        List<WinningBidDto> winningBidDtosList = null;
+        List<WinningBidDto> winningBidDtosList = new ArrayList<>();
         for(WinningBid winningBid:winningBids){
             winningBidDtosList.add(setWinningBidDtoByWinningBid(winningBid));
         }
