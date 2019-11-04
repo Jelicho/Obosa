@@ -35,9 +35,18 @@ public class AuctionController {
     }
 
     @PostMapping("/{aid}")
-    public ResponseEntity bidAuction(BidDto bidDto, @RequestHeader("Authorization") String jwtToken) {
-        int uid = userService.getUserByJwtToken(jwtToken).getUid();
-        return new ResponseEntity(bidService.newBid(bidDto, uid), HttpStatus.OK);
+    public ResponseEntity bidAuction(@RequestHeader(value = "Authorization", required = false) String jwtToken, BidDto bidDto) {
+        try{
+            User user = userService.getUserByJwtToken(jwtToken);
+            if(user==null){
+                return new ResponseEntity<>(DefaultRes.UNAUTHORIZATION, HttpStatus.UNAUTHORIZED);
+            }
+            int uid = user.getUid();
+            return new ResponseEntity(bidService.newBid(bidDto, uid), HttpStatus.OK);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{aid}")
