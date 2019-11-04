@@ -1,7 +1,7 @@
 <template>
   <router-link :to="{name: 'auction.detail' , params : { auction: auction }}">
     <v-card height="auto" outlined>
-      <v-img class="item-img" :src="auction.product.imgCount == 0 ? imgsrc() : productImg" />
+      <v-img class="item-img" :src="auction.product.imgCount === 0 ? imgsrc() : productImg" />
       <v-card-title>{{auction.product.pname}}</v-card-title>
       <v-card-subtitle>{{auction.uid}}</v-card-subtitle>
       <v-progress-linear :value="progressDate" :color="progressColor"></v-progress-linear>
