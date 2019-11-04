@@ -7,7 +7,7 @@ import $ from 'jquery'
 window.$ = $
 
 /* service */
-import constant from '@/service/constant'
+import constant from '@/util/constant'
 
 /* style */
 import './assets/style.css'
