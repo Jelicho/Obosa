@@ -27,7 +27,7 @@ public class ReadProductService {
     public DefaultRes<Page<ProductDto>> readAllProducts(User user, Pageable pageable)
     {
         Page<Product> productAllList = productRepository.findByUser(user, pageable);
-        if(productAllList==null){
+        if(productAllList.isEmpty()){
             return DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_PRODUCTS);
         }else{
             return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_ALL_PRODUCTS, ProductDto.setProductDtoListByProductList(productAllList, pageable));
