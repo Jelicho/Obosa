@@ -28,7 +28,9 @@ pipeline {
         }
         stage ('deploy front server') {
             when{
-                branch 'master'
+                expression {
+                    return gitlabTargetBranch == 'master';
+                 }
             }
             steps {
                 script {
@@ -41,7 +43,9 @@ pipeline {
         
         stage ('deploy spring server') {
             when{
-                branch 'master'
+                expression {
+                    return gitlabTargetBranch == 'master';
+                 }
             }
             steps {
                 script {
@@ -61,16 +65,16 @@ pipeline {
         always {
             script{
                 if ( currentBuild.currentResult == "SUCCESS" ) {
-                    slackSend color: "good", message: "[ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} was successful"
+                    slackSend color: "good", message: "[ user : ${gitlabUserName} ] , [ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} was successful"
                 }
                 else if( currentBuild.currentResult == "FAILURE" ) { 
-                    slackSend color: "danger", message: "[ Job: ${env.JOB_NAME} ] , [ Stage: ${FAILED_STAGE} ] with buildnumber ${env.BUILD_NUMBER} was failed"
+                    slackSend color: "danger", message: "[ user : ${gitlabUserName} ] , [ Job: ${env.JOB_NAME} ] , [ Stage: ${FAILED_STAGE} ] with buildnumber ${env.BUILD_NUMBER} was failed"
                 }
                 else if( currentBuild.currentResult == "UNSTABLE" ) { 
-                    slackSend color: "warning", message: "[ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} was unstable"
+                    slackSend color: "warning", message: "[ user : ${gitlabUserName} ] , [ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} was unstable"
                 }
                 else {
-                    slackSend color: "danger", message: "[ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} its resulat was unclear"	
+                    slackSend color: "danger", message: "[ user : ${gitlabUserName} ] , [ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} its resulat was unclear"	
                 }
             }
         }
