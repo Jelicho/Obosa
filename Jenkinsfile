@@ -26,6 +26,39 @@ pipeline {
                 }
             }
         }
+        stage ('deploy test server') {
+            when{
+                expression {
+                    return gitlabTargetBranch == 'develop';
+                 }
+            }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                }
+                sh 'chmod +x ${WORKSPACE}/deployTestSpring.sh'
+                sh "JENKINS_NODE_COOKIE=dontKillMe ${WORKSPACE}/deployTestSpring.sh 8333 obosa-0.0.1-SNAPSHOT application.yml"
+            }
+        }
+        stage ('kill test server') {
+            when{
+                expression {
+                    return gitlabTargetBranch == 'develop';
+                 }
+            }
+            input {
+                message "테스트 서버를 종료하시겠습니까?"
+            }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                }
+                    echo " "
+                    echo "Stoping process on port: 8333"
+                    sh   'fuser -n tcp -k 8333 &'
+                    echo " "
+            }
+        }
         stage ('deploy front server') {
             when{
                 expression {
