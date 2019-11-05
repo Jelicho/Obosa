@@ -219,7 +219,7 @@ export default {
       addressDialog: false,
       emailDuplicated: true,
       nicknameDuplicated: true,
-      profilePreview: USER_IMG_BASE_URL + "/default_user_img.png",
+      profilePreview: S3_BASE_URL + "obosa/user/default_user_img.png",
       user: {
         email: "",
         name: "",
@@ -228,7 +228,7 @@ export default {
         zipCode: "",
         address: "",
         phone: "",
-        profileImg: USER_IMG_BASE_URL + "/default_user_img.png"
+        profileImg: S3_BASE_URL + "obosa/user/default_user_img.png"
       },
       no1: "",
       no2: "",
