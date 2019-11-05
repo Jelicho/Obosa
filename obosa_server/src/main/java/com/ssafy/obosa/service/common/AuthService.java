@@ -1,5 +1,6 @@
 package com.ssafy.obosa.service.common;
 
+import com.ssafy.obosa.enumeration.LoginState;
 import com.ssafy.obosa.model.common.LoginReq;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.repository.UserRepository;
@@ -17,20 +18,23 @@ public class AuthService
         this.userRepository = userRepository;
     }
 
-    public boolean loginCheck(LoginReq loginReq)
+    public LoginState loginCheck(LoginReq loginReq)
     {
         final User user = userRepository.findUserByEmail(loginReq.getEmail());
+        //탈퇴된 계정일 시, login 불가
+        if(user.isWithDraw()){
+            return LoginState.BANNED;
+        }
         SHA256Util sha256Util = new SHA256Util();
         if(user != null)
         {
             String hashedPw = sha256Util.SHA256Util(loginReq.getPassword()+user.getSalt());
             if(hashedPw.equals(user.getPassword()))
             {
-                return true;
+                return LoginState.SUCCESS;
             }
-            return false;
         }
-        return false;
+        return LoginState.FAIL;
     }
 
     public boolean emailCheck(String email)

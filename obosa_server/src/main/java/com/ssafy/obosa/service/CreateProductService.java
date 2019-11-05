@@ -5,7 +5,6 @@ import com.ssafy.obosa.model.domain.Product;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.CreateProductDto;
 import com.ssafy.obosa.repository.ProductRepository;
-import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.FileService;
 import com.ssafy.obosa.util.ImgHandler;
 import com.ssafy.obosa.enumeration.ResponseMessage;
@@ -14,43 +13,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CreateProductService {
 
     private final ProductRepository productRepository;
     private final FileService fileService;
-    private final UserRepository userRepository;
 
-    public CreateProductService(final ProductRepository productRepository, final FileService fileService, final UserRepository userRepository)
+    public CreateProductService(final ProductRepository productRepository, final FileService fileService)
     {
         this.productRepository = productRepository;
         this.fileService = fileService;
-        this.userRepository=userRepository;
     }
-    public DefaultRes<CreateProductDto> newProduct(CreateProductDto createProductDto, List<MultipartFile> productImgs)
+    public DefaultRes<CreateProductDto> newProduct(User user, CreateProductDto createProductDto)
     {
         try
         {
-            int uid = createProductDto.getUid();
-            Optional<User> optionalUser = userRepository.findByUid(uid);
-            if(!optionalUser.isPresent())
-            {
-                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_USER);
-            }
-
-            User user = optionalUser.get();
             Product product = Product.setProductByProductDto(createProductDto, user);
-
+            List<MultipartFile> productImgs = createProductDto.getProductImgs();
             if(productImgs != null)
             {
-                ImgHandler.createProductImgs(fileService, product, productImgs, uid);
+                ImgHandler.createProductImgs(fileService, product, productImgs, user.getUid());
             }
             //else => default는 0로 설정되어 있다.
-
             productRepository.save(product);
-
             return DefaultRes.res(StatusCode.OK, ResponseMessage.CREATED_PRODUCT);
         }
         catch (Exception e)

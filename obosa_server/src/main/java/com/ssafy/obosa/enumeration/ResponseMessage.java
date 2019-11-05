@@ -22,6 +22,8 @@ public enum ResponseMessage {
     CREATED_USER("회원 가입 성공"),
     UPDATE_USER("회원 정보 수정 성공"),
     DELETE_USER("회원 탈퇴 성공"),
+    NOT_PERMISSION_ACCESS("접근 권한이 없습니다."),
+    BANNED_USER("탈퇴된 계정입니다."),
     //Product
     CREATED_PRODUCT("물품 등록 성공"),
     NOT_FOUND_PRODUCT("해당 물품을 찾을 수 없습니다."),
@@ -29,8 +31,8 @@ public enum ResponseMessage {
     DELETED_PRODUCT("물품 삭제 성공"),
     UPDATED_PRODUCT("물품 수정 성공"),
     NOT_FOUND_PRODUCTS("등록된 상품이 없습니다."),
-//    READ_ALL_PRODUCTS("유저 등록 물품 탐색 성공"),
-//    READ_PRODUCT("물품 탐색 성공"),
+    READ_ALL_PRODUCTS("유저 등록 물품 탐색 성공"),
+    READ_PRODUCT("물품 탐색 성공"),
     //Auction
     CREATED_AUCTION("경매 등록 성공"),
     NOT_FOUND_AUCTION("해당 경매를 찾을 수 없습니다."),
@@ -52,6 +54,9 @@ public enum ResponseMessage {
     READ_WINNINGBID("결제 상세 내역 조회 성공"),
     READ_WINNINGBID_SELLER("판매자 결제 내역 조회 성공"),
     READ_WINNINGBID_WINNER("구매자 결제 내역 조회 성공"),
+    NOT_FOUND_SELL_WINNINGBID("낙찰된 판매 상품이 존재하지 않습니다."),
+    NOT_FOUND_WIN_WINNINGBID("낙찰된 구매 상품이 존재하지 않습니다."),
+    ALREADY_PASS_BIDSTATE("해당 결제 단계에서 불가능한 기능입니다."),
     //Common
     INTERNAL_SERVER_ERROR("서버 내부 에러"),
     DB_ERROR("데이터베이스 에러"),
