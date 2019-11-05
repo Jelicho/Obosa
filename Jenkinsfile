@@ -42,6 +42,7 @@ pipeline {
         }
         stage ('kill test server') {
             when{
+                beforeInput  true
                 expression {
                     return gitlabTargetBranch == 'develop';
                  }
