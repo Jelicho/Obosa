@@ -1,30 +1,25 @@
 <template>
   <div>
     <div id="main-overview" class="container">
-      <v-row>
-        <v-col md="7">
-          <br />
-          <v-btn depressed large color="#FFD54F">
-            <router-link :to="{ name: 'register' }">회원가입</router-link>
-          </v-btn>
-        </v-col>
-        <v-col md="5">
-          <h1>
-            OISO
-            <br />BOISO
-            <br />SAISO
-            <br />
-          </h1>
-          <h4>중고 상품 경매를 시작해보세요.</h4>
-        </v-col>
-      </v-row>
+        <introImageSlide />
+        <introTextCard />
+        <introAuctionList />
+        <introStatistics />
     </div>
   </div>
 </template>
 
 <script>
+import introImageSlide from '@/component/intro/introImageSlide'
+import introTextCard from '@/component/intro/introTextCard'
+import introAuctionList from '@/component/intro/introAuctionList'
+import introStatistics from '@/component/intro/introStatistics'
+
 export default {
   name: "Home",
+  components:{
+    introImageSlide, introTextCard, introAuctionList, introStatistics
+  }
 };
 </script>
 
