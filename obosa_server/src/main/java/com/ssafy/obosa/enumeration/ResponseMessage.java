@@ -1,4 +1,4 @@
-package com.ssafy.obosa.util;
+package com.ssafy.obosa.enumeration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +22,8 @@ public enum ResponseMessage {
     CREATED_USER("회원 가입 성공"),
     UPDATE_USER("회원 정보 수정 성공"),
     DELETE_USER("회원 탈퇴 성공"),
+    NOT_PERMISSION_ACCESS("접근 권한이 없습니다."),
+    BANNED_USER("탈퇴된 계정입니다."),
     //Product
     CREATED_PRODUCT("물품 등록 성공"),
     NOT_FOUND_PRODUCT("해당 물품을 찾을 수 없습니다."),
@@ -29,8 +31,8 @@ public enum ResponseMessage {
     DELETED_PRODUCT("물품 삭제 성공"),
     UPDATED_PRODUCT("물품 수정 성공"),
     NOT_FOUND_PRODUCTS("등록된 상품이 없습니다."),
-//    READ_ALL_PRODUCTS("유저 등록 물품 탐색 성공"),
-//    READ_PRODUCT("물품 탐색 성공"),
+    READ_ALL_PRODUCTS("유저 등록 물품 탐색 성공"),
+    READ_PRODUCT("물품 탐색 성공"),
     //Auction
     CREATED_AUCTION("경매 등록 성공"),
     NOT_FOUND_AUCTION("해당 경매를 찾을 수 없습니다."),
@@ -41,6 +43,20 @@ public enum ResponseMessage {
     TYPE_ERROR("지원하는 않는 Type입니다."),
     READ_SEARCH_AUCTIONS("경매 검색 성공"),
     NOT_FOUND_SEARCH("경매 검색 해당 항목이 없습니다."),
+    BID_SUCCESS("경매 입찰 성공"),
+    EXPIRED_AUCTION("경매 시간 만료"),
+    BID_LOWER_THAN_CURRENT_HIGHEST("현재 입찰금보다 적은 액수로 입찰할 수 없습니다."),
+    //WinningBid
+    NOT_FOUND_WINNINGBID("해당 결제는 존재하지 않습니다."),
+    DELETED_WINNINGBID_AND_AUCTION("결제내역과 경매 삭제 성공"),
+    UPDATED_WINNINGBID_STATE("결제내역의 상태가 변경완료됐습니다."),
+    UPDATED_WINNINGBID_ADDRESS("결제내역의 주소가 변경완료됐습니다."),
+    READ_WINNINGBID("결제 상세 내역 조회 성공"),
+    READ_WINNINGBID_SELLER("판매자 결제 내역 조회 성공"),
+    READ_WINNINGBID_WINNER("구매자 결제 내역 조회 성공"),
+    NOT_FOUND_SELL_WINNINGBID("낙찰된 판매 상품이 존재하지 않습니다."),
+    NOT_FOUND_WIN_WINNINGBID("낙찰된 구매 상품이 존재하지 않습니다."),
+    ALREADY_PASS_BIDSTATE("해당 결제 단계에서 불가능한 기능입니다."),
     //Common
     INTERNAL_SERVER_ERROR("서버 내부 에러"),
     DB_ERROR("데이터베이스 에러"),
@@ -53,4 +69,6 @@ public enum ResponseMessage {
     TOKEN_VALID("이메일 인증 성공");
 
     private String message;
+
+
 }

@@ -15,6 +15,5 @@ import java.util.List;
 public class CreateProductDto {
     private String pname;
     private String pdescription;
-    private int uid;
     private List<MultipartFile> productImgs;
 }

@@ -3,14 +3,15 @@ package com.ssafy.obosa.aop;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.common.JwtService;
-import com.ssafy.obosa.util.ResponseMessage;
-import com.ssafy.obosa.util.StatusCode;
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 

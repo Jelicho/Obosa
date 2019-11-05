@@ -1,12 +1,12 @@
 package com.ssafy.obosa.model.dto;
 
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class MyinfoDto
 {
