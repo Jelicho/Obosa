@@ -1,5 +1,6 @@
 package com.ssafy.obosa.controller;
 
+import com.ssafy.obosa.enumeration.BidState;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.DeleteWinningBidDto;
@@ -90,7 +91,7 @@ public class WinningBidController {
     public ResponseEntity updateBidStateToOutstanding(@RequestHeader(value = "Authorization", required = false) String jwtToken, UpdateWinningBidDto updateWinningBidDto){
         try{
             User user = userService.getUserByJwtToken(jwtToken);
-            int bidState = 4;
+            int bidState = BidState.NOT_PAY.getState();
             return new ResponseEntity(updateWinningBidService.updateWinningBidState(user, updateWinningBidDto, bidState), HttpStatus.OK);
         }catch (Exception e)
         {
@@ -107,7 +108,7 @@ public class WinningBidController {
             {
                 return new ResponseEntity<>(DefaultRes.UNAUTHORIZATION, HttpStatus.UNAUTHORIZED);
             }
-            int bidState = 3;
+            int bidState = BidState.SHIP_RECEIVED.getState();
             return new ResponseEntity(updateWinningBidService.updateWinningBidState(user, updateWinningBidDto, bidState), HttpStatus.OK);
         }catch (Exception e)
         {
@@ -124,7 +125,7 @@ public class WinningBidController {
             {
                 return new ResponseEntity<>(DefaultRes.UNAUTHORIZATION, HttpStatus.UNAUTHORIZED);
             }
-            int bidState = 2;
+            int bidState = BidState.SHIPPING.getState();
             return new ResponseEntity(updateWinningBidService.updateWinningBidState(user, updateWinningBidDto, bidState), HttpStatus.OK);
         }catch (Exception e)
         {
@@ -141,7 +142,7 @@ public class WinningBidController {
             {
                 return new ResponseEntity<>(DefaultRes.UNAUTHORIZATION, HttpStatus.UNAUTHORIZED);
             }
-            int bidState = 1;
+            int bidState = BidState.PAY_COMPLETE.getState();
             return new ResponseEntity(updateWinningBidService.updateWinningBidState(user, updateWinningBidDto, bidState), HttpStatus.OK);
         }catch (Exception e)
         {
