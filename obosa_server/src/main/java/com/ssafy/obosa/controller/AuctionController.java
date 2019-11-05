@@ -34,7 +34,7 @@ public class AuctionController {
         this.bidService = bidService;
     }
 
-    @PostMapping("/{aid}")
+    @PostMapping("/bid")
     public ResponseEntity bidAuction(@RequestHeader(value = "Authorization", required = false) String jwtToken, BidDto bidDto) {
         try{
             User user = userService.getUserByJwtToken(jwtToken);
