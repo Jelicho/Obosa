@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
-@RequestMapping("auction")
+@RequestMapping("api/auction")
 public class AuctionController {
 
     private final AuctionRepository auctionRepository;

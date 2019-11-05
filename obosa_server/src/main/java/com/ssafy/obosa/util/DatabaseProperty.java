@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties("datasource")
+@ConfigurationProperties("spring.datasource")
 public class DatabaseProperty
 {
     private String url;

@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
-@RequestMapping("signup")
+@RequestMapping("api/signup")
 public class SignUpController
 {
     @Autowired
