@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
-@RequestMapping("mypage")
+@RequestMapping("api/mypage")
 @CrossOrigin(origins = "*")
 @Controller
 public class MyinfoController

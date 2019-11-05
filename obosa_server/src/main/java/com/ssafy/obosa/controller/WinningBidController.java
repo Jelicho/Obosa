@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("winningbid")
+@RequestMapping("api/winningbid")
 public class WinningBidController {
     private final DeleteWinningBidService deleteWinningBidService;
     private final UpdateWinningBidService updateWinningBidService;
