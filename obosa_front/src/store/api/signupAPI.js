@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:8080/signup'
+// const apiUrl = 'http://localhost:8080/signup'
+const apiUrl = 'http://obosa.ssafy.io/api/signup'
 
 export default {
   signup(regiFormData) {

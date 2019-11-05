@@ -5,17 +5,14 @@ import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.SignUpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
-@RequestMapping("signup")
+@RequestMapping("api/signup")
 public class SignUpController
 {
     @Autowired
@@ -32,11 +29,18 @@ public class SignUpController
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping
-    public ResponseEntity signup(SignupFormDto signupFormDto, @RequestPart(value="profileImgFile", required = false) final MultipartFile profileImgFile)
+    @GetMapping("duplicateNickname")
+    public ResponseEntity duplicateUserNickname(@RequestParam String nickname)
     {
-        System.out.println("[ --> profile : " + profileImgFile.toString() + " ]");
-        return new ResponseEntity(signUpService.newUser(signupFormDto, profileImgFile), HttpStatus.OK);
+        return new ResponseEntity(signUpService.duplicateNickname(nickname), HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping
+    public ResponseEntity signup(SignupFormDto signupFormDto)
+    {
+//        System.out.println("[ --> profile : " + profileImgFile.toString() + " ]");
+        return new ResponseEntity(signUpService.newUser(signupFormDto), HttpStatus.OK);
     }
 
     @GetMapping("/confirm/{token}")

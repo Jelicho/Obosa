@@ -5,12 +5,13 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ssafy.obosa.enumeration.JwtExpireTermEnum;
+import com.ssafy.obosa.enumeration.LoginState;
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.common.JwtToken;
 import com.ssafy.obosa.model.common.LoginReq;
 import com.ssafy.obosa.model.common.Token;
-import com.ssafy.obosa.enumeration.ResponseMessage;
-import com.ssafy.obosa.enumeration.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,10 @@ public class JwtService
 
     public DefaultRes generateToken(LoginReq loginReq)
     {
-        if(authService.loginCheck(loginReq))
-        {
+        LoginState loginState = authService.loginCheck(loginReq);
+        int state = loginState.getState();
+
+        if(state == LoginState.SUCCESS.getState()){
             long nowTime = System.currentTimeMillis() / 1000;
 
             Token accessToken = createToken(loginReq.getEmail(), JwtExpireTermEnum.ACCESS, nowTime);
@@ -49,9 +52,14 @@ public class JwtService
             JwtToken jwtToken = new JwtToken(accessToken, refreshToken);
             return DefaultRes.res(StatusCode.CREATED, ResponseMessage.LOGIN_SUCCESS, jwtToken);
         }
-        else
-        {
+        else if(state == LoginState.BANNED.getState()){
+            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.BANNED_USER);
+        }
+        else if(state == LoginState.FAIL.getState()){
             return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.LOGIN_FAIL);
+        }
+        else{
+            return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
         }
     }
 

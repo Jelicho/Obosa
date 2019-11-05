@@ -26,7 +26,7 @@ public class CreateAuctionService {
         this.productRepository=productRepository;
     }
 
-    public DefaultRes<CreateProductDto> newAuction(CreateAuctionDto createAuctionDto){
+    public DefaultRes<CreateProductDto> newAuction(User user, CreateAuctionDto createAuctionDto){
         try{
             int pid = createAuctionDto.getPid();
             Optional<Product> optionalProduct = productRepository.findByPid(pid);
@@ -35,12 +35,12 @@ public class CreateAuctionService {
             }
 
             Product product = optionalProduct.get();
-            User user = product.getUser();
-
+            if(user.getUid()!=product.getUser().getUid()){
+                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }
             Auction auction = Auction.setAuctionByAuctionDto(createAuctionDto, user, product);
 
             auctionRepository.save(auction);
-
             return DefaultRes.res(StatusCode.OK, ResponseMessage.CREATED_AUCTION);
 
         }catch (Exception e ){

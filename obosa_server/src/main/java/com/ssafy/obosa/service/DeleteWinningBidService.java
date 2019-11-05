@@ -1,6 +1,7 @@
 package com.ssafy.obosa.service;
 
 import com.ssafy.obosa.model.common.DefaultRes;
+import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.domain.WinningBid;
 import com.ssafy.obosa.model.dto.DeleteWinningBidDto;
 import com.ssafy.obosa.repository.AuctionRepository;
@@ -20,7 +21,7 @@ public class DeleteWinningBidService {
         this.winningBidRepository=winningBidRepository;
     }
 
-    public DefaultRes<DeleteWinningBidDto> deleteBidAndAuction(DeleteWinningBidDto deleteWinningBidDto){
+    public DefaultRes<DeleteWinningBidDto> deleteBidAndAuction(User user, DeleteWinningBidDto deleteWinningBidDto){
         try
         {
             //삭제할 WinningBid  객체 가져오기
@@ -33,9 +34,11 @@ public class DeleteWinningBidService {
             }
 
             WinningBid winningBid = optionalWinningBid.get();
-
-            winningBidRepository.deleteByWid(wid);
-            auctionRepository.deleteByAid(winningBid.getAuction().getAid());
+            if(winningBid.getAuction().getUser().getUid()!=user.getUid()){
+                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }
+            winningBidRepository.delete(winningBid);
+            auctionRepository.delete(winningBid.getAuction());
 
             return DefaultRes.res(StatusCode.OK, ResponseMessage.DELETED_WINNINGBID_AND_AUCTION);
         }
