@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -24,8 +23,8 @@ public interface AuctionRepository extends JpaRepository<Auction, String> {
     int setFixedAucStateFromNowDateTime(char aucState, String nowDateTime);
     @Transactional
     long deleteByAid(int aid);
-    @Query(value = "SELECT A FROM AUCTION A WHERE A.aucState = :aucState and A.ENDDATE <= :nowDate", nativeQuery = true)
+    @Query(value = "SELECT * FROM AUCTION A WHERE A.aucState = ?1 and A.ENDDATE >= ?2", nativeQuery = true)
     List<Auction> findByAucStateAndNowDate(
-            @Param("aucState") char aucState,
-            @Param("nowDate") String nowDate);
+            char aucState,
+            String nowDate);
 }
