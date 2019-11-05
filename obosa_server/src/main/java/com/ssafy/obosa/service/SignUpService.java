@@ -131,4 +131,16 @@ public class  SignUpService
             return DefaultRes.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Transactional(readOnly = true)
+    public DefaultRes duplicateNickname(String nickname) {
+        if(userRepository.findUserByNickname(nickname)==null)
+        {
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.UNABLE_NICKNAME, true);
+        }
+        else
+        {
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.ABLE_NICKNAME, false);
+        }
+    }
 }

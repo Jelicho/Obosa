@@ -5,8 +5,6 @@ import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.service.SignUpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,6 +27,13 @@ public class SignUpController
     public ResponseEntity duplicateUserEmail(@RequestParam String email)
     {
         return new ResponseEntity(signUpService.duplicateEmail(email), HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("duplicateNickname")
+    public ResponseEntity duplicateUserNickname(@RequestParam String nickname)
+    {
+        return new ResponseEntity(signUpService.duplicateNickname(nickname), HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
