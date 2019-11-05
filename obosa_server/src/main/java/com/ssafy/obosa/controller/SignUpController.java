@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
@@ -38,10 +37,10 @@ public class SignUpController
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
-    public ResponseEntity signup(SignupFormDto signupFormDto, @RequestPart(value="profileImgFile", required = false) final MultipartFile profileImgFile)
+    public ResponseEntity signup(SignupFormDto signupFormDto)
     {
-        System.out.println("[ --> profile : " + profileImgFile.toString() + " ]");
-        return new ResponseEntity(signUpService.newUser(signupFormDto, profileImgFile), HttpStatus.OK);
+//        System.out.println("[ --> profile : " + profileImgFile.toString() + " ]");
+        return new ResponseEntity(signUpService.newUser(signupFormDto), HttpStatus.OK);
     }
 
     @GetMapping("/confirm/{token}")

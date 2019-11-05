@@ -44,7 +44,7 @@ public class  SignUpService
     @Value("${AES.SECRET}")
     private String aesKey;
 
-    public DefaultRes<SignupFormDto> newUser(SignupFormDto signupFormDto, MultipartFile profileImgFile)
+    public DefaultRes<SignupFormDto> newUser(SignupFormDto signupFormDto)
     {
         try
         {
@@ -72,7 +72,7 @@ public class  SignUpService
             user.setPhone(phone);
             user.setZipCode(zipCode);
             user.setAddress(address);
-
+            MultipartFile profileImgFile = signupFormDto.getProfileImgFile();
             if(profileImgFile != null)
             {
                 String filePath = new StringBuilder(baseDir)
@@ -95,7 +95,7 @@ public class  SignUpService
                 TODO: bind appUrl with the context path of request
              */
 //            String appUrl = request.getContextPath();
-            String appUrl = "http://localhost:8080";
+            String appUrl = "http://obosa.saffy.io";
             eventPublisher.publishEvent(new OnRegistrationCompleteEvent
                     (userRepository.findUserByEmail(user.getEmail()), null, appUrl));
 
