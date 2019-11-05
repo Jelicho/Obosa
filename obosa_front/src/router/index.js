@@ -12,7 +12,10 @@ import passwordRe from '@/component/mypage/passwordRe'
 import myAuction from '@/component/mypage/auctionList'
 import myProduct from '@/component/mypage/productList'
 import myInfo from '@/component/mypage/info'
-
+// auction children router
+import auctionList from '@/component/auction/auctionList'
+import auctionDetail from '@/component/auction/auctionDetail'
+import auctionRegister from '@/component/auction/auctionRegister'
 
 Vue.use(Router)
 
@@ -44,7 +47,26 @@ export default new Router({
     {
       name: "auction",
       path: '/auction',
-      component: auctionView
+      component: auctionView,
+      children: [{
+          name: "auction.list",
+          path: ':sortby',
+          component: auctionList,
+          params: {
+            sortby: 'count'
+          }
+        },
+        {
+          name: 'auction.detail',
+          path: 'detail/:auction',
+          component: auctionDetail,
+        },
+        {
+          name: 'auction.register',
+          path: 'register/:product',
+          component: auctionRegister
+        }
+      ]
     },
     {
       name: "passwordRe",

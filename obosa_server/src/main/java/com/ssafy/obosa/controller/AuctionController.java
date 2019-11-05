@@ -10,9 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
-@RequestMapping("auction")
+@RequestMapping("api/auction")
 public class AuctionController {
 
     private final ReadAuctionService readAuctionService;
@@ -57,6 +57,7 @@ public class AuctionController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity readAllAuction(Pageable pageable)
     {
         return new ResponseEntity(readAuctionService.readAllAuctions(pageable), HttpStatus.OK);

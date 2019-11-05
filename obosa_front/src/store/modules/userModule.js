@@ -25,6 +25,8 @@ const getters = {
 // actions
 const actions = {
   login ({commit}, {email, password}) {
+    console.log(email, password);
+    
     api.login({email, password})
     .then(({data}) => commit('setAccessToken', data))
 
@@ -40,7 +42,11 @@ const actions = {
   },
   async passwordReChk ({commit}, password) {
     // const resp = api.passwordReChk("min3248")
-    await  api.passwordReChk("min3248").then(response => {
+    console.log(password);
+    
+    await  api.passwordReChk(password).then(response => {
+      console.log(response.data);
+      
       if(response.data.status == 200){
         console.log("communication : success");
         state.rechecked = true;

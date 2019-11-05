@@ -8,7 +8,7 @@
       :pDesc="products[i-1].pdescription"
       :prodImgs="products[i-1].productImgs"
       ></Product> -->
-      <v-flex v-for="product in products" xs12 sm6 >
+      <v-flex v-for="product in products" xs12 sm6 v-bind:key="product.pid">
         <Product
         :pId="product.pid"
         :pName="product.pname"

@@ -1,3 +1,7 @@
+/* font */
+@import url("https://fonts.googleapis.com/css?family=Muli:300,400,700");
+@import url("https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css");
+
 body {
     margin: 0;
     padding: 0;
@@ -18,7 +22,9 @@ a {
 
 #app {
     margin-top: 0px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'NanumSquare', sans-serif;
+    font-size: 19px;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -26,38 +32,68 @@ a {
 }
 
 .router-view {
-    min-height: calc(100vh - 64px);
-    text-align: -webkit-center;
+  min-height: calc(100vh - 64px);
+  text-align: -webkit-center;
+  margin-top: 64px;
 }
 
 @media screen and (min-width:1200px) {
-    .v-toolbar__content,
-    .router-view>div {
-        max-width: 1140px;
-    }
+
+  .v-toolbar__content,
+  .router-view>div {
+    max-width: 1140px;
+  }
+
+  .item-img {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 @media (max-width:1200px) and (min-width:992px) {
-    .v-toolbar__content,
-    .router-view>div {
-        max-width: 960px;
-    }
+
+  .v-toolbar__content,
+  .router-view>div {
+    max-width: 960px;
+  }
+
+  .item-img {
+    width: 184px;
+    height: 184px;
+  }
 }
 
 @media (max-width:992px) and (min-width:768px) {
-    .v-toolbar__content,
-    .router-view>div {
-        max-width: 720px;
-    }
+
+  .v-toolbar__content,
+  .router-view>div {
+    max-width: 720px;
+  }
 }
 
 @media (max-width:768px) and (min-width:576px) {
-    .v-toolbar__content,
-    .router-view>div {
-        max-width: 540px;
-    }
+
+  .v-toolbar__content,
+  .router-view>div {
+    max-width: 540px;
+  }
 }
 
+.btn:hover {
+    cursor: pointer;
+}
+.btn-active {
+    background-color: lightgrey!important;
+}
+
+.v-btn.v-size--default, .v-btn.v-size--large {
+    font-size: 18px!important;
+}
+
+/* header */
+.header {
+    border-bottom: 1px solid #4a4a4a4d!important;
+}
 
 /* nav */
 
@@ -65,6 +101,48 @@ a {
     text-align: -webkit-center;
 }
 
+/* logo */
+@media (max-width:992px) {
+    .ghost {
+        display: none!important;
+    }
+    .text li.spaced {
+        padding-left: 0px!important;
+    }
+}
+
+.text {
+    font-family: "Muli", sans-serif;
+    position: fixed;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    list-style: none;
+    border-bottom: 0;
+    margin-left: 215px;
+    width: 450px;
+    padding-left: 0px!important;
+}
+.text li {
+    display: inline-block;
+    float: left;
+    font-weight: 700;
+    font-size: 2em;
+    color: #000;
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+    max-width: 2em;
+}
+.text.hidden li.spaced {
+    padding-left: 0;
+}
+.text li.spaced {
+    padding-left: 0.5em;
+}
+
+.text.hidden li.ghost {
+    opacity: 0;
+    max-width: 0;
+}
 
 /* input form */
 
@@ -76,6 +154,9 @@ a {
     padding: 0px;
 }
 
+.v-text-field{
+    border-radius: 0px !important ;
+}
 
 /* 메인 소개글 스타일 시트 */
 
@@ -91,7 +172,6 @@ a {
 }
 
 #main-overview h4 {
-    font-weight: 300;
     padding-top: 15px;
 }
 
@@ -101,6 +181,10 @@ a {
 
 .container {
     text-align: center;
+    min-height: calc(100vh - 64px);
+}
+.v-divider--vertical {
+    height: auto!important;
 }
 
 .breadcrumb {
@@ -111,7 +195,16 @@ a {
     padding: 10px !important;
 }
 
-
+.text-container {
+    align-self: center;
+}
+.login-text {
+    font-size: 28px;
+    padding: 20px 0px 20px 0px;
+    border-bottom: 3px solid grey;
+    border-top: 3px solid grey;
+    margin: 0px 30px 0px 30px;
+}
 /* 작품 리스트 스타일 시트 */
 
 #auction-list,
@@ -140,22 +233,164 @@ a {
     padding-top: 10px;
 }
 
+.auction-sub-title {
+    font-size: 25px;
+    font-weight: bold;
+    padding: 2px;
+    margin-bottom: 0px !important;
+    align-self: center;
+}
 
+.auction-detail-title {
+    width: 100%;
+}
+
+.v-progress-linear {
+  text-align: left !important;
+}
+
+.auction-detail-info {
+    /* height: 500px; */
+}
+
+.auction-detail-info>* {
+  padding: 14px;
+}
+
+.auction-description {
+  border-radius: 0px !important;
+}
+
+.auction-description>div {
+  padding: 8px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.auction-description>.v-card__title {
+  font-weight: bold;
+  font-size: 15px;
+  color: #aaa;
+}
+
+.auction-description>.v-card__text {
+    color: black !important;
+}
+
+.price .price_low {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.price_high {
+    font-size: 50px;
+    color: crimson;
+    font-weight: 700;
+    border-left: 1px grey solid;
+}
+
+.end_date {
+    font-size: 40px;
+    color: crimson;
+    font-weight: 700;
+}
+
+.auction-detail-container {
+    min-height: inherit;
+}
+
+.v-input input {
+    max-height: inherit;
+}
+
+.price input[type=number] {
+    font-size: 40px;
+    color: crimson!important;
+    border-left: 0px;
+}
+
+.time-select .v-select__selections {
+    font-size: 30px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.item-list {
+    padding: 20px;
+}
+
+.price {
+    font-size: 27px;
+    font-weight: bold;
+}
+.time-select {
+    width: 35%;
+    border-radius: 0px;
+    background-color: #fff5;
+    margin: 5px;
+}
+  .register_title {
+    font-size: 50px;
+    font-weight: 700;
+    padding: 30px 0px 30px 0px;
+}
+
+/* intro */
+
+.intro-view {
+    width: 100vw!important;
+    margin-top: -97px;
+    margin-left: calc(-50vw + 50%)!important;
+}
+.intro-item {
+    margin-top: 30px;
+    /* height: 250px; */
+    background-color: #fff0!important;
+}
+.intro-card {
+    padding: 30px !important;
+    height: 100%;
+    text-align: left;
+}
+.intro-card > p {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+}
+.intro-card-1 {
+    background-color: rgba(93, 114, 87, 0.603);
+}
+.intro-card-2 {
+    background-color: rgba(75, 45, 53, 0.603);
+}
+.v-carousel{
+    width: 100vw;
+}
 /* 로그인 & 회원가입 스타일 시트 */
+.form-container{
+    min-height: inherit;
+}
 
 #register-form,
 #login-form {
     padding: 30px;
     text-align: left;
     margin: auto;
-    border-radius: 30px;
-    border: solid 1px;
+}
+
+.password {
+    font: initial;
 }
 
 .vue-daum-postcode-container {
     min-height: 439px;
 }
 
+.search .input_text .v-select__selection, .v-text-field__slot {
+    font-weight: bold;
+    font-size: 19px;
+    text-align: center;
+}
 
 /* 마이페이지 > 서브 메뉴 */
 
@@ -238,4 +473,59 @@ nav.bottom-pagination {
 .no-arrow input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+
+/* loading-box animation */
+
+@keyframes loader {
+    0% {
+        left: -100px;
+    }
+    100% {
+        left: 110%;
+    }
+}
+
+#box {
+    width: 50px;
+    height: 50px;
+    background: #fff766;
+    animation: animate 0.5s linear infinite;
+    border-radius: 3px;
+}
+
+@keyframes animate {
+    17% {
+        border-bottom-right-radius: 3px;
+    }
+    25% {
+        transform: translateY(9px) rotate(22.5deg);
+    }
+    50% {
+        transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+    }
+    75% {
+        transform: translateY(9px) rotate(67.5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+#shadow {
+    width: 50px;
+    height: 5px;
+    background: #000;
+    opacity: 0.1;
+    margin-top: 9px;
+    border-radius: 50%;
+    animation: shadow 0.5s linear infinite;
+}
+
+@keyframes shadow {
+    50% {
+        transform: scale(1.2, 1);
+    }
 }

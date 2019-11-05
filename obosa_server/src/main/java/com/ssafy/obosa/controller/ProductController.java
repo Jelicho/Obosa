@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("product")
+@RequestMapping("api/product")
 public class ProductController
 {
     private final CreateProductService createProductService;

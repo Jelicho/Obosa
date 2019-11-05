@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
-@RequestMapping("signup")
+@RequestMapping("api/signup")
 public class SignUpController
 {
     @Autowired
@@ -35,6 +35,7 @@ public class SignUpController
     @PostMapping
     public ResponseEntity signup(SignupFormDto signupFormDto, @RequestPart(value="profileImgFile", required = false) final MultipartFile profileImgFile)
     {
+        System.out.println("[ --> profile : " + profileImgFile.toString() + " ]");
         return new ResponseEntity(signUpService.newUser(signupFormDto, profileImgFile), HttpStatus.OK);
     }
 

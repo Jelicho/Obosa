@@ -112,6 +112,7 @@ public class JwtService
             final JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(SECRET)).withIssuer(ISSUER).build();
             DecodedJWT decodedJWT = jwtVerifier.verify(token);
 
+            System.out.println(decodedJWT.getClaim("email").asString());
             return decodedJWT.getClaim("email").asString();
         }
         catch (Exception e)
