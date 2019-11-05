@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:8080'
+// const apiUrl = 'http://localhost:8080'
+const apiUrl = 'http://obosa.ssafy.io/api'
 
 export default {
   create(params) {
