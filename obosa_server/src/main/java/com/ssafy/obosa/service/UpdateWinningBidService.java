@@ -1,5 +1,8 @@
 package com.ssafy.obosa.service;
 
+import com.ssafy.obosa.enumeration.BidState;
+import com.ssafy.obosa.enumeration.ResponseMessage;
+import com.ssafy.obosa.enumeration.StatusCode;
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.domain.WinningBid;
@@ -7,8 +10,6 @@ import com.ssafy.obosa.model.dto.UpdateWinningBidDto;
 import com.ssafy.obosa.repository.UserRepository;
 import com.ssafy.obosa.repository.WinningBidRepository;
 import org.joda.time.DateTime;
-import com.ssafy.obosa.enumeration.ResponseMessage;
-import com.ssafy.obosa.enumeration.StatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -67,34 +68,29 @@ public class UpdateWinningBidService {
 //            -결제취소 : 구매자만 가능(단, 3일 판매자도 가능하다.)
             User seller = winningBid.getAuction().getUser();
             User winner = winningBid.getUser();
-            switch(bidState){
-                case 1:
-                    if(winner.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
-                    break;
-                case 2:
-                    if(seller.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
-                    break;
-                case 3:
-                    if(winner.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
-                    break;
-                case 4:
-                    if(winner.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
-                    else{
-                        DateTime bidDate = new DateTime(winningBid.getBidDate());
-                        DateTime banDatetime = bidDate.plusDays(3);
+            if(BidState.PAY_COMPLETE.getState() == bidState){
+                if(winner.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }else if(BidState.SHIPPING.getState() == bidState){
+                if(seller.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }else if(BidState.SHIP_RECEIVED.getState() == bidState){
+                if(winner.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }else if(BidState.NOT_PAY.getState() == bidState){
+                if(winner.getUid()!=user.getUid())return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+                else{
+                    DateTime bidDate = new DateTime(winningBid.getBidDate());
+                    DateTime banDatetime = bidDate.plusDays(3);
 
-                        Date now = new Date();
-                        DateTime nowDateTime = new DateTime(now);
-                        //nowDateTime is before banDatetime
-                        if(nowDateTime.compareTo(banDatetime)<0){
-                            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
-                        }
+                    Date now = new Date();
+                    DateTime nowDateTime = new DateTime(now);
+                    //nowDateTime is before banDatetime
+                    if(nowDateTime.compareTo(banDatetime)<0){
+                        return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
                     }
-                    break;
+                }
             }
             winningBid.setBidState(bidState);
             winningBidRepository.save(winningBid);
-            if(bidState == 4){
+            if(BidState.NOT_PAY.getState() == bidState){
                 Optional<User> optionalUser = userRepository.findByUid(winningBid.getUser().getUid());
                 User banUser = optionalUser.get();
                 banUser.setWithDraw(true);
