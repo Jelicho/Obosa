@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:8083'
+const apiUrl = 'http://localhost:8080'
 
 export default {
   login({email, password}) {

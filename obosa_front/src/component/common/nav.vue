@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="#FFD54F" height="64px" flat >
+  <v-toolbar class="header" height="64px" flat>
     <v-toolbar-title>
       <logo />
     </v-toolbar-title>
@@ -7,20 +7,20 @@
     <v-spacer></v-spacer>
 
     <v-toolbar-items>
-      <v-btn text>
-        <router-link class="nav-link" to="/auction">경매참여하기</router-link>
+      <v-btn text @click="to('auction.list', 'count')" id="auclist">
+        경매참여하기
       </v-btn>
-      <v-btn text v-if="getSignedState">
-        <router-link class="nav-link" to="/passwordRe">마이페이지</router-link>
+      <v-btn text v-if="getSignedState" @click="to('passwordRe')" id="passwordRe" >
+        마이페이지
       </v-btn>
-      <v-btn text v-if="!getSignedState">
-        <router-link class="nav-link" to="/login">로그인</router-link>
+      <v-btn text v-if="!getSignedState" @click="to('login')" id="login" >
+        로그인
       </v-btn>
-      <v-btn text v-if="!getSignedState">
-        <router-link class="nav-link" to="/register">회원가입</router-link>
+      <v-btn text v-if="!getSignedState" @click="to('register')" id="register" >
+        회원가입
       </v-btn>
-      <v-btn text v-if="getSignedState">
-        <router-link class="nav-link" to="/logout">로그아웃</router-link>
+      <v-btn text v-if="getSignedState" @click="to('logout')" id="logout" >
+        로그아웃
       </v-btn>
     </v-toolbar-items>
   </v-toolbar>
@@ -35,11 +35,30 @@ export default {
     return {
     };
   },
+  methods: {
+    to(name, params) {
+      for (const active of $('.header .btn-active')) {
+        $(active).removeClass('btn-active')
+      }
+      $('#'+name).addClass('btn-active')
+      console.log(params || null );
+      
+      this.$router.push({
+        name: name,
+        params : { sortby : params || null }
+      });
+    },
+  },
   computed: {
     ...mapGetters('userModule',['getSignedState'])
   }
-};
+}
 </script>
 
 <style>
+.header {
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+}
 </style>
