@@ -136,11 +136,11 @@ public class  SignUpService
     public DefaultRes duplicateNickname(String nickname) {
         if(userRepository.findUserByNickname(nickname)==null)
         {
-            return DefaultRes.res(StatusCode.OK, ResponseMessage.UNABLE_NICKNAME, true);
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.ABLE_NICKNAME, true);
         }
         else
         {
-            return DefaultRes.res(StatusCode.OK, ResponseMessage.ABLE_NICKNAME, false);
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.UNABLE_NICKNAME, false);
         }
     }
 }
