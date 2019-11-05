@@ -58,7 +58,7 @@ public class UpdateWinningBidService {
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_WINNINGBID);
             }
             WinningBid winningBid = optionalWinningBid.get();
-            if(winningBid.getBidState()<=bidState){
+            if((bidState==4&&winningBid.getBidState()!=0) || (bidState!=4 && (winningBid.getBidState()+1)!=bidState)){
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.ALREADY_PASS_BIDSTATE);
             }
 //            -결제완료처리 : 구매자만 가능
