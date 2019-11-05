@@ -23,6 +23,7 @@ public enum ResponseMessage {
     UPDATE_USER("회원 정보 수정 성공"),
     DELETE_USER("회원 탈퇴 성공"),
     NOT_PERMISSION_ACCESS("접근 권한이 없습니다."),
+    BANNED_USER("탈퇴된 계정입니다."),
     //Product
     CREATED_PRODUCT("물품 등록 성공"),
     NOT_FOUND_PRODUCT("해당 물품을 찾을 수 없습니다."),
