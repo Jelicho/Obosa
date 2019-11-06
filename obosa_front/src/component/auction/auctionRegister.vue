@@ -8,7 +8,7 @@
           <h1 class="auction-detail-title">{{product.pname}}</h1>
         </v-row>
         <v-row class="pb-5">
-          <imageSlide :imageList="productImgList" />
+          <imageSlide :imageList="product.productImgs" />
         </v-row>
         <v-row>
           <auctionDescription subtitle="상품 설명" :description="product.pdescription" />
@@ -134,17 +134,7 @@ export default {
     this.dates[0] = this.today;
     this.dates[1] = this.today;
     this.startHours = new Date().getHours() + 1
-
     this.product = this.$route.params.product;
-    // this.product = {
-    //   pid: 2,
-    //   pname: "백만송이 장미",
-    //   pdescription: "아주 좋은 장미",
-    //   uid: "3",
-    //   registeredDate: "2019-10-18",
-    //   modifiedDate: null,
-    //   imgCount: 2
-    // };
   },
   methods: {
     ...mapActions("auctionModule", ["createAuction"]),
@@ -155,7 +145,7 @@ export default {
     },
     registerRequest() {
       (this.auction.pid = this.product.pid), (this.auction.endDate = this.dates[1]);
-
+      
       var regiFormData = new FormData();
 
       for (var key in this.auction) {
