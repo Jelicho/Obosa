@@ -53,7 +53,7 @@ export default {
     ...mapActions('productModule', ['updateProduct', 'deleteProduct']),
     updateProd(){
       // TODO: 상품삭제 메소드 바인딩 params : pid, pname, pdesc, pImg
-      let formData = new formDate()
+      let formData = new formData()
       this.updateProduct(formData)
     },
     deleteProd(){

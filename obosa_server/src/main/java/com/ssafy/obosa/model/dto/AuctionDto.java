@@ -1,6 +1,8 @@
 package com.ssafy.obosa.model.dto;
 
 import com.ssafy.obosa.model.domain.Auction;
+import com.ssafy.obosa.model.redis.Bid;
+import com.ssafy.obosa.repository.BidRedisRepository;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -36,10 +39,18 @@ public class AuctionDto {
                 .product(ProductDto.setProductDtoByProduct(auction.getProduct()))
                 .build();
     }
-    public static Page<AuctionDto> setAuctionDtoListByAuctionList(Page<Auction> auctions, Pageable pageable)
+    public static Page<AuctionDto> setAuctionDtoListByAuctionList(Page<Auction> auctions, Pageable pageable, BidRedisRepository bidRedisRepository)
     {
         List<AuctionDto> auctionDtosList = new ArrayList<>();
+        Bid bidFound =null;
         for(Auction auction:auctions){
+            Optional<Bid> optionalBid =  bidRedisRepository.findById(auction.getAid()+"");
+            System.out.println("야!");
+            if(optionalBid.isPresent()){
+                System.out.println("호!");
+                bidFound=optionalBid.get();
+                auction.setHighPrice(bidFound.getHighestBid());
+            }
             auctionDtosList.add(setAuctionDtoByAuction(auction));
         }
         Page<AuctionDto> auctionDtosPage = new PageImpl<>(auctionDtosList, pageable, auctionDtosList.size());
