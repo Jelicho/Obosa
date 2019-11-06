@@ -28,4 +28,13 @@ public class CreateAuctionDto {
         this.aucState=0;
         this.upPrice=1000;
     }
+    CreateAuctionDto(int pid, int lowPrice, String description, String endDate, int upPrice){
+        this.pid = pid;
+        this.lowPrice = lowPrice;
+        this.highPrice = 2000000000;
+        this.description=description;
+        this.endDate=endDate;
+        this.aucState=0;
+        this.upPrice=upPrice;
+    }
 }

@@ -137,8 +137,10 @@ export default {
       onSubmit() {
         let formData = new FormData();
           formData.append('pname', this.product.pname)
-          formData.append('pdescription', this.product.pname)
+          formData.append('pdescription', this.product.pdescription)
           formData.append('productImgs', this.product.productImgs)
+          console.log(this.product.productImgs)
+          console.log(formData)
           this.createProduct(formData)
       },
       upload() {

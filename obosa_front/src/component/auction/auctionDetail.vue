@@ -82,17 +82,19 @@ export default {
 
     // 상품 이미지 리스트를 가져옴
     this.getProductImgList(
+      this.auction.product.user.uid,
       this.auction.product.dirS3,
       this.auction.product.imgCount
+      
     );
   },
   methods: {
     ...mapActions("auctionModule", ["bidAuction"]),
-    getProductImgList(dirS3, count) {
+    getProductImgList(uid,dirS3, count) {
       if (count == 0) {
         this.productImgList = [DEFAULT_IMG_BASE_URL + "/product.png"];
       } else {
-        const baseUrl = PRODUCT_IMG_BASE_URL + "/" + dirS3 + "/";
+        const baseUrl = PRODUCT_IMG_BASE_URL + "/" + uid + "/" + dirS3 + "/";
         for (var i = 1; i <= count; i++) {
           this.productImgList.push(baseUrl + i);
         }

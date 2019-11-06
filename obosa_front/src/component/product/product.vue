@@ -9,9 +9,12 @@
     <!-- <v-img
       class="white--text align-end"
       height="200px"
+      :src="getUrl()"
+    >
+      <v-card-title>{{pName}}</v-card-title>
       :src="this.pImgs[0]"
     > -->
-    <v-img class="item-img" :src="product.productImgs[0]" >
+    <v-img class="item-img" :src="getUrl()" >
     </v-img>
     <v-card-title>{{product.pname}}</v-card-title>
     <v-card-text class="text--primary">
@@ -57,9 +60,15 @@ export default {
       // TODO: 상품삭제 메소드 바인딩 params : pid
       this.deleteProduct({pid})
     },
+
+    getUrl(){
+      if(this.product.imgCount===0){
+        return DEFAULT_IMG_BASE_URL+'/product.png'
+      }
+      return PRODUCT_IMG_BASE_URL+'/'+this.product.user.uid+'/'+this.product.dirS3+'/'+1
+    },
     register(target){
       console.log(this.product);
-      
       this.$router.push({
         name : 'mypage.auction.register',
         params : {

@@ -228,7 +228,9 @@ export default {
         zipCode: "",
         address: "",
         phone: "",
-        profileImg: S3_BASE_URL + "obosa/user/default_user_img.png"
+        profileImg: S3_BASE_URL + "obosa/user/default_user_img.png",
+        profileImgFile:null
+        
       },
       no1: "",
       no2: "",
@@ -272,8 +274,8 @@ export default {
     },
     signupResponse(response) {
       console.log(response);
-      if (response.statue == 200) {
-        this.$router.push({
+      if (response.status == 200) {
+        this.$router.replace({
           name: 'home'
         });
       } else {
@@ -293,9 +295,12 @@ export default {
       if (this.$refs.regiform.validate()) {
         this.user.phone = this.no1 + "-" + this.no2 + "-" + this.no3;
         for (var key in this.user) {
+          if(this.user[key]===null)continue;
           regiFormData.append(key, this.user[key]);
         }
+        console.log(regiFormData)
         await this.signup(regiFormData)
+        
       } 
     },
     upload() {
@@ -303,7 +308,7 @@ export default {
     },
     onFileChange(e) {
       var profile = e.target.files[0];
-      this.user.profileImg = profile;
+      this.user.profileImgFile = profile;
       this.setPreview(profile);
     },
     setPreview(imgfile) {

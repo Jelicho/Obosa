@@ -51,7 +51,7 @@ export default {
     productRegister,
   },
   async beforeMount() {
-    // this.getProductList()
+    await this.getProductList()
     await this.setProductList()
   },
   methods: {
