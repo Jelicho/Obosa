@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@CrossOrigin(origins = "*")
 @RequestMapping("api/product")
 public class ProductController
 {
@@ -35,6 +36,7 @@ public class ProductController
     public ResponseEntity createProduct(@RequestHeader(value = "Authorization", required = false) String jwtToken, CreateProductDto createProductDto)
     {
         try{
+            System.out.println("생성시도");
             User user = userService.getUserByJwtToken(jwtToken);
             if(user == null)
             {

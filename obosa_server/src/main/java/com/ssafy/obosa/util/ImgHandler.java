@@ -38,6 +38,22 @@ public class ImgHandler {
         product.setImgCount(imgCount);
     }
 
+    public static void createProductImg(FileService fileService, Product product, MultipartFile productImg, int uid) {
+        int imgCount = 1;
+        String dirS3=UUID.randomUUID().toString();
+
+        String filePath = new StringBuilder(ProductsDir)
+                .append(uid)
+                .append('/')
+                .append(dirS3)
+                .append('/')
+                .append(1).toString();
+        System.out.println(filePath);
+        fileService.fileUpload(productImg, filePath);
+
+        product.setDirS3(dirS3);
+        product.setImgCount(imgCount);
+    }
     public static void deleteProductImgs(FileService fileService, Product product) {
         int imgCount = product.getImgCount();
         int forFilename_count = 1;
