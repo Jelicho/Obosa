@@ -73,6 +73,7 @@ export default {
   },
   mounted() {
     // 경매 리스트를 router paramerter로 받아옴
+    this.connect();
     this.auction = this.$route.params.auction;
 
     // 최소 입찰 가격을 지정함
@@ -89,6 +90,7 @@ export default {
   },
   methods: {
     ...mapActions("auctionModule", ["bidAuction"]),
+    ...mapActions("webSocketModule", ["updatePrice",'connect','disconnect']),
     getProductImgList(uid,dirS3, count) {
       if (count == 0) {
         this.productImgList = [DEFAULT_IMG_BASE_URL + "/product.png"];
@@ -105,6 +107,12 @@ export default {
       formData.append('aid', this.auction.aid)
       formData.append('bidPrice', Number(this.bidPrice))
       this.bidAuction(formData)
+        .then(result =>{
+            if(result == true){
+                console.log('hi 성공했음')
+                this.updatePrice(this.auction.aid);
+            }
+        })
     }
   }
 };

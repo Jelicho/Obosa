@@ -9,15 +9,17 @@ const state = {
 // actions
 const actions = {
   connect({ state, commit }) {
-    const socket = new SockJS(API_BASE_URL + "/api/price");
+    const socket = new SockJS("http://localhost:8080/myWebSocketEndPoint");
     state.stompClient = Stomp.over(socket);
     state.stompClient.connect({}, function(frame) {
       console.log("Connected: " + frame);
-      state.stompClient.subscribe(API_BASE_URL + "/api/topic/price", function(response) {
+      state.stompClient.subscribe("/topic/notification", function(response) {
         //response.body
         // - id : auction id
         // - highPrice : 제일 높은 가격
-        console.log(JSON.parse(response.body).content);
+        for(let auction in store.state.auctionModule.auctionList){
+            auction.u
+        }
         // TODO: 받은 id에 해당하는 auction의 최고가를 highPrice로 변경한다.
       });
     });
@@ -30,11 +32,11 @@ const actions = {
     console.log("Disconnected");
   },
 
-  updatePrice({ state }, { auctionId }) {
+  updatePrice({ state },  auctionId ) {
     state.stompClient.send(
-        API_BASE_URL + "/api/message/price",
+        "/app/hello",
       {},
-      JSON.stringify({ id: auctionId })
+      auctionId
     );
   },
 };

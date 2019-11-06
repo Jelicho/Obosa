@@ -36,7 +36,7 @@ const actions = {
     },
     async bidAuction({ commit }, params){
         console.log(params);
-        await auctionAPI.bidAuction( params ).then(response => {
+        return auctionAPI.bidAuction( params ).then(response => {
             if(response.data.status == 200){
                 return true;
             } else {
