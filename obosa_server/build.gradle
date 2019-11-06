@@ -47,7 +47,7 @@ dependencies {
     compile 'javax.xml.bind:jaxb-api'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-    compile 'org.springframework.boot:spring-boot-starter-websocket'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.0.4.RELEASE'
     compile 'org.webjars:sockjs-client:1.0.2'
     compile 'org.webjars:stomp-websocket:2.3.3'
 }

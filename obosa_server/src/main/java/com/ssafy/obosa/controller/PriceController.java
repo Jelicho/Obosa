@@ -16,11 +16,10 @@ public class PriceController
     PriceController(final BidRedisRepository bidRedisRepository) {
         this.bidRedisRepository = bidRedisRepository;
     }
-    @MessageMapping("/price")
-    @SendTo("/topic/price")
+    @MessageMapping("/message/price")
+    @SendTo("/api/topic/price")
     public PriceDto getHighPrice(AuctionIdDto id) throws Exception
     {
-        //TODO : redis에서 가격 가져오기
          int highestPrice = bidRedisRepository.findById(id.getId()).get().getHighestBid();
         return new PriceDto(id.getId(), highestPrice);
     }
