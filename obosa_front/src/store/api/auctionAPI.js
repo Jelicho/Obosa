@@ -37,7 +37,7 @@ export default {
         // });
     },
     bidAuction({ aid, bidPrice }) {
-        return axios.post(`${apiUrl}/${aid}`, 
+        return axios.post(`${apiUrl}/bid`, 
                 { aid, bidPrice })
     }
 }
