@@ -21,8 +21,7 @@
           </v-col>
           <v-col md="8">
             <p class="auction-sub-title">현재 최고가</p>
-            <!-- Redis에서 현재 경매 최고가를 가져옵니다. (현재는 lowPrice로 설정) -->
-            <div class="price price_high">{{auction.lowPrice}}</div>
+            <div class="price price_high">{{auction.highPrice}}</div>
           </v-col>
         </v-row>
         <v-row>
@@ -77,7 +76,7 @@ export default {
     this.auction = this.$route.params.auction;
 
     // 최소 입찰 가격을 지정함
-    this.minbidPrice = this.auction.lowPrice + this.auction.upPrice;
+    this.minbidPrice = this.auction.highPrice + this.auction.upPrice;
     this.bidPrice = this.minbidPrice;
 
     // 상품 이미지 리스트를 가져옴
@@ -101,7 +100,11 @@ export default {
       }
     },
     bidRequest(){
-      this.bidAuction({ aid : this.auction.aid, bidPrice : Number(this.bidPrice) })
+      let formData = new FormData();
+      
+      formData.append('aid', this.auction.aid)
+      formData.append('bidPrice', Number(this.bidPrice))
+      this.bidAuction(formData)
     }
   }
 };
