@@ -30,7 +30,7 @@ new Vue({
   router,
   store,
   data:{API_BASE_URL : constant.API_BASE_URL, 
-        USER_IMG_BASE_URL : constant.USER_IMG_BASE_URL,
+        // USER_IMG_BASE_URL : constant.USER_IMG_BASE_URL,
         PRODUCT_IMG_BASE_URL : constant.PRODUCT_IMG_BASE_URL,
         DEFAULT_IMG_BASE_URL : constant.DEFAULT_IMG_BASE_URL,
         INTRO_BASE_URL : constant.INTRO_BASE_URL},

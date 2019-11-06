@@ -4,18 +4,6 @@ import axios from 'axios'
 // initial state
 const state = {
   productList: [
-    {
-      "pid" : "1",
-      "pname" : "음",
-      "pdescription" : "오",
-      "productImgs" : ["@/assets/product.png","../../assets/product.png"],
-    },
-    {
-      "pid" : "2",
-      "pname" : "음",
-      "pdescription" : "오",
-      "productImgs" : ["../../assets/product.png"],
-    }
   ],
 
 }
@@ -29,8 +17,9 @@ const getters = {
 // actions
 const actions = {
   // product CRUD
-  createProduct({commit}, formData){
+  createProduct({}, formData){
     // params : pname / pdescription / uid / productImgs
+    console.log('생성');
     api.create(formData)
   },
   readProduct({commit}){
@@ -96,7 +85,8 @@ const actions = {
 // mutations
 const mutations = {
   setProductList (state, {data}) {
-    state.productList = data.productList.data
+    console.log(data)
+    state.productList = data.content
     console.log(state.productList)
   },
   setAccessToken (state, {data}) {

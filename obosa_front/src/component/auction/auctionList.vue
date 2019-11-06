@@ -70,6 +70,7 @@ export default {
     ...mapMutations("auctionModule", ["setHasMoreAuctions"]),
     async auctionRequest() {
       if ( (this.params.page == 0 || this.isEnd) && this.hasMoreAuctions) {
+        console.log(this.params)
         await this.getAuctionList(this.params);
         this.params.page ++;
         this.params.size = 4;

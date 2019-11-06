@@ -18,6 +18,8 @@ public enum ResponseMessage {
     ABLE_EMAIL("email 사용 가능"),
     UNABLE_EMAIL("이미 존재하는 email"),
     EMAIL_CONFIRMED("email 인증 완료"),
+    ABLE_NICKNAME("nickname 사용 가능"),
+    UNABLE_NICKNAME("이미 존재하는 nickname"),
     NOT_FOUND_USER("회원을 찾을 수 없습니다."),
     CREATED_USER("회원 가입 성공"),
     UPDATE_USER("회원 정보 수정 성공"),
