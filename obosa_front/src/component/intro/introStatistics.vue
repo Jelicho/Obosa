@@ -14,10 +14,10 @@ export default {
   name: "introStatistics",
   data() {
     return {
-      userCount: 0,
-      productCount: 0,
-      auctionCount: 0,
-      winningBidCount: 0
+      userCount: 18,
+      productCount: 47,
+      auctionCount: 40,
+      winningBidCount: 23
     };
   }
 };

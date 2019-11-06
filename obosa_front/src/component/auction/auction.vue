@@ -21,7 +21,7 @@ export default {
   props: ["auction", "height"],
   data() {
     return {
-      productImg: PRODUCT_IMG_BASE_URL + "/" + this.auction.product.dirS3 + "/1",
+      productImg: PRODUCT_IMG_BASE_URL + "/" + this.auction.product.user.uid+"/"+this.auction.product.dirS3 + "/1",
       progressDate: 0,
       progressColor: "success"
     };

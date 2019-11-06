@@ -1,13 +1,13 @@
 import axios from 'axios'
-
-// const apiUrl = 'http://localhost:8080/signup'
+// const apiUrl = 'http://obosa.ssafy.io:8333/api/signup'
+// const apiUrl = 'http://localhost:8080/api/signup'
 const apiUrl = 'http://obosa.ssafy.io/api/signup'
 
 export default {
   signup(regiFormData) {
     return $.ajax({
         type: "POST",
-        url: API_BASE_URL + "/signup",
+        url: apiUrl,
         data: regiFormData,
         processData: false,
         contentType: false,
