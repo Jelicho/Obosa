@@ -7,7 +7,7 @@
     <v-img
       class="white--text align-end"
       height="200px"
-      :src="this.pImgs[0]"
+      :src="getUrl()"
     >
       <v-card-title>{{pName}}</v-card-title>
     </v-img>
@@ -38,13 +38,15 @@ export default {
     }
   },
   props: {
-    pId: '',
-    pName: '',
-    pDesc: '',
-    pImgs: [],
+    pid: '',
+    pname: '',
+    pdescription: '',
+    dirS3:'',
+    imgCount: 0,
+    user:{}
   },
   mounted(){
-    console.log(this.pImgs);
+    // console.log(this.pImgs);
   },
   methods: {
     ...mapActions('productModule', ['updateProduct', 'deleteProduct']),
@@ -60,6 +62,9 @@ export default {
     auctionRegister(){
       // TODO: quctionRegister binding(From. MK)
 
+    },
+    getUrl(){
+      return PRODUCT_IMG_BASE_URL+'/'+this.user.uid+'/'+this.dirS3+'/'+1
     }
   }
 }

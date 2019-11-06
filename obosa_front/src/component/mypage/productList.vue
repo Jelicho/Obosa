@@ -8,12 +8,14 @@
       :pDesc="products[i-1].pdescription"
       :prodImgs="products[i-1].productImgs"
       ></Product> -->
-      <v-flex v-for="product in products" xs12 sm6 v-bind:key="product.pid">
+      <v-flex v-for="product in products" xs12 sm6>
         <Product
-        :pId="product.pid"
-        :pName="product.pname"
-        :pDesc="product.pdescription"
-        :pImgs="product.productImgs"
+        :pid="product.pid"
+        :pname="product.pname"
+        :pdescription="product.pdescription"
+        :dirS3 = "product.dirS3"
+        :imgCount="product.imgCount"
+        :user = "product.user"
         ></Product>
       <v-divider></v-divider>
     </v-flex>
@@ -56,7 +58,7 @@ export default {
     productRegister
   },
   async beforeMount() {
-    // this.getProductList()
+    await this.getProductList()
     await this.setProductList()
   },
   methods: {
@@ -70,9 +72,12 @@ export default {
       console.log("set productlist");
       this.products = await this.getProductState()
       console.log(this.products);
+      for (const iterator of this.products) {
+        console.log(iterator)
+        console.log(iterator.user)
+        console.log(iterator.user.uid)
+      }
       console.log("len : " + this.products.length);
-      console.log("pid : " + this.products[0].productImgs);
-      console.log("pid : " + this.productList[0].productImgs);
 
     },
   }

@@ -32,7 +32,7 @@
                         <v-btn rounded depressed color="#FDD835" @click="upload()">
                           업로드
                           <input
-                            type="file"
+                            type="file" multiple
                             style="display:none"
                             accept=".gif, .jpg, .png"
                             id="profile"
@@ -119,7 +119,7 @@ export default {
           product: {
               pname: "",
               pdescription: "",
-              productImgs: ""
+              productImgs: []
           },
           rules: {
             required: value => !!value || "입력해주세요"
@@ -131,17 +131,20 @@ export default {
       onSubmit() {
         let formData = new FormData();
           formData.append('pname', this.product.pname)
-          formData.append('pdescription', this.product.pname)
+          formData.append('pdescription', this.product.pdescription)
           formData.append('productImgs', this.product.productImgs)
+          console.log(this.product.productImgs)
+          console.log(formData)
           this.createProduct(formData)
       },
       upload() {
         $("#profile").trigger("click");
       },
       onFileChange(e) {
-        var prodImg = e.target.files[0];
-        this.product.productImgs = prodImg;
-        this.setPreview(prodImg);
+        console.log(e)
+        var prodImgs = e.target.files[0];
+        this.product.productImgs = prodImgs;
+        this.setPreview(prodImgs);
       },
       setPreview(imgfile) {
         var reader = new FileReader(0);
