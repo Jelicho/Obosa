@@ -8,7 +8,7 @@
           <h1 class="auction-detail-title">{{product.pname}}</h1>
         </v-row>
         <v-row class="pb-5">
-          <imageSlide :imageList="productImgList" />
+          <imageSlide :imageList="getUrls()" />
         </v-row>
         <v-row>
           <auctionDescription subtitle="상품 설명" :description="product.pdescription" />
@@ -32,8 +32,9 @@
               <p class="end_date">{{dates[1]}}</p>
             </v-row>
             <v-row>
-              <v-select hide-details outlined class="time-select" :items="hours" filled></v-select>
+              <v-select v-model ="end_hour" hide-details outlined class="time-select" :items="hours" filled></v-select>
               <p class="auction-sub-title">시</p>
+
             </v-row>
           </v-col>
         </v-row>
@@ -89,7 +90,8 @@ export default {
         description: "",
         endDate: "",
         upPrice: 1000
-      }
+      },
+      end_hour:"",
     };
   },
   components: {
@@ -134,17 +136,7 @@ export default {
     this.dates[0] = this.today;
     this.dates[1] = this.today;
     this.startHours = new Date().getHours() + 1
-
     this.product = this.$route.params.product;
-    // this.product = {
-    //   pid: 2,
-    //   pname: "백만송이 장미",
-    //   pdescription: "아주 좋은 장미",
-    //   uid: "3",
-    //   registeredDate: "2019-10-18",
-    //   modifiedDate: null,
-    //   imgCount: 2
-    // };
   },
   methods: {
     ...mapActions("auctionModule", ["createAuction"]),
@@ -154,10 +146,10 @@ export default {
       );
     },
     registerRequest() {
-      (this.auction.pid = this.product.pid), (this.auction.endDate = this.dates[1]);
-
+      (this.auction.pid = this.product.pid), (this.auction.endDate = this.dates[1]+" "+this.end_hour+":00:00");
+      
       var regiFormData = new FormData();
-
+      console.log(this.auction)
       for (var key in this.auction) {
         regiFormData.append(key, this.auction[key]);
       }
@@ -166,6 +158,17 @@ export default {
     },
     range(start, end){
       return Array(end - start + 1).fill().map((_, idx) => start + idx)
+    },
+    getUrls(){
+      var urls = [];
+      if(this.product.imgCount===0){
+        urls.push(DEFAULT_IMG_BASE_URL+"/product.png");
+        return urls;
+      }
+      for (var index =1; index<=this.product.imgCount;index++) {
+        urls.push(PRODUCT_IMG_BASE_URL+'/'+this.product.user.uid+'/'+this.product.dirS3+'/'+index);
+      }
+      return urls;
     }
   }
 };

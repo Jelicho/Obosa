@@ -61,11 +61,6 @@ export default new Router({
           path: 'detail/:auction',
           component: auctionDetail,
         },
-        {
-          name: 'auction.register',
-          path: 'register/:product',
-          component: auctionRegister
-        }
       ]
     },
     {
@@ -93,6 +88,11 @@ export default new Router({
               path: 'info',
               component: myInfo
             },
+            {
+              name: 'mypage.auction.register',
+              path: 'auction/register/:product',
+              component: auctionRegister
+            }
       ]
     }
   ]

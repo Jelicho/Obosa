@@ -24,6 +24,7 @@ public class ProductDto {
     public static ProductDto setProductDtoByProduct(Product product)
     {
         return ProductDto.builder()
+                .pid(product.getPid())
                 .pname(product.getPname())
                 .pdescription(product.getPdescription())
                 .imgCount(product.getImgCount())
