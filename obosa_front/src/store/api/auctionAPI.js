@@ -10,6 +10,7 @@ export default {
                 params: params
             })
         } else {
+            if(params.sort === 'count') params.sort = 'endDate'
             return axios.get(`${apiUrl}`, {
                 params: {
                     page: params.page,
