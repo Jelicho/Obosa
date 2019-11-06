@@ -28,14 +28,16 @@
                   <div id="register-form" class="col-md-12 mx-auto bg-white">
                     <v-row>
                       <v-col sm="6" align="center">
-                        <v-img :src="prodImgPrev" width="300" height="300"></v-img>
+                        <!-- <v-img :src="prodImgPrev" width="300" height="300"></v-img> -->
+                        <imageSlide :imageList="prodImgPrev"/>
                         <v-btn rounded depressed color="#FDD835" @click="upload()">
                           업로드
                           <input
-                            type="file" multiple
+                            type="file"
                             style="display:none"
                             accept=".gif, .jpg, .png"
                             id="profile"
+                            multiple
                             @change="onFileChange"
                           />
                         </v-btn>
@@ -109,13 +111,14 @@
 <script>
 // import imgur from '../components/Imgur'
 import {mapActions} from "vuex"
+import imageSlide from '@/component/common/imageSlide'
 
 export default {
   name:"productRegister",
   data(){
       return {
           dialog: false,
-          prodImgPrev: require("@/assets/product.png"),
+          prodImgPrev: [require("@/assets/product.png")],
           product: {
               pname: "",
               pdescription: "",
@@ -125,6 +128,9 @@ export default {
             required: value => !!value || "입력해주세요"
           }
       }
+  },
+  components: {
+    imageSlide
   },
   methods: {
     ...mapActions('productModule', ['createProduct']),
@@ -141,19 +147,25 @@ export default {
         $("#profile").trigger("click");
       },
       onFileChange(e) {
-        console.log(e)
-        var prodImgs = e.target.files[0];
+        var prodImgs = e.target.files;
         this.product.productImgs = prodImgs;
         this.setPreview(prodImgs);
       },
-      setPreview(imgfile) {
-        var reader = new FileReader(0);
-        var _this = this;
-        reader.onload = e => {
-          _this.prodImgPrev = e.target.result;
-        };
-        reader.readAsDataURL(imgfile);
+      setPreview(imgfileList) {
+        this.prodImgPrev = []
+        for (const img of imgfileList) {
+          var reader = new FileReader(0);
+          this.dataUrl(reader, img)
+        }
+        console.log(this.prodImgPrev);
       },
+      dataUrl(reader, img){
+        var _this = this
+        reader.onload = e => {
+          _this.prodImgPrev.push(e.target.result)
+        }
+        reader.readAsDataURL(img)
+      }
   }
 }
 </script>

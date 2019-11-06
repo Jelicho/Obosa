@@ -26,6 +26,20 @@ pipeline {
                 }
             }
         }
+        stage ('deploy test server') {
+            when{
+                expression {
+                    return gitlabTargetBranch == 'develop';
+                 }
+            }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                }
+                sh 'chmod +x ${WORKSPACE}/deployTestSpring.sh'
+                sh "JENKINS_NODE_COOKIE=dontKillMe ${WORKSPACE}/deployTestSpring.sh 8333 obosa-0.0.1-SNAPSHOT application.yml"
+            }
+        }
         stage ('deploy front server') {
             when{
                 expression {

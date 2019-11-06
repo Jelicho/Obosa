@@ -1,24 +1,29 @@
 <template>
-  <v-card
+  <!-- <v-card
     class="mx-auto"
     max-width="400"
     @onclick=""
-  >
-    <v-img
+  > -->
+  <v-card :height="height" outlined>
+
+    <!-- <v-img
       class="white--text align-end"
       height="200px"
       :src="getUrl()"
     >
       <v-card-title>{{pName}}</v-card-title>
+      :src="this.pImgs[0]"
+    > -->
+    <v-img class="item-img" :src="getUrl()" >
     </v-img>
-
+    <v-card-title>{{product.pname}}</v-card-title>
     <v-card-text class="text--primary">
-      <div>{{pDesc}}</div>
+      <div>{{product.pdescription}}</div>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="orange" text @onclick="updateProd">
-        경매등록
+      <v-btn color="orange" text @click="register()">
+        경매등록sd
       </v-btn>
 
       <v-btn color="red" text @onclick="deleteProd">
@@ -38,15 +43,11 @@ export default {
     }
   },
   props: {
-    pid: '',
-    pname: '',
-    pdescription: '',
-    dirS3:'',
-    imgCount: 0,
-    user:{}
+    product: {},
+    height: ''
   },
   mounted(){
-    // console.log(this.pImgs);
+    console.log(this.product);
   },
   methods: {
     ...mapActions('productModule', ['updateProduct', 'deleteProduct']),
@@ -59,12 +60,21 @@ export default {
       // TODO: 상품삭제 메소드 바인딩 params : pid
       this.deleteProduct({pid})
     },
-    auctionRegister(){
-      // TODO: quctionRegister binding(From. MK)
 
-    },
     getUrl(){
-      return PRODUCT_IMG_BASE_URL+'/'+this.user.uid+'/'+this.dirS3+'/'+1
+      if(this.product.imgCount===0){
+        return DEFAULT_IMG_BASE_URL+'/product.png'
+      }
+      return PRODUCT_IMG_BASE_URL+'/'+this.product.user.uid+'/'+this.product.dirS3+'/'+1
+    },
+    register(target){
+      console.log(this.product);
+      this.$router.push({
+        name : 'mypage.auction.register',
+        params : {
+          product: this.product
+        }
+      })
     }
   }
 }

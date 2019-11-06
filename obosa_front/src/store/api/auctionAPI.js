@@ -20,13 +20,21 @@ export default {
         }
     },
     createAuction(params) {
-        return $.ajax({
-            type: "POST",
-            url: `${apiUrl}`,
-            data: params,
-            processData: false,
-            contentType: false,
-        });
+        console.log(axios.defaults.headers.common['Authorization'])
+        console.log(params)
+        var config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            };
+        return axios.post(`${apiUrl}`, params, config)
+        // return $.ajax({
+        //     type: "POST",
+        //     url: `${apiUrl}`,
+        //     data: params,
+        //     processData: false,
+        //     contentType: false,
+        // });
     },
     bidAuction({ aid, bidPrice }) {
         return axios.post(`${apiUrl}/${aid}`, 

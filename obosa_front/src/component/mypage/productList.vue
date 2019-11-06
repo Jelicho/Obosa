@@ -1,6 +1,6 @@
 <template>
-  <div>
-  <v-layout mt-5 wrap>
+  <div class="item-list">
+  <v-layout row wrap pa-5>
     <!-- <v-flex v-for="i in products.length > limits ? limits : products.length" xs12 sm6 md4 lg3>
       <Product
       :pId="products[i-1].pid"
@@ -8,15 +8,8 @@
       :pDesc="products[i-1].pdescription"
       :prodImgs="products[i-1].productImgs"
       ></Product> -->
-      <v-flex v-for="product in products" xs12 sm6>
-        <Product
-        :pid="product.pid"
-        :pname="product.pname"
-        :pdescription="product.pdescription"
-        :dirS3 = "product.dirS3"
-        :imgCount="product.imgCount"
-        :user = "product.user"
-        ></Product>
+      <v-flex v-for="product in products" xs12 sm6 md4 lg3 v-bind:key="product.pid">
+        <Product :product="product"></Product>
       <v-divider></v-divider>
     </v-flex>
     <!-- <v-flex xs12 text-xs-center round my-5 v-if="loadMore">
@@ -55,7 +48,7 @@ export default {
   },
   components: {
     Product,
-    productRegister
+    productRegister,
   },
   async beforeMount() {
     await this.getProductList()
@@ -71,14 +64,6 @@ export default {
     async setProductList(){
       console.log("set productlist");
       this.products = await this.getProductState()
-      console.log(this.products);
-      for (const iterator of this.products) {
-        console.log(iterator)
-        console.log(iterator.user)
-        console.log(iterator.user.uid)
-      }
-      console.log("len : " + this.products.length);
-
     },
   }
 }
