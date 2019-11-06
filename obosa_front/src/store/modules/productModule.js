@@ -8,13 +8,13 @@ const state = {
       "pid" : "1",
       "pname" : "음",
       "pdescription" : "오",
-      "productImgs" : ["@/assets/product.png","../../assets/product.png"],
+      "productImgs" : [ 'https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/default/product.png','https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/default/product.png' ],
     },
     {
       "pid" : "2",
       "pname" : "음",
       "pdescription" : "오",
-      "productImgs" : ["../../assets/product.png"],
+      "productImgs" : [ 'https://obosa.s3.ap-northeast-2.amazonaws.com/obosa/default/product.png' ],
     }
   ],
 
