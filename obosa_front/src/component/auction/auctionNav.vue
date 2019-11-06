@@ -1,7 +1,7 @@
 <template>
   <v-toolbar class="header" height="64px" flat>
     <v-toolbar-items>
-      <v-btn text @click="to('endDate')" class="nav-link" id='count'>인기 순</v-btn>
+      <v-btn text @click="to('count')" class="nav-link" id='count'>인기 순</v-btn>
       <v-btn text @click="to('endDate')" class="nav-link" id='endDate'>마감 임박</v-btn>
       <v-btn text @click="to('registeredDate')" class="nav-link" id='registeredDate'>신규 순</v-btn>
     </v-toolbar-items>

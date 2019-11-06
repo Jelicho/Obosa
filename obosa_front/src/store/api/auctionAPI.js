@@ -10,6 +10,7 @@ export default {
                 params: params
             })
         } else {
+            if(params.sort === 'count') params.sort = 'endDate'
             return axios.get(`${apiUrl}`, {
                 params: {
                     page: params.page,
@@ -36,8 +37,11 @@ export default {
         //     contentType: false,
         // });
     },
-    bidAuction({ aid, bidPrice }) {
-        return axios.post(`${apiUrl}/bid`, 
-                { aid, bidPrice })
+    bidAuction(params) {
+        console.log(params)
+        return axios.post(`${apiUrl}/bid`, params)
+        // console.log(aid)
+        // return axios.post(`${apiUrl}/bid`, 
+        //         { aid, bidPrice })
     }
 }

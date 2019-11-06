@@ -148,7 +148,7 @@ export default {
       },
       onFileChange(e) {
         var prodImgs = e.target.files;
-        this.product.productImgs = prodImgs;
+        this.product.productImgs = prodImgs[0];
         this.setPreview(prodImgs);
       },
       setPreview(imgfileList) {
