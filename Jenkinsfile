@@ -58,7 +58,7 @@ pipeline {
         stage ('deploy spring server') {
             when{
                 expression {
-                    return gitlabTargetBranch == 'master';
+                    return gitlabTargetBranch == 'feature/test';
                  }
             }
             steps {
@@ -68,24 +68,9 @@ pipeline {
                 sh 'cp obosa_server/src/main/resources/* obosa_server/build/libs'
                 sh 'chmod +x ${WORKSPACE}/deploySpring.sh'
                 sh 'cp deploySpring.sh obosa_server/build/libs'
-                sshPublisher(publishers: 
-                                [sshPublisherDesc(configName: 'ObosaAPIServer1', 
-                                transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-                                    execCommand: '''chmod +x /home/ubuntu/ObosaSpring/deploySpring.sh 
-                                                    /home/ubuntu/ObosaSpring/deploySpring.sh 8080 obosa-0.0.1-SNAPSHOT application.yml &''', 
-                                                    execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+',
-                                                    remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'obosa_server/build/libs', 
-                                                    sourceFiles: 'obosa_server/build/libs/*')], 
-                                usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false), 
-                                
-                                sshPublisherDesc(configName: 'ObosaAPIServer2', 
-                                transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-                                    execCommand: '''chmod +x /home/ubuntu/ObosaSpring/deploySpring.sh 
-                                                    /home/ubuntu/ObosaSpring/deploySpring.sh 8080 obosa-0.0.1-SNAPSHOT application.yml &''', 
-                                                    execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', 
-                                                    remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'obosa_server/build/libs', 
-                                                    sourceFiles: 'obosa_server/build/libs/*')], 
-                                usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'ObosaAPIServer1', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''chmod +x /home/ubuntu/ObosaSpring/deploySpring.sh 
+                /home/ubuntu/ObosaSpring/deploySpring.sh 8080 obosa-0.0.1-SNAPSHOT application.yml &''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'obosa_server/build/libs', sourceFiles: 'obosa_server/build/libs/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false), sshPublisherDesc(configName: 'ObosaAPIServer2', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''chmod +x /home/ubuntu/ObosaSpring/deploySpring.sh 
+                /home/ubuntu/ObosaSpring/deploySpring.sh 8080 obosa-0.0.1-SNAPSHOT application.yml &''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'obosa_server/build/libs', sourceFiles: 'obosa_server/build/libs/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
 
