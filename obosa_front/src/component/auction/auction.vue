@@ -70,18 +70,5 @@ export default {
 </script>
 
 <style>
-.non_click {
-  cursor: default;
-  position: absolute;
-  z-index: 10;
-  background-color: #0008;
-  height: 100%;
-  width: 100%;
-  font-size: 30px;
-  font-weight: 800;
-  color:#ffff;
-}
-.non_click > div {
-  margin-top:50%;
-}
+
 </style>
