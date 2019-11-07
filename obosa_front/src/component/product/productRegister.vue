@@ -136,11 +136,14 @@ export default {
     ...mapActions('productModule', ['createProduct']),
       onSubmit() {
         let formData = new FormData();
-          formData.append('pname', this.product.pname)
-          formData.append('pdescription', this.product.pdescription)
-          formData.append('productImgs', this.product.productImgs)
-          console.log(this.product.productImgs)
-          console.log(formData)
+          console.log(this.product.productImgs.length);
+          console.log(this.product.productImgs);
+          formData.append('pname', this.product.pname);
+          formData.append('pdescription', this.product.pdescription);
+          for (let i = 0; i < this.product.productImgs.length; i++) {
+            console.log(this.product.productImgs[i]);
+            formData.append('productImgs', this.product.productImgs[i])
+          }
           this.createProduct(formData)
       },
       upload() {
@@ -148,7 +151,7 @@ export default {
       },
       onFileChange(e) {
         var prodImgs = e.target.files;
-        this.product.productImgs = prodImgs[0];
+        this.product.productImgs = prodImgs;
         this.setPreview(prodImgs);
       },
       setPreview(imgfileList) {
