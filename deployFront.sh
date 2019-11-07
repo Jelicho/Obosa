@@ -28,7 +28,7 @@ frontDestFolder=$destAbsPath/obosa_front/dist
 function stopServer(){
     echo " "
     echo "Stoping process on port: $frontPort"
-    fuser -n tcp -k $frontPort > redirection &
+    fuser -n tcp -k $frontPort > fuserFrontResult.txt 2>&1
     echo " "
 }
 
