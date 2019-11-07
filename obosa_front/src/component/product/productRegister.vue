@@ -19,7 +19,7 @@
           class="headline grey lighten-2"
           primary-title
         >
-          상품 등록 해욥~~~~!
+          상품 등록
         </v-card-title>
 
         <v-card-text>
@@ -28,7 +28,6 @@
                   <div id="register-form" class="col-md-12 mx-auto bg-white">
                     <v-row>
                       <v-col sm="6" align="center">
-                        <!-- <v-img :src="prodImgPrev" width="300" height="300"></v-img> -->
                         <imageSlide :imageList="prodImgPrev"/>
                         <v-btn rounded depressed color="#FDD835" @click="upload()">
                           업로드
@@ -43,11 +42,6 @@
                         </v-btn>
                       </v-col>
                       <v-col sm="6" class="input-form">
-                        <v-row>
-                          <v-col>
-                            <logo />
-                          </v-col>
-                        </v-row>
                         <v-row>
                           <v-col>
                             <v-text-field
@@ -118,7 +112,7 @@ export default {
   data(){
       return {
           dialog: false,
-          prodImgPrev: [require("@/assets/product.png")],
+          prodImgPrev: [`${DEFAULT_IMG_BASE_URL}/product.png`],
           product: {
               pname: "",
               pdescription: "",
@@ -136,12 +130,9 @@ export default {
     ...mapActions('productModule', ['createProduct']),
       onSubmit() {
         let formData = new FormData();
-          console.log(this.product.productImgs.length);
-          console.log(this.product.productImgs);
           formData.append('pname', this.product.pname);
           formData.append('pdescription', this.product.pdescription);
           for (let i = 0; i < this.product.productImgs.length; i++) {
-            console.log(this.product.productImgs[i]);
             formData.append('productImgs', this.product.productImgs[i])
           }
           this.createProduct(formData)
