@@ -29,7 +29,7 @@ pipeline {
         stage ('deploy test server') {
             when{
                 expression {
-                    return gitlabTargetBranch == 'develop';
+                    return gitlabTargetBranch == 'feature/test';
                  }
             }
             steps {
