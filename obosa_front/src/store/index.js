@@ -5,7 +5,6 @@ import productModule from '@/store/modules/productModule'
 
 import signupModule from '@/store/modules/signupModule'
 import auctionModule from '@/store/modules/auctionModule'
-import webSocketModule from '@/store/modules/webSocketModule'
 
 Vue.use(Vuex)
 
@@ -15,6 +14,5 @@ export default new Vuex.Store({
     productModule,
     signupModule,
     auctionModule,
-    webSocketModule
   },
 })

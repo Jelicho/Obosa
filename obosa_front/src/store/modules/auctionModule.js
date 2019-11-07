@@ -1,9 +1,13 @@
 import auctionAPI from '@/store/api/auctionAPI'
+import Stomp from 'stomp-websocket'
+import SockJS from 'sockjs-client'
 
 const state = {
     auctionList: [],
     hasMoreAuctions: true,
-    auctionResponse: {}
+    auctionResponse: {},
+    stompClient: null,
+    auctionIndexList: {}
 }
 
 const actions = {
@@ -44,16 +48,49 @@ const actions = {
                 return response.data.message;
             }
         })
-    }
+    },
+    // web socket
+    connect({ state, commit }) {
+        const socket = new SockJS("http://localhost:8080/api/bid");
+        state.stompClient = Stomp.over(socket);
+        state.stompClient.connect({}, function(frame) {
+          console.log("Connected: " + frame);
+          state.stompClient.subscribe("/api/topic/bidPrice", function(response) {
+            commit('setPrice', JSON.parse(response.body))
+            // TODO: 받은 id에 해당하는 auction의 최고가를 highPrice로 변경한다.
+          });
+        });
+    },
+    disconnect({ state }) {
+        if (state.stompClient !== null) {
+          state.stompClient.disconnect();
+        }
+        console.log("Disconnected");
+    },
+    updatePrice({ state },  auctionId ) {
+        state.stompClient.send(
+            "/api/bidPrice",
+            {},
+            JSON.stringify({ id: auctionId })
+        );
+    },
 }
 
 const mutations = {
     setAuctionList(state, response) {
         state.auctionList = response
+        
+        state.auctionIndexList = {}
+        var i = 0;
+        for (const auction of state.auctionList) {
+            state.auctionIndexList[auction.aid] = i++
+        }
     },
     addAuctionList(state, response) {
+        var i = state.auctionList.length
         for (const auction of response) {
             state.auctionList.push(auction)
+            state.auctionIndexList[auction.aid] = i++
         }
     },
     setHasMoreAuctions(state, response) {
@@ -61,6 +98,12 @@ const mutations = {
     },
     setAuctionResponse(state, response) {
         state.auctionResponse = response
+    },
+    setStompclient(state, response) {
+        state.stompClient = response
+    },
+    setPrice(state, response) {
+        state.auctionList[state.auctionIndexList[response.id]].highPrice = response.highPrice
     }
 }
 

@@ -88,8 +88,7 @@ export default {
     );
   },
   methods: {
-    ...mapActions("auctionModule", ["bidAuction"]),
-    ...mapActions("webSocketModule", ["updatePrice"]),
+    ...mapActions("auctionModule", ["bidAuction", "updatePrice"]),
     getProductImgList(uid,dirS3, count) {
       if (count == 0) {
         this.productImgList = [DEFAULT_IMG_BASE_URL + "/product.png"];

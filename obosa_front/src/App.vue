@@ -16,11 +16,11 @@ export default {
     await this.reLogin()
   },
   computed: {
-      ...mapState('webSocketModule',['stompClient'])
+      ...mapState('auctionModule',['stompClient'])
   },
   methods:{
     ...mapActions('userModule', ['reLogin']),
-    ...mapActions("webSocketModule", ['connect','disconnect']),
+    ...mapActions("auctionModule", ['connect','disconnect']),
   },
   mounted () {
       this.connect();
