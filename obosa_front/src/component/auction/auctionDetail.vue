@@ -89,6 +89,7 @@ export default {
   },
   methods: {
     ...mapActions("auctionModule", ["bidAuction"]),
+    ...mapActions("webSocketModule", ["updatePrice"]),
     getProductImgList(uid,dirS3, count) {
       if (count == 0) {
         this.productImgList = [DEFAULT_IMG_BASE_URL + "/product.png"];
@@ -105,6 +106,12 @@ export default {
       formData.append('aid', this.auction.aid)
       formData.append('bidPrice', Number(this.bidPrice))
       this.bidAuction(formData)
+        .then(result =>{
+            if(result == true){
+                console.log('hi 성공했음')
+                this.updatePrice(this.auction.aid);
+            }
+        })
     }
   }
 };
