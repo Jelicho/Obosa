@@ -4,7 +4,7 @@
       <v-form ref="regiform" valid>
         <v-row class="form-container" >
           <div class="col-md-5 text_container" >
-                <v-img :src="profilePreview" style="margin:auto" width="300px" height="300"></v-img>
+                <v-img :src="profilePreview" style="margin-top: 45%;" width="300px" height="300"></v-img>
                 <v-btn rounded depressed color="#FDD835" @click="upload()">
                   업로드
                   <input
