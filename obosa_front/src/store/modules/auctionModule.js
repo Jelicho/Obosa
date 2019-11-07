@@ -9,10 +9,10 @@ const state = {
 const actions = {
     async getAuctionList({ commit }, params) {
         await auctionAPI.getAuctionList(params).then(response => {
+            console.log(response.data);
             if(response.data.status == 200) {
                 if(response.data.data.first){
                     commit('setAuctionList', response.data.data.content)
-
                 } else {
                     commit('addAuctionList', response.data.data.content)
                 }
@@ -20,7 +20,8 @@ const actions = {
                     commit('setHasMoreAuctions', false)
                 }
             } else {
-                return response.data.message
+                commit('setAuctionList', [])
+                commit('setHasMoreAuctions', false)
             }
         })
     },
