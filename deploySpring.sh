@@ -47,7 +47,7 @@ msgAppStarted="Application Started... exiting buffer!"
 function stopServer(){
     echo " "
     echo "Stoping process on port: $springPort"
-    sudo fuser -n tcp -k $springPort > redirection &
+    sudo fuser -n tcp -k 8080 > redirection &
     echo " "
 }
 
