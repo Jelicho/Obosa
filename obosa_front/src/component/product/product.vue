@@ -1,19 +1,5 @@
 <template>
-  <!-- <v-card
-    class="mx-auto"
-    max-width="400"
-    @onclick=""
-  > -->
   <v-card :height="height" outlined>
-
-    <!-- <v-img
-      class="white--text align-end"
-      height="200px"
-      :src="getUrl()"
-    >
-      <v-card-title>{{pName}}</v-card-title>
-      :src="this.pImgs[0]"
-    > -->
     <v-img class="item-img" :src="getUrl()" >
     </v-img>
     <v-card-title>{{product.pname}}</v-card-title>
@@ -23,9 +9,8 @@
 
     <v-card-actions>
       <v-btn color="orange" text @click="register()">
-        경매등록sd
+        경매등록
       </v-btn>
-
       <v-btn color="red" text @onclick="deleteProd">
         상품삭제
       </v-btn>
