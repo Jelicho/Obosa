@@ -20,7 +20,11 @@ export default {
   },
   methods:{
     ...mapActions('userModule', ['reLogin']),
+    ...mapActions("webSocketModule", ['connect','disconnect']),
   },
+  mounted () {
+      this.connect();
+  }
 };
 </script>
 
