@@ -32,7 +32,8 @@ const actions = {
 
 const mutations = {
   setProductList (state, {data}) {
-    state.productList = data.productList.data
+    console.log(data)
+    state.productList = data.content
     // console.log(state.productList)
   }
 }
