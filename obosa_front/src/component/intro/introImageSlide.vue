@@ -19,7 +19,7 @@ export default {
   },
   mounted() {
     for(let i = 1; i <= 6; i++){
-      this.images.push(`${INTRO_BASE_URL}/introImg${i}.jpg`);
+      this.images.push(`${INTRO_BASE_URL}introImg${i}.jpg`);
     }
   },
 };

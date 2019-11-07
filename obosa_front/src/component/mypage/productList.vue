@@ -1,13 +1,8 @@
 <template>
-  <div>
-  <v-layout mt-5 wrap>
-      <v-flex v-for="product in products" xs12 sm6 >
-        <Product
-        :pId="product.pid"
-        :pName="product.pname"
-        :pDesc="product.pdescription"
-        :pImgs="product.productImgs"
-        ></Product>
+  <div class="item-list">
+  <v-layout row wrap pa-5>
+      <v-flex v-for="product in products" xs12 sm6 md4 lg3 v-bind:key="product.pid">
+        <Product :product="product"></Product>
       <v-divider></v-divider>
     </v-flex>
   </v-layout>
@@ -42,7 +37,7 @@ export default {
   },
   components: {
     Product,
-    productRegister
+    productRegister,
   },
   async beforeMount() {
     await this.getProductList()
@@ -58,11 +53,6 @@ export default {
     async setProductList(){
       console.log("set productlist");
       this.products = await this.getProductState()
-      console.log(this.products);
-      console.log("len : " + this.products.length);
-      console.log("pid : " + this.products[0].productImgs);
-      console.log("pid : " + this.productList[0].productImgs);
-
     },
   }
 }

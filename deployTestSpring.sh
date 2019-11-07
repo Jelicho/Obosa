@@ -14,8 +14,7 @@ configFile=$3
 #### CONFIGURABLE VARIABLES ######
 #destination absolute path. It must be pre created or you can
 # improve this script to create if not exists
-sourceAbsPath=/home/ubuntu/ObosaSpring
-destAbsPath=$sourceAbsPath/deploy
+destAbsPath=/home/ubuntu/$projectName
 configFolder=src/main/resources
 ##############################################################
 
@@ -23,15 +22,16 @@ configFolder=src/main/resources
 ##### DONT CHANGE HERE ##############
 #jar file
 # $WORKSPACE is a jenkins variable
-springSourceFile=$sourceAbsPath/$projectName*.jar
-springDestFolder=$destAbsPath
-springDestFile=$springDestFolder/$projectName.jar
+springSourceFile=$WORKSPACE/obosa_server/build/libs/$projectName*.jar
+springDestFolder=$destAbsPath/obosa_server
+springDestFile=$destAbsPath/obosa_server/$projectName.jar
 
 #config files folder
-sourConfigFile=$sourceAbsPath/$configFile
-destConfigFolder=$destAbsPath/$configFolder
+sourConfigFolder=$WORKSPACE/obosa_server/$configFolder/*
+destConfigFolder=$destAbsPath/obosa_server/$configFolder
 
-properties=--spring.config.location=$destConfigFolder/$configFile
+properties=--spring.config.location=$destAbsPath/obosa_server/$configFolder/$configFile
+
 
 #CONSTANTS
 logFile=initServer.log
@@ -47,10 +47,9 @@ msgAppStarted="Application Started... exiting buffer!"
 function stopServer(){
     echo " "
     echo "Stoping process on port: $springPort"
-    sudo fuser -n tcp -k $springPort 
+    fuser -n tcp -k $springPort > redirection &
     echo " "
 }
-
 function deleteFiles(){
     echo "Deleting $springDestFile"
     rm -rf $springDestFile
@@ -74,7 +73,7 @@ function copyFiles(){
     echo "Creating $destConfigFolder"
     mkdir -p $destConfigFolder
     echo "Copying Config file to $destConfigFolder"
-    cp $sourConfigFile $destConfigFolder
+    cp $sourConfigFolder $destConfigFolder
 
 }
 
@@ -89,7 +88,19 @@ function changeFilePermission(){
     echo " "
 }   
 
+function watch(){
+    tail -f $dstLogFile |
 
+        while IFS= read line
+            do
+                echo "$msgBuffer" "$line"
+
+                if [[ "$line" == *"$whatToFind"* ]]; then
+                    echo $msgAppStarted
+                    pkill  tail
+                fi
+        done
+}
 ### FUNCTIONS CALLS
 #####################
 # Use Example of this file. Args: branchname | springPort | frontPort | project name | external resourcce
@@ -107,3 +118,5 @@ copyFiles
 changeFilePermission
 # 4 - start server
 run
+
+watch

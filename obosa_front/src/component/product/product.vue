@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 <v-dialog
   v-model="dialog"
   width="1000"
@@ -13,17 +14,38 @@
       height="200px"
       :src="pImgs[0]"
       v-on="on"
+=======
+  <!-- <v-card
+    class="mx-auto"
+    max-width="400"
+    @onclick=""
+  > -->
+  <v-card :height="height" outlined>
+
+    <!-- <v-img
+      class="white--text align-end"
+      height="200px"
+      :src="getUrl()"
+>>>>>>> 8adac5b5d8afed0d3811205cdb72abc495a953db
     >
       <v-card-title>{{pName}}</v-card-title>
+      :src="this.pImgs[0]"
+    > -->
+    <v-img class="item-img" :src="getUrl()" >
     </v-img>
-
+    <v-card-title>{{product.pname}}</v-card-title>
     <v-card-text class="text--primary">
-      <div>{{pDesc}}</div>
+      <div>{{product.pdescription}}</div>
     </v-card-text>
 
     <v-card-actions>
+<<<<<<< HEAD
       <v-btn color="orange" text @onclick="to('auction.register')">
         경매등록
+=======
+      <v-btn color="orange" text @click="register()">
+        경매등록sd
+>>>>>>> 8adac5b5d8afed0d3811205cdb72abc495a953db
       </v-btn>
 
       <v-btn color="red" text @onclick="deleteProd">
@@ -143,6 +165,7 @@ export default {
     }
   },
   props: {
+<<<<<<< HEAD
     pId: String,
     pName: String,
     pDesc: String,
@@ -165,12 +188,27 @@ export default {
       formData.append('productImgs', this.pImgsUp);
       await this.updateProduct(formData)
       await this.readProduct()
+=======
+    product: {},
+    height: ''
+  },
+  mounted(){
+    console.log(this.product);
+  },
+  methods: {
+    ...mapActions('productModule', ['updateProduct', 'deleteProduct']),
+    updateProd(){
+      // TODO: 상품삭제 메소드 바인딩 params : pid, pname, pdesc, pImg
+      let formData = new formData()
+      this.updateProduct(formData)
+>>>>>>> 8adac5b5d8afed0d3811205cdb72abc495a953db
     },
     async deleteProd(){
       var pid = this.pId
       await this.deleteProduct({pid})
       await this.readProduct()
     },
+<<<<<<< HEAD
     auctionRegister(target){
         this.$router.push({
           name:target,
@@ -196,5 +234,24 @@ export default {
       $("#prodImgFile").trigger("click");
     },
 }
+=======
+
+    getUrl(){
+      if(this.product.imgCount===0){
+        return DEFAULT_IMG_BASE_URL+'/product.png'
+      }
+      return PRODUCT_IMG_BASE_URL+'/'+this.product.user.uid+'/'+this.product.dirS3+'/'+1
+    },
+    register(target){
+      console.log(this.product);
+      this.$router.push({
+        name : 'mypage.auction.register',
+        params : {
+          product: this.product
+        }
+      })
+    }
+  }
+>>>>>>> 8adac5b5d8afed0d3811205cdb72abc495a953db
 }
 </script>

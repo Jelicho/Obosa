@@ -26,9 +26,25 @@ pipeline {
                 }
             }
         }
+        stage ('deploy test server') {
+            when{
+                expression {
+                    return gitlabTargetBranch == 'develop';
+                 }
+            }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                }
+                sh 'chmod +x ${WORKSPACE}/deployTestSpring.sh'
+                sh "JENKINS_NODE_COOKIE=dontKillMe ${WORKSPACE}/deployTestSpring.sh 8333 obosa-0.0.1-SNAPSHOT application.yml"
+            }
+        }
         stage ('deploy front server') {
             when{
-                branch 'master'
+                expression {
+                    return gitlabTargetBranch == 'master';
+                 }
             }
             steps {
                 script {
@@ -41,7 +57,9 @@ pipeline {
         
         stage ('deploy spring server') {
             when{
-                branch 'master'
+                expression {
+                    return gitlabTargetBranch == 'master';
+                 }
             }
             steps {
                 script {
@@ -50,9 +68,24 @@ pipeline {
                 sh 'cp obosa_server/src/main/resources/* obosa_server/build/libs'
                 sh 'chmod +x ${WORKSPACE}/deploySpring.sh'
                 sh 'cp deploySpring.sh obosa_server/build/libs'
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'ObosaAPIServer1', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''chmod +x /home/ubuntu/ObosaSpring/deploySpring.sh 
-/home/ubuntu/ObosaSpring/deploySpring.sh 8080 obosa-0.0.1-SNAPSHOT application.yml &''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'obosa_server/build/libs', sourceFiles: 'obosa_server/build/libs/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false), sshPublisherDesc(configName: 'ObosaAPIServer2', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''chmod +x /home/ubuntu/ObosaSpring/deploySpring.sh 
-/home/ubuntu/ObosaSpring/deploySpring.sh 8080 obosa-0.0.1-SNAPSHOT application.yml &''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'obosa_server/build/libs', sourceFiles: 'obosa_server/build/libs/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: 
+                                [sshPublisherDesc(configName: 'ObosaAPIServer1', 
+                                transfers: [sshTransfer(cleanRemote: false, excludes: '', 
+                                    execCommand: '''chmod +x /home/ubuntu/ObosaSpring/deploySpring.sh 
+                                                    /home/ubuntu/ObosaSpring/deploySpring.sh 8080 obosa-0.0.1-SNAPSHOT application.yml &''', 
+                                                    execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+',
+                                                    remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'obosa_server/build/libs', 
+                                                    sourceFiles: 'obosa_server/build/libs/*')], 
+                                usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false), 
+                                
+                                sshPublisherDesc(configName: 'ObosaAPIServer2', 
+                                transfers: [sshTransfer(cleanRemote: false, excludes: '', 
+                                    execCommand: '''chmod +x /home/ubuntu/ObosaSpring/deploySpring.sh 
+                                                    /home/ubuntu/ObosaSpring/deploySpring.sh 8080 obosa-0.0.1-SNAPSHOT application.yml &''', 
+                                                    execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', 
+                                                    remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'obosa_server/build/libs', 
+                                                    sourceFiles: 'obosa_server/build/libs/*')], 
+                                usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
 
@@ -61,16 +94,16 @@ pipeline {
         always {
             script{
                 if ( currentBuild.currentResult == "SUCCESS" ) {
-                    slackSend color: "good", message: "[ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} was successful"
+                    slackSend color: "good", message: "[ user : ${gitlabUserName} ] , [ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} was successful"
                 }
                 else if( currentBuild.currentResult == "FAILURE" ) { 
-                    slackSend color: "danger", message: "[ Job: ${env.JOB_NAME} ] , [ Stage: ${FAILED_STAGE} ] with buildnumber ${env.BUILD_NUMBER} was failed"
+                    slackSend color: "danger", message: "[ user : ${gitlabUserName} ] , [ Job: ${env.JOB_NAME} ] , [ Stage: ${FAILED_STAGE} ] with buildnumber ${env.BUILD_NUMBER} was failed"
                 }
                 else if( currentBuild.currentResult == "UNSTABLE" ) { 
-                    slackSend color: "warning", message: "[ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} was unstable"
+                    slackSend color: "warning", message: "[ user : ${gitlabUserName} ] , [ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} was unstable"
                 }
                 else {
-                    slackSend color: "danger", message: "[ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} its resulat was unclear"	
+                    slackSend color: "danger", message: "[ user : ${gitlabUserName} ] , [ Job: ${env.JOB_NAME} ] with buildnumber ${env.BUILD_NUMBER} its resulat was unclear"	
                 }
             }
         }

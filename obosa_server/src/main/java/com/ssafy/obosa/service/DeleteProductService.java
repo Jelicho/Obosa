@@ -3,6 +3,7 @@ package com.ssafy.obosa.service;
 
 import com.ssafy.obosa.model.common.DefaultRes;
 import com.ssafy.obosa.model.domain.Product;
+import com.ssafy.obosa.model.domain.User;
 import com.ssafy.obosa.model.dto.DeleteProductDto;
 import com.ssafy.obosa.repository.ProductRepository;
 import com.ssafy.obosa.repository.UserRepository;
@@ -31,7 +32,7 @@ public class DeleteProductService {
         this.fileService = fileService;
         this.userRepository = userRepository;
     }
-    public DefaultRes<DeleteProductDto> deleteProduct(DeleteProductDto deleteProductDto)
+    public DefaultRes<DeleteProductDto> deleteProduct(User user, DeleteProductDto deleteProductDto)
     {
         try
         {
@@ -45,6 +46,10 @@ public class DeleteProductService {
             }
 
             Product product = optionalProduct.get();
+            if(product.getUser().getUid()!=user.getUid()){
+                return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_PERMISSION_ACCESS);
+            }
+
 
             if(product.getImgCount()>0){
                 ImgHandler.deleteProductImgs(fileService, product);
