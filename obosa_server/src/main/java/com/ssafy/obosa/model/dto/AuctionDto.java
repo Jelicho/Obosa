@@ -1,18 +1,20 @@
 package com.ssafy.obosa.model.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import com.ssafy.obosa.model.domain.Auction;
 import com.ssafy.obosa.model.redis.Bid;
 import com.ssafy.obosa.repository.BidRedisRepository;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Builder
@@ -22,6 +24,7 @@ public class AuctionDto {
     private int lowPrice;
     private int highPrice;
     private String description;
+    private String registeredDate;
     private String endDate;
     private char aucState;
     private int upPrice;
@@ -33,6 +36,7 @@ public class AuctionDto {
                 .lowPrice(auction.getLowPrice())
                 .highPrice(auction.getHighPrice())
                 .description(auction.getDescription())
+                .registeredDate(auction.getRegisteredDate().toString())
                 .endDate(auction.getEndDate())
                 .aucState(auction.getAucState())
                 .upPrice(auction.getUpPrice())
