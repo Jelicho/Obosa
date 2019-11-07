@@ -1,6 +1,7 @@
-<template>
-  <router-link :to="{name: 'auction.detail' , params : { auction: auction }}">
-    <v-card height="auto" outlined>
+<template style="position:relative">
+    <v-hover v-slot:default="{ hover }">
+    <v-card height="auto" outlined @click="toDetail" >
+      <div v-if="hover & closed" class="non_click" ><div>이미 마감된<br/> 경매입니다</div></div>
       <v-img class="item-img" :src="auction.product.imgCount === 0 ? imgsrc() : productImg" />
       <v-card-title>{{auction.product.pname}}</v-card-title>
       <v-card-subtitle>{{auction.uid}}</v-card-subtitle>
@@ -11,7 +12,7 @@
         남은시간 : {{calculateDate(auction.registeredDate, auction.endDate)}}
       </v-card-text>
     </v-card>
-  </router-link>
+    </v-hover>
 </template>
 
 <script>
@@ -21,6 +22,7 @@ export default {
   props: ["auction", "height"],
   data() {
     return {
+      closed: false,
       productImg: PRODUCT_IMG_BASE_URL + "/" + this.auction.product.user.uid+"/"+this.auction.product.dirS3 + "/1",
       progressDate: 0,
       progressColor: "success"
@@ -38,6 +40,7 @@ export default {
       this.progressDate = ((now - startDate) / (endDate - startDate)) * 100;
 
       if (100 <= this.progressDate) {
+        this.closed = true;
         this.progressColor = "red";
       } 
 
@@ -54,10 +57,31 @@ export default {
 
         return days + "일 " + hours + "시간 " + minutes + "분";
       }
+    },
+    toDetail(){
+      if(this.closed) return;
+      this.$router.push({name: "auction.detail",
+        params: {
+          auction: this.auction
+        }})
     }
   }
 };
 </script>
 
 <style>
+.non_click {
+  cursor: default;
+  position: absolute;
+  z-index: 10;
+  background-color: #0008;
+  height: 100%;
+  width: 100%;
+  font-size: 30px;
+  font-weight: 800;
+  color:#ffff;
+}
+.non_click > div {
+  margin-top:50%;
+}
 </style>
