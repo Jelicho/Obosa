@@ -47,7 +47,7 @@ msgAppStarted="Application Started... exiting buffer!"
 function stopServer(){
     echo " "
     echo "Stoping process on port: $springPort"
-    fuser -n tcp -k $springPort > redirection &
+    fuser -n tcp -k $springPort  > fuserResult.txt 2>&1
     echo " "
 }
 function deleteFiles(){
