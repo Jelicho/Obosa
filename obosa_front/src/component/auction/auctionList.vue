@@ -8,6 +8,7 @@
         <v-text-field class="search" color="#994fa980" background-color="#fff0" outlined clearable hide-details v-model="params.searchStr" @keyup.enter="auctionSearch"></v-text-field>
       </v-col>
     </v-row>
+    <v-row justify="center" v-if="auctionList.length===0"><h1><br/><br/> 경매가 없습니다 :( </h1></v-row>
     <v-layout row wrap pa-5>
       <v-flex pa-5 xs12 sm6 md4 lg3 v-for="auction in auctionList" v-bind:key="auction.aid">
         <auction :auction="auction" :height="300" />
