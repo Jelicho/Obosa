@@ -29,6 +29,19 @@ const actions = {
             }
         })
     },
+    async getAuctionDetail({ commit }, params ){
+        await auctionAPI.getAuctionDetail(params).then( response => {
+            console.log(response);
+            
+            if(response.data.status == 200 ){
+                commit('setAuction', response.data.data)
+            } else {
+                commit('setAuction', {})
+                commit('setAuctionResponse', response)
+            }
+        })
+
+    },
     async getAuctionListByUser({ commit }, params) {
         const response = await auctionAPI.getAuctionListByUser(params)
         if (response != null)
@@ -95,6 +108,9 @@ const mutations = {
     },
     setHasMoreAuctions(state, response) {
         state.hasMoreAuctions = response
+    },
+    setAuction(state, response) {
+        state.auction = response
     },
     setAuctionResponse(state, response) {
         state.auctionResponse = response

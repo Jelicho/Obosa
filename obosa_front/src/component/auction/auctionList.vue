@@ -11,7 +11,7 @@
     <v-row justify="center" v-if="auctionList.length===0"><h1><br/><br/> 경매가 없습니다 :( </h1></v-row>
     <v-layout row wrap pa-5>
       <v-flex pa-5 xs12 sm6 md4 lg3 v-for="auction in auctionList" v-bind:key="auction.aid">
-        <auction :auction="auction" :height="300" />
+        <auction :auction="auction" height="250px" />
       </v-flex>
       <v-flex pa-5 xs12 sm6 md4 lg3>
         <loadingbox v-if="hasMoreAuctions" :height="430" />

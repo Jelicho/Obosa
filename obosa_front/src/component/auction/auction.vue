@@ -1,13 +1,14 @@
 <template style="position:relative">
     <v-hover v-slot:default="{ hover }">
-    <v-card height="auto" outlined @click="toDetail" >
+    <v-card  outlined @click="toDetail" >
       <div v-if="hover & closed" class="non_click" ><div>이미 마감된<br/> 경매입니다</div></div>
-      <v-img class="item-img" :src="auction.product.imgCount === 0 ? imgsrc() : productImg" />
+      <v-img width="100%" :height="height" class="item-img" :src="auction.product.imgCount === 0 ? imgsrc() : productImg" />
       <v-card-title>{{auction.product.pname}}</v-card-title>
       <v-card-subtitle>{{auction.uid}}</v-card-subtitle>
       <v-progress-linear :value="progressDate" :color="progressColor"></v-progress-linear>
       <v-card-text>
         <p>마감일자 : {{auction.endDate}}</p>
+        <p class="price" style="color:red">{{auction.highPrice}}</p>
         <br />
         남은시간 : {{calculateDate(auction.registeredDate, auction.endDate)}}
       </v-card-text>
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 
 export default {
   name: "auction",
@@ -29,6 +31,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("auctionModule", [ "getAuctionDetail" ]),
     imgsrc() {
       return DEFAULT_IMG_BASE_URL + "/product.png";
     },
@@ -58,12 +61,12 @@ export default {
         return days + "일 " + hours + "시간 " + minutes + "분";
       }
     },
-    toDetail(){
+    async toDetail(){
       if(this.closed) return;
-      this.$router.push({name: "auction.detail",
-        params: {
-          auction: this.auction
-        }})
+
+      await this.getAuctionDetail(this.auction.aid)
+
+      this.$router.push({name: "auction.detail"})
     }
   }
 };

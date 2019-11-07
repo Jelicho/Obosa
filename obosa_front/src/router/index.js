@@ -58,7 +58,7 @@ export default new Router({
         },
         {
           name: 'auction.detail',
-          path: 'detail/:auction',
+          path: 'detail',
           component: auctionDetail,
         },
       ]
@@ -90,7 +90,7 @@ export default new Router({
             },
             {
               name: 'mypage.auction.register',
-              path: 'auction/register/:product',
+              path: 'auction/register/:pid',
               component: auctionRegister
             }
       ]

@@ -1,6 +1,6 @@
 <template>
-  <v-card :height="height" outlined>
-    <v-img class="item-img" :src="getUrl()" >
+  <v-card  outlined>
+    <v-img width="100%"  :height="height" class="item-img" :src="getUrl()" >
     </v-img>
     <v-card-title>{{product.pname}}</v-card-title>
     <v-card-text class="text--primary">

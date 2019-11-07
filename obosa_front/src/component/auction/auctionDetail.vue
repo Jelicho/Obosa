@@ -26,7 +26,6 @@
         </v-row>
         <v-row>
           <v-col md="8">
-            <!-- 현재 경매의 최고경매가를 min 값으로 지정한다. (현재는 Redis와 연결하지 않아서 lowPrice로 설정) -->
             <v-text-field
               outlined
               type="number"
@@ -54,7 +53,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import auctionDescription from "@/component/auction/auctionDescription";
 import imageSlide from '@/component/common/imageSlide'
 
@@ -65,20 +64,31 @@ export default {
   },
   data() {
     return {
-      auction: { product: { pname: "" } },
       minbidPrice: 0,
       bidPrice: 0,
       productImgList: []
     };
   },
+  watch:{
+    auction: {
+      deep: true,
+      immediate: true,
+      handler(){
+        if(this.auction.highPrice === 0){
+          this.minbidPrice = this.auction.lowPrice
+        } else {
+          this.minbidPrice = this.auction.highPrice + this.auction.upPrice;
+        }
+        this.bidPrice = this.minbidPrice;
+      }
+    }
+  },
+  computed: {
+    ...mapState({
+      auction : state => state.auctionModule.auction
+    })
+  },
   mounted() {
-    // 경매 리스트를 router paramerter로 받아옴
-    this.auction = this.$route.params.auction;
-
-    // 최소 입찰 가격을 지정함
-    this.minbidPrice = this.auction.highPrice + this.auction.upPrice;
-    this.bidPrice = this.minbidPrice;
-
     // 상품 이미지 리스트를 가져옴
     this.getProductImgList(
       this.auction.product.user.uid,
@@ -88,7 +98,7 @@ export default {
     );
   },
   methods: {
-    ...mapActions("auctionModule", ["bidAuction", "updatePrice"]),
+    ...mapActions("auctionModule", ["getAuctionDetail", "bidAuction", "updatePrice"]),
     getProductImgList(uid,dirS3, count) {
       if (count == 0) {
         this.productImgList = [DEFAULT_IMG_BASE_URL + "/product.png"];
