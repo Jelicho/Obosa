@@ -99,6 +99,7 @@ a {
 
 .v-toolbar {
     text-align: -webkit-center;
+    z-index: 20 !important;
 }
 
 /* logo */
